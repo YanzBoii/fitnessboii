@@ -38,10 +38,10 @@ export function PerfsView({ v }: { v: PerfsVals }) {
                   <div role="img" aria-label={c.title} style={{ position: "absolute", inset: "0", backgroundSize: "cover", backgroundPosition: "center", backgroundImage: c.bgImg }}>
                   </div>
                   <div style={{ position: "absolute", left: "0", right: "0", bottom: "0", padding: "28px 12px 10px", background: "linear-gradient(transparent, rgba(0,0,0,.75))" }}>
-                    <div style={{ fontFamily: "Sora", fontWeight: "700", fontSize: "15px" }}>
+                    <div style={{ fontFamily: "Sora", fontWeight: "700", fontSize: "15px", color: "#fff" }}>
                       {c.title}
                     </div>
-                    <div style={{ fontSize: "12px", color: "var(--fb-tx2,#e8d6ca)", textTransform: "capitalize" }}>
+                    <div style={{ fontSize: "12px", color: "rgba(255,255,255,.8)", textTransform: "capitalize" }}>
                       {c.date}
                     </div>
                   </div>

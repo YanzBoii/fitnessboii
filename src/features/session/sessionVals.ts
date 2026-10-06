@@ -12,6 +12,9 @@ import { useStartSession } from './useStartSession';
 
 const fmtKg = (n: number) => String(n).replace('.', ',');
 
+
+/** « 70 kg × 10 », ou « 12 reps » au poids du corps (0 kg). */
+const perfLabel = (w: number, r: number) => (w ? `${fmtKg(w)} kg × ${r}` : `${r} reps`);
 export function useSessionVals() {
   const a = useApp();
   const start = useStartSession();
@@ -99,7 +102,7 @@ export function useSessionVals() {
       c = {
         num: ci + 1, name: ce.name, machine: ce.machine || '—', icon: groupIcon(ce.group),
         target: `${ce.sets} × ${ce.reps}${+ce.weight ? ` · ${fmtKg(ce.weight)} kg` : ''}`,
-        best: b ? `${fmtKg(b.w)} kg × ${b.r}` : '—', w: w.value, r: r.value, onW: w.onChange, onR: r.onChange,
+        best: b ? perfLabel(b.w, b.r) : '—', w: w.value, r: r.value, onW: w.onChange, onR: r.onChange,
         wMinus: () => step('w', Math.max(0, r25((+x.w || 0) - 2.5))), wPlus: () => step('w', Math.min(1000, r25((+x.w || 0) + 2.5))),
         rMinus: () => step('r', Math.max(0, (+x.r || 0) - 1)), rPlus: () => step('r', Math.min(500, (+x.r || 0) + 1)),
         validate: () => {
@@ -122,7 +125,7 @@ export function useSessionVals() {
       list: order.map((e, i) => {
         const x = se.ex[e.id], cur = i === ci;
         return {
-          name: e.name, onClick: () => setCur(i), sub: x.done ? `${fmtKg(x.w)} kg × ${x.r}` : `${e.sets} × ${e.reps}`,
+          name: e.name, onClick: () => setCur(i), sub: x.done ? perfLabel(x.w, x.r) : `${e.sets} × ${e.reps}`,
           stIcon: x.done ? 'check' : groupIcon(e.group),
           bg: cur ? 'rgba(var(--fb-a,236,40,78),.14)' : 'transparent',
           border: cur ? '1px solid rgba(var(--fb-a,236,40,78),.35)' : '1px solid transparent',

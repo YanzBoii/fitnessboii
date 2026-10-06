@@ -2,6 +2,9 @@
 import { Fragment } from 'react';
 import type { SessionVals } from './sessionVals';
 
+/** Taille de police qui fait tenir la valeur dans son champ (unités cqw du conteneur), 30 px max. */
+const numFont = (val: string) => `clamp(12px, calc(100cqw / ${(Math.max(String(val).length, 2) * 0.62).toFixed(2)}), 30px)`;
+
 export function SessionView({ v }: { v: SessionVals }) {
   return (
     <>
@@ -149,14 +152,16 @@ export function SessionView({ v }: { v: SessionVals }) {
                 <div style={{ fontSize: "12px", color: "var(--fb-tx3,#a8978c)", textAlign: "center" }}>
                   Charge max (kg)
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                  <button onClick={v.sess.c.wMinus} style={{ width: "44px", height: "44px", flexShrink: "0", borderRadius: "50%", cursor: "pointer", display: "grid", placeItems: "center", background: "rgba(var(--fb-fg,255,255,255),.06)", border: "1px solid rgba(var(--fb-fg,255,255,255),.08)", color: "var(--fb-tx,#f5efe9)" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                  <button onClick={v.sess.c.wMinus} style={{ width: "40px", height: "40px", flexShrink: "0", borderRadius: "50%", cursor: "pointer", display: "grid", placeItems: "center", background: "rgba(var(--fb-fg,255,255,255),.06)", border: "1px solid rgba(var(--fb-fg,255,255,255),.08)", color: "var(--fb-tx,#f5efe9)" }}>
                     <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", fontVariationSettings: "'FILL' 0" }}>
                       remove
                     </span>
                   </button>
-                  <input type="number" inputMode="decimal" value={v.sess.c.w} onChange={v.sess.c.onW} style={{ flex: "1", minWidth: "0", width: "100%", height: "48px", textAlign: "center", border: "none", background: "transparent", color: "var(--fb-tx,#f5efe9)", font: "700 30px Sora", letterSpacing: "-.02em", outline: "none" }} />
-                  <button onClick={v.sess.c.wPlus} style={{ width: "44px", height: "44px", flexShrink: "0", borderRadius: "50%", cursor: "pointer", display: "grid", placeItems: "center", background: "rgba(var(--fb-fg,255,255,255),.06)", border: "1px solid rgba(var(--fb-fg,255,255,255),.08)", color: "var(--fb-tx,#f5efe9)" }}>
+                  <div style={{ flex: "1", minWidth: "0", containerType: "inline-size" }}>
+                    <input type="number" inputMode="decimal" value={v.sess.c.w} onChange={v.sess.c.onW} style={{ width: "100%", height: "48px", padding: "0", textAlign: "center", border: "none", background: "transparent", color: "var(--fb-tx,#f5efe9)", font: `700 ${numFont(v.sess.c.w)} Sora`, letterSpacing: "-.02em", outline: "none" }} />
+                  </div>
+                  <button onClick={v.sess.c.wPlus} style={{ width: "40px", height: "40px", flexShrink: "0", borderRadius: "50%", cursor: "pointer", display: "grid", placeItems: "center", background: "rgba(var(--fb-fg,255,255,255),.06)", border: "1px solid rgba(var(--fb-fg,255,255,255),.08)", color: "var(--fb-tx,#f5efe9)" }}>
                     <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", fontVariationSettings: "'FILL' 0" }}>
                       add
                     </span>
@@ -167,14 +172,16 @@ export function SessionView({ v }: { v: SessionVals }) {
                 <div style={{ fontSize: "12px", color: "var(--fb-tx3,#a8978c)", textAlign: "center" }}>
                   Reps
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                  <button onClick={v.sess.c.rMinus} style={{ width: "44px", height: "44px", flexShrink: "0", borderRadius: "50%", cursor: "pointer", display: "grid", placeItems: "center", background: "rgba(var(--fb-fg,255,255,255),.06)", border: "1px solid rgba(var(--fb-fg,255,255,255),.08)", color: "var(--fb-tx,#f5efe9)" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                  <button onClick={v.sess.c.rMinus} style={{ width: "40px", height: "40px", flexShrink: "0", borderRadius: "50%", cursor: "pointer", display: "grid", placeItems: "center", background: "rgba(var(--fb-fg,255,255,255),.06)", border: "1px solid rgba(var(--fb-fg,255,255,255),.08)", color: "var(--fb-tx,#f5efe9)" }}>
                     <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", fontVariationSettings: "'FILL' 0" }}>
                       remove
                     </span>
                   </button>
-                  <input type="number" inputMode="numeric" value={v.sess.c.r} onChange={v.sess.c.onR} style={{ flex: "1", minWidth: "0", width: "100%", height: "48px", textAlign: "center", border: "none", background: "transparent", color: "var(--fb-tx,#f5efe9)", font: "700 30px Sora", letterSpacing: "-.02em", outline: "none" }} />
-                  <button onClick={v.sess.c.rPlus} style={{ width: "44px", height: "44px", flexShrink: "0", borderRadius: "50%", cursor: "pointer", display: "grid", placeItems: "center", background: "rgba(var(--fb-fg,255,255,255),.06)", border: "1px solid rgba(var(--fb-fg,255,255,255),.08)", color: "var(--fb-tx,#f5efe9)" }}>
+                  <div style={{ flex: "1", minWidth: "0", containerType: "inline-size" }}>
+                    <input type="number" inputMode="numeric" value={v.sess.c.r} onChange={v.sess.c.onR} style={{ width: "100%", height: "48px", padding: "0", textAlign: "center", border: "none", background: "transparent", color: "var(--fb-tx,#f5efe9)", font: `700 ${numFont(v.sess.c.r)} Sora`, letterSpacing: "-.02em", outline: "none" }} />
+                  </div>
+                  <button onClick={v.sess.c.rPlus} style={{ width: "40px", height: "40px", flexShrink: "0", borderRadius: "50%", cursor: "pointer", display: "grid", placeItems: "center", background: "rgba(var(--fb-fg,255,255,255),.06)", border: "1px solid rgba(var(--fb-fg,255,255,255),.08)", color: "var(--fb-tx,#f5efe9)" }}>
                     <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", fontVariationSettings: "'FILL' 0" }}>
                       add
                     </span>

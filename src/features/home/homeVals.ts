@@ -50,7 +50,9 @@ export function useHomeVals() {
       checkDisplay: d.done ? 'block' : 'none', numDisplay: d.done ? 'none' : 'block',
       bg: d.done ? (d.isToday ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-a2,220,30,96),.85)') : 'rgba(var(--fb-fg,255,255,255),.04)',
       border: d.isToday && !d.done ? '1.5px solid rgb(var(--fb-a,236,40,78))' : d.done ? 'none' : '1px solid rgba(var(--fb-fg,255,255,255),.08)',
-      shadow: d.done ? '0 0 14px rgba(var(--fb-a2,220,30,96),.5)' : 'none'
+      shadow: d.done ? '0 0 14px rgba(var(--fb-a2,220,30,96),.5)' : 'none',
+      // Blanc sur la pastille pleine, couleur du texte sinon (lisible en thème clair).
+      color: d.done ? 'var(--fb-on,#fff)' : 'var(--fb-tx,#f5efe9)'
     })),
     heatCols,
     heatRange: `${fmtMonth(hs)} → ${fmtMonth(today)}`,

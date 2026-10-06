@@ -68,7 +68,7 @@ export function HomeView({ v }: { v: HomeVals }) {
                 <span style={{ fontSize: "11px", color: "var(--fb-tx3,#a8978c)" }}>
                   {d.label}
                 </span>
-                <div style={{ width: "100%", maxWidth: "36px", aspectRatio: "1", borderRadius: "50%", display: "grid", placeItems: "center", background: d.bg, border: d.border, boxShadow: d.shadow, color: "var(--fb-on,#fff)", fontSize: "12px", fontWeight: "600" }}>
+                <div style={{ width: "100%", maxWidth: "36px", aspectRatio: "1", borderRadius: "50%", display: "grid", placeItems: "center", background: d.bg, border: d.border, boxShadow: d.shadow, color: d.color, fontSize: "12px", fontWeight: "600" }}>
                   <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "16px", display: d.checkDisplay }}>
                     check
                   </span>
@@ -94,7 +94,7 @@ export function HomeView({ v }: { v: HomeVals }) {
                 Présence à la salle
               </div>
               <div style={{ fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
-                {v.heatRange} · {v.heatTotal} séances
+                {v.heatRange} · {v.heatTotal} {v.heatTotal > 1 ? "séances" : "séance"}
               </div>
             </div>
           </div>
