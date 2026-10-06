@@ -10,3 +10,6 @@ coverage/
 dev-dist/
 .claude/
 *.tsbuildinfo
+
+# Local Netlify folder
+.netlify
