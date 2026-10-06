@@ -94,7 +94,7 @@ export function HomeView({ v }: { v: HomeVals }) {
                 Présence à la salle
               </div>
               <div style={{ fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
-                {v.heatRange} · {v.heatTotal} séances
+                {v.heatRange} · {v.heatTotal} {v.heatTotal > 1 ? "séances" : "séance"}
               </div>
             </div>
           </div>

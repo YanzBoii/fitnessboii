@@ -1,7 +1,7 @@
 import { useRef, useState, type ChangeEvent, type MouseEvent } from 'react';
 import { REST_OPTIONS } from '../../domain/constants';
 import type { Profile, RestSeconds } from '../../domain/types';
-import { authMessage, deleteAccountAndData, isPasswordUser, logout } from '../../firebase/authApi';
+import { authMessage, deleteAccountAndData, errCode, isPasswordUser, logout } from '../../firebase/authApi';
 import { exportAll, saveProfile, wipeAll } from '../../firebase/repo';
 import { useApp } from '../../state/app';
 import { reducedMotion } from '../../ui/theme';
@@ -121,7 +121,9 @@ export function useProfileVals() {
       try {
         await deleteAccountAndData(a.user, delPw);
       } catch (e) {
-        a.flash(authMessage(e) || 'Suppression annulée');
+        // Seul le mot de passe est saisi ici : pas de mention de l'email.
+        const badPw = ['auth/invalid-credential', 'auth/wrong-password'].includes(errCode(e));
+        a.flash(badPw ? 'Mot de passe incorrect' : authMessage(e) || 'Suppression annulée');
         setDeleting(false);
       }
     },
