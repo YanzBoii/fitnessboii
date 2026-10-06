@@ -1,0 +1,36 @@
+html, body {
+  margin: 0;
+  background: rgb(var(--fb-bg, 12, 8, 10));
+  color: var(--fb-tx, #f5efe9);
+  font-family: Manrope, system-ui, sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+* { box-sizing: border-box; }
+a { color: rgb(var(--fb-a4, 255, 130, 154)); text-decoration: none; }
+a:hover { color: rgb(var(--fb-a5, 255, 182, 198)); }
+input, select { font-family: Manrope; }
+input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+select option { background: rgb(var(--fb-bg2, 20, 11, 15)); color: var(--fb-tx, #f5efe9); }
+button {
+  transition: transform .18s cubic-bezier(.3,.7,.4,1.4), filter .2s, background-color .25s, color .25s, box-shadow .3s, border-color .25s;
+  -webkit-tap-highlight-color: transparent;
+}
+button:hover { filter: brightness(1.1); }
+button:active { transform: scale(.95); transition-duration: .08s; }
+button:disabled { cursor: default; opacity: .5; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid rgba(var(--fb-a3, 255, 92, 124), .7); outline-offset: 2px; }
+input, select { transition: border-color .2s, background-color .2s; }
+input:focus, select:focus { border-color: rgba(var(--fb-a3, 255, 92, 124), .6) !important; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* Écran de chargement */
+.fb-splash { position: fixed; inset: 0; display: grid; place-items: center; background: rgb(var(--fb-bg, 12, 8, 10)); }
+.fb-splash > div {
+  width: 56px; height: 56px; border-radius: 18px; display: grid; place-items: center; color: #fff;
+  background: linear-gradient(135deg, rgb(255, 92, 124), rgb(236, 40, 78)); box-shadow: 0 0 36px rgba(236, 40, 78, .55);
+  animation: fb-breathe 1.4s ease-in-out infinite;
+}
+@keyframes fb-breathe { 50% { transform: scale(.92); box-shadow: 0 0 18px rgba(236, 40, 78, .35); } }
+.ms { font-family: 'Material Symbols Rounded'; font-variation-settings: 'FILL' 1; }
