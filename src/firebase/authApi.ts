@@ -44,6 +44,7 @@ export const resendVerification = (user: User) => sendEmailVerification(user, co
  */
 export async function logout() {
   await signOut(auth);
+  try { localStorage.removeItem('fitnessboii-tab'); } catch { /* stockage indisponible */ }
   try {
     await terminate(db);
     await clearIndexedDbPersistence(db);
