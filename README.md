@@ -4,6 +4,8 @@
 
 Application de suivi de musculation : programmes (exercices, machine, séries × reps × charge), séances guidées un exercice à la fois, perf max par exercice, régularité (heatmap de présence, série de semaines) et évolution physique (photo hebdomadaire + comparatifs).
 
+**Démo : https://fitnessboiii.netlify.app**
+
 Responsive PC / mobile, installable (PWA), utilisable hors-ligne à la salle, multi-utilisateur, hébergée gratuitement.
 
 ## Stack
