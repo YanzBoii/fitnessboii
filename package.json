@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:emu": "vite --mode emulator",
+    "emulators": "firebase emulators:start --only auth,firestore --project demo-fitnessboii",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b",

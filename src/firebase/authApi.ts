@@ -3,7 +3,8 @@ import {
   reauthenticateWithCredential, reauthenticateWithPopup, sendEmailVerification, sendPasswordResetEmail,
   signInWithEmailAndPassword, signInWithPopup, signInWithRedirect, signOut, type AuthProvider, type User
 } from 'firebase/auth';
-import { auth } from './config';
+import { clearIndexedDbPersistence, terminate } from 'firebase/firestore';
+import { auth, db } from './config';
 import { wipeAll } from './repo';
 
 const google = () => new GoogleAuthProvider();
@@ -37,7 +38,19 @@ export async function signUpEmail(email: string, password: string) {
 export const signInEmail = (email: string, password: string) => signInWithEmailAndPassword(auth, email, password);
 export const resetPassword = (email: string) => sendPasswordResetEmail(auth, email, continueUrl());
 export const resendVerification = (user: User) => sendEmailVerification(user, continueUrl());
-export const logout = () => signOut(auth);
+/**
+ * Déconnexion + effacement du cache Firestore local (appareil partagé : rien ne reste sur le disque).
+ * Le cache ne peut être vidé qu'après terminate(), d'où le rechargement de la page.
+ */
+export async function logout() {
+  await signOut(auth);
+  try {
+    await terminate(db);
+    await clearIndexedDbPersistence(db);
+  } finally {
+    window.location.replace('/');
+  }
+}
 
 /** Recharge l'utilisateur et force un nouveau token (pour que email_verified soit pris en compte par les règles). */
 export async function refreshVerified(user: User) {
@@ -62,6 +75,7 @@ export async function deleteAccountAndData(user: User, password?: string) {
   }
   await wipeAll(user.uid, true);
   await deleteUser(user);
+  await logout();
 }
 
 export const errCode = (e: unknown) => (e && typeof e === 'object' && 'code' in e ? String((e as { code: unknown }).code) : '');

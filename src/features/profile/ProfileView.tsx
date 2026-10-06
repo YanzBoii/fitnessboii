@@ -32,7 +32,7 @@ export function ProfileView({ v }: { v: ProfileVals }) {
           </label>
           <label style={{ display: "flex", flexDirection: "column", gap: "5px", fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
             Email
-            <input type="email" value={v.settings.email} onChange={v.onEmail} style={{ height: "40px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", fontSize: "14px", outline: "none", width: "100%" }} />
+            <input type="email" value={v.settings.email} readOnly title="Email du compte" style={{ opacity: ".7", height: "40px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", fontSize: "14px", outline: "none", width: "100%" }} />
           </label>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
             <label style={{ display: "flex", flexDirection: "column", gap: "5px", fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
@@ -118,6 +118,15 @@ export function ProfileView({ v }: { v: ProfileVals }) {
               restart_alt
             </span>
             {v.resetLabel}
+          </button>
+          {v.askPassword && (
+            <input type="password" value={v.delPw} onChange={v.onDelPw} placeholder="Mot de passe pour confirmer" autoComplete="current-password" style={{ flex: "1 1 100%", height: "40px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(255,90,70,.3)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", fontSize: "14px", outline: "none" }} />
+          )}
+          <button onClick={v.deleteAccount} disabled={v.deleting} style={{ flex: "1 1 100%", whiteSpace: "nowrap", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", padding: "11px", borderRadius: "14px", cursor: "pointer", background: v.deleteBg, border: "1px solid rgba(255,90,70,.3)", color: "#ff8a73", font: "600 13px Manrope" }}>
+            <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "18px" }}>
+              person_remove
+            </span>
+            {v.deleteLabel}
           </button>
         </div>
       </div>

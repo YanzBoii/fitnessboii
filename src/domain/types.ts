@@ -77,6 +77,8 @@ export interface PhotoMeta {
   /** Lundi ISO de la semaine, aussi l'ID du document. */
   week: string;
   date: string;
+  /** Version (ms) : change quand la photo de la semaine est remplacée. */
+  v: number;
 }
 
 export interface PerfPoint {

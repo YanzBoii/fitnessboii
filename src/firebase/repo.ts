@@ -96,7 +96,10 @@ export const clearSession = (uid: string) => deleteDoc(sessionDoc(uid));
 // ---------- Photos (métadonnées) ----------
 export function subscribePhotos(uid: string, cb: (p: PhotoMeta[]) => void, onError?: OnError): Unsubscribe {
   return onSnapshot(query(sub(uid, 'photos'), orderBy('week')), s => {
-    cb(s.docs.map(d => ({ week: d.id, date: String(d.data().date) })));
+    cb(s.docs.map(d => {
+      const x = d.data({ serverTimestamps: 'estimate' });
+      return { week: d.id, date: String(x.date), v: x.createdAt?.toMillis?.() ?? 0 };
+    }));
   }, onError);
 }
 

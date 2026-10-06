@@ -31,9 +31,13 @@ export const reducedMotion = () => !!window.matchMedia?.('(prefers-reduced-motio
 
 /** Transition de vue en fondu si le navigateur la supporte. */
 export function viewTransition(fn: () => void) {
-  const d = document as Document & { startViewTransition?: (cb: () => void) => unknown };
-  if (d.startViewTransition && !reducedMotion()) d.startViewTransition(fn);
-  else fn();
+  type VT = { ready: Promise<void>; finished: Promise<void> };
+  const d = document as Document & { startViewTransition?: (cb: () => void) => VT };
+  if (!d.startViewTransition || reducedMotion()) return fn();
+  const t = d.startViewTransition(fn);
+  // Clics rapides : la transition précédente est annulée, ce n'est pas une erreur.
+  t.ready.catch(() => {});
+  t.finished.catch(() => {});
 }
 
 /** Aperçu de carte thème (Réglages / onboarding). */
