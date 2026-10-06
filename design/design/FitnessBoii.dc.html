@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0" rel="stylesheet">
+<style>
+html,body{margin:0;background:rgb(var(--fb-bg,12,8,10));color:var(--fb-tx,#f5efe9);font-family:Manrope,system-ui,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:rgb(var(--fb-a4,255,130,154));text-decoration:none}a:hover{color:rgb(var(--fb-a5,255,182,198))}
+input,select{font-family:Manrope}
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield}
+select option{background:rgb(var(--fb-bg2,20,11,15));color:var(--fb-tx,#f5efe9)}
+button{transition:transform .18s cubic-bezier(.3,.7,.4,1.4),filter .2s,background-color .25s,color .25s,box-shadow .3s,border-color .25s;-webkit-tap-highlight-color:transparent}
+button:hover{filter:brightness(1.1)}
+button:active{transform:scale(.95);transition-duration:.08s}
+input,select{transition:border-color .2s,background-color .2s}
+input:focus,select:focus{border-color:rgba(var(--fb-a3,255,92,124),.6)!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</helmet>
+<div style="min-height:100vh; background:radial-gradient(900px 520px at 70% -10%, rgba(var(--fb-a,236,40,78),calc(.15 * var(--fb-gk,1))), transparent 70%), radial-gradient(700px 500px at 0% 100%, rgba(var(--fb-s3,110,15,40),.10), transparent 70%), rgb(var(--fb-bg,12,8,10)); position:relative;">
+
+  <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+    <aside style="position:fixed; left:0; top:0; bottom:0; width:224px; padding:24px 14px; display:flex; flex-direction:column; gap:24px; border-right:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.08)); background:rgba(var(--fb-bg,12,8,10),.7); backdrop-filter:blur(20px); z-index:10;">
+      <div style="display:flex; align-items:center; gap:10px; padding:0 10px;">
+        <div style="width:28px; height:28px; border-radius:9px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(255,92,124),rgb(var(--fb-a2,220,30,96))); box-shadow:0 0 16px rgba(236,40,78,.55); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:18px; font-variation-settings:'FILL' 1; color:var(--fb-on,#fff);">fitness_center</span></div>
+        <div style="font-family:Sora; font-weight:700; font-size:17px; letter-spacing:-.02em;">FitnessBoii</div>
+      </div>
+      <nav style="display:flex; flex-direction:column; gap:4px;">
+        <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+          <button onClick="{{ n.onClick }}" style="display:flex; align-items:center; gap:11px; padding:10px 12px; border-radius:14px; border:none; cursor:pointer; font:600 14px Manrope; text-align:left; background:{{ n.bg }}; color:{{ n.color }}; box-shadow:{{ n.shadow }};">
+            <span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 1;">{{ n.icon }}</span>{{ n.label }}
+          </button>
+        </sc-for>
+      </nav>
+      <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
+        <button onClick="{{ goProfile }}" style="display:flex; align-items:center; gap:10px; padding:8px; border-radius:14px; border:none; background:transparent; color:var(--fb-tx,#f5efe9); cursor:pointer; text-align:left;">
+          <div style="width:34px; height:34px; border-radius:50%; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a6,150,14,48))); font-family:Sora; font-weight:600; font-size:14px; color:#fff;">{{ initial }}</div>
+          <div style="min-width:0;"><div style="font-weight:700; font-size:13px;">{{ settings.name }}</div><div style="font-size:12px; color:var(--fb-tx3,#a8978c); overflow:hidden; text-overflow:ellipsis;">{{ settings.email }}</div></div>
+        </button>
+      </div>
+    </aside>
+  </sc-if>
+
+  <main ref="{{ mainRef }}" style="margin-left:{{ mainML }}; padding:clamp(16px,3vw,36px) clamp(14px,3vw,40px) 120px; max-width:1240px;">
+
+    <header style="display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:20px;">
+      <div style="display:flex; flex-direction:column; gap:3px; min-width:0;">
+        <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+            <div style="width:24px; height:24px; border-radius:8px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(255,92,124),rgb(var(--fb-a2,220,30,96))); box-shadow:0 0 12px rgba(236,40,78,.55); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:15px; font-variation-settings:'FILL' 1; color:var(--fb-on,#fff);">fitness_center</span></div>
+            <div style="font-family:Sora; font-weight:700; font-size:15px;">FitnessBoii</div>
+          </div>
+        </sc-if>
+        <div style="font-size:13px; color:var(--fb-tx3,#a8978c); text-transform:capitalize;">{{ dateLabel }}</div>
+        <h1 ref="{{ titleRef }}" style="margin:0; font-family:Sora; font-weight:600; font-size:clamp(22px,2.6vw,30px); letter-spacing:-.025em;">{{ pageTitle }}</h1>
+      </div>
+      <div style="display:flex; gap:8px; flex-shrink:0;">
+        <button onClick="{{ goPrograms }}" aria-label="Programmes" style="width:40px; height:40px; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.05); border:1px solid rgba(var(--fb-fg,255,255,255),.08); color:var(--fb-tx2,#d4c2b6);"><span style="font-family:'Material Symbols Rounded'; font-size:20px;">calendar_month</span></button>
+        <button onClick="{{ goProfile }}" aria-label="Profil" style="width:40px; height:40px; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a6,150,14,48))); border:none; color:var(--fb-on,#fff); font:600 15px Sora;">{{ initial }}</button>
+      </div>
+    </header>
+
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap:14px;">
+
+        <section style="position:relative; overflow:hidden; border-radius:24px; padding:20px; min-height:260px; display:flex; flex-direction:column; justify-content:space-between; gap:16px; background:radial-gradient(380px 260px at 50% 0%, rgba(var(--fb-a,236,40,78),calc(.5 * var(--fb-gk,1))), rgba(var(--fb-s3,110,15,40),.22) 55%, transparent 80%), linear-gradient(180deg, rgb(var(--fb-s2,36,12,20)), rgb(var(--fb-bg2,20,11,15))); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.18)); box-shadow:var(--fb-cardsh,none);">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+            <span style="white-space:nowrap; display:flex; align-items:center; gap:6px; font-size:12px; padding:5px 11px; border-radius:99px; background:rgba(var(--fb-ink,0,0,0),.3); border:1px solid rgba(var(--fb-fg,255,255,255),.1);"><span style="font-family:'Material Symbols Rounded'; font-size:15px;">{{ hero.pillIcon }}</span>{{ hero.pill }}</span>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:6px;">
+            <div style="width:58px; height:58px; border-radius:50%; display:grid; place-items:center; margin-bottom:6px; background:radial-gradient(circle at 35% 30%, rgb(var(--fb-a5,255,182,198)), rgb(var(--fb-a,236,40,78)) 60%, rgb(var(--fb-a6,150,14,48))); box-shadow:0 0 40px rgba(var(--fb-a,236,40,78),.65), inset 0 -4px 10px rgba(0,0,0,.25); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:30px; font-variation-settings:'FILL' 1; color:var(--fb-on,#fff);">{{ hero.icon }}</span></div>
+            <div style="font-size:13px; color:var(--fb-tx2,#f1d9cc);">{{ hero.subtitle }}</div>
+            <div style="font-family:Sora; font-weight:700; font-size:clamp(34px,4.4vw,46px); letter-spacing:-.04em; line-height:1.05;">{{ hero.name }}</div>
+          </div>
+          <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap;">
+            <button onClick="{{ startToday }}" style="white-space:nowrap; display:flex; align-items:center; gap:6px; padding:11px 20px; border-radius:99px; border:none; background:var(--fb-inv,#fff); color:rgb(var(--fb-bg2,20,11,15)); font:700 14px Manrope; cursor:pointer;">
+              <span style="font-family:'Material Symbols Rounded'; font-size:18px; font-variation-settings:'FILL' 1;">play_arrow</span>{{ hero.cta }}
+            </button>
+            <button onClick="{{ goHeroProgram }}" style="white-space:nowrap; padding:11px 18px; border-radius:99px; border:1px solid rgba(var(--fb-fg,255,255,255),.22); background:rgba(var(--fb-ink,0,0,0),.25); color:var(--fb-tx,#f5efe9); font:600 14px Manrope; cursor:pointer;">Voir le programme</button>
+          </div>
+        </section>
+
+        <section style="border-radius:24px; padding:20px; display:flex; flex-direction:column; gap:16px; background:linear-gradient(160deg, rgba(var(--fb-s1,58,22,32),.55), rgba(var(--fb-card,22,16,14),.75)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.10)); box-shadow:var(--fb-cardsh,none);">
+          <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+            <div style="width:54px; height:54px; border-radius:18px; display:grid; place-items:center; background:radial-gradient(circle at 50% 70%, rgba(var(--fb-a,236,40,78),calc(.45 * var(--fb-gk,1))), rgba(var(--fb-a,236,40,78),.08)); border:1px solid rgba(var(--fb-a3,255,92,124),.25); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:32px; font-variation-settings:'FILL' 1; color:rgb(var(--fb-a3,255,92,124)); text-shadow:0 0 18px rgba(var(--fb-a,236,40,78),.9);">local_fire_department</span></div>
+            <div>
+              <div style="font-size:13px; color:var(--fb-tx3,#a8978c);">Série en cours</div>
+              <div style="display:flex; align-items:baseline; gap:8px; margin-top:2px;">
+                <span style="font-family:Sora; font-weight:800; font-size:44px; line-height:1; color:rgb(var(--fb-a,236,40,78)); text-shadow:0 0 30px rgba(var(--fb-a,236,40,78),.5);">{{ streak }}</span>
+                <span style="font-family:Sora; font-weight:600; font-size:16px;">semaines</span>
+              </div>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:5px; padding:9px; border-radius:18px; background:rgba(var(--fb-ink,0,0,0),.3); border:1px solid rgba(var(--fb-fg,255,255,255),.06);">
+            <sc-for list="{{ weekRow }}" as="d" hint-placeholder-count="7">
+              <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+                <span style="font-size:11px; color:var(--fb-tx3,#a8978c);">{{ d.label }}</span>
+                <div style="width:100%; max-width:36px; aspect-ratio:1; border-radius:50%; display:grid; place-items:center; background:{{ d.bg }}; border:{{ d.border }}; box-shadow:{{ d.shadow }}; color:var(--fb-on,#fff); font-size:12px; font-weight:600;">
+                  <span style="font-family:'Material Symbols Rounded'; font-size:16px; display:{{ d.checkDisplay }};">check</span><span style="display:{{ d.numDisplay }};">{{ d.num }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+
+        <section style="grid-column:1 / -1; border-radius:24px; padding:20px; display:flex; flex-direction:column; gap:14px; background:linear-gradient(160deg, rgba(var(--fb-s1,58,22,32),.45), rgba(var(--fb-card,22,16,14),.75)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.10)); box-shadow:var(--fb-cardsh,none);">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="width:36px; height:36px; border-radius:12px; display:grid; place-items:center; background:rgba(var(--fb-a,236,40,78),.14); color:rgb(var(--fb-a4,255,130,154));"><span style="font-family:'Material Symbols Rounded'; font-size:19px;">event_available</span></div>
+              <div>
+                <div style="font-weight:700; font-size:14px;">Présence à la salle</div>
+                <div style="font-size:12px; color:var(--fb-tx3,#a8978c);">{{ heatRange }} · {{ heatTotal }} séances</div>
+              </div>
+            </div>
+            <div style="display:flex; gap:14px; font-size:12px; color:var(--fb-tx3,#a8978c);">
+              <span style="display:flex; align-items:center; gap:6px;"><span style="width:10px; height:10px; border-radius:50%; background:rgb(var(--fb-a2,220,30,96)); box-shadow:0 0 8px rgba(var(--fb-a2,220,30,96),.7);"></span>Séance</span>
+              <span style="display:flex; align-items:center; gap:6px;"><span style="width:10px; height:10px; border-radius:50%; border:1.5px solid rgba(var(--fb-fg,255,255,255),.2);"></span>Repos</span>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <sc-for list="{{ heatRows }}" as="row" hint-placeholder-count="7">
+              <div style="display:grid; grid-template-columns:20px repeat({{ heatCols }}, minmax(0,1fr)); gap:5px; align-items:center;">
+                <span style="font-size:11px; color:var(--fb-tx4,#8e7d72);">{{ row.label }}</span>
+                <sc-for list="{{ row.cells }}" as="c" hint-placeholder-count="16">
+                  <div title="{{ c.title }}" style="width:100%; max-width:16px; aspect-ratio:1; justify-self:center; border-radius:50%; background:{{ c.bg }}; border:{{ c.border }}; box-shadow:{{ c.shadow }}; opacity:{{ c.op }};"></div>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+
+        <section style="grid-column:1 / -1; border-radius:24px; padding:20px; background:linear-gradient(160deg, rgba(var(--fb-s1,58,22,32),.45), rgba(var(--fb-card,22,16,14),.75)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.10)); box-shadow:var(--fb-cardsh,none);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="width:36px; height:36px; border-radius:12px; display:grid; place-items:center; background:rgba(var(--fb-a,236,40,78),.14); color:rgb(var(--fb-a4,255,130,154));"><span style="font-family:'Material Symbols Rounded'; font-size:19px; font-variation-settings:'FILL' 1;">emoji_events</span></div>
+              <div style="font-weight:700; font-size:14px;">Records récents</div>
+            </div>
+            <button onClick="{{ goPerf }}" style="border:none; background:none; color:rgb(var(--fb-a4,255,130,154)); font:600 13px Manrope; cursor:pointer;">Tout voir</button>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap:10px;">
+            <sc-for list="{{ prs }}" as="p" hint-placeholder-count="4">
+              <button onClick="{{ p.onClick }}" style="display:flex; gap:12px; align-items:center; text-align:left; cursor:pointer; padding:14px; border-radius:18px; background:rgba(var(--fb-ink,0,0,0),.28); border:1px solid rgba(var(--fb-fg,255,255,255),.06); color:var(--fb-tx,#f5efe9); font-family:Manrope;">
+                <div style="width:40px; height:40px; flex-shrink:0; border-radius:50%; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.05); color:rgb(var(--fb-a4,255,130,154));"><span style="font-family:'Material Symbols Rounded'; font-size:20px;">{{ p.icon }}</span></div>
+                <div style="min-width:0;">
+                  <div style="font-size:12px; color:var(--fb-tx3,#a8978c);">{{ p.name }}</div>
+                  <div style="font-family:Sora; font-weight:600; font-size:18px; margin-top:2px;">{{ p.w }} <span style="font-size:12px; color:var(--fb-tx3,#a8978c);">kg × {{ p.r }}</span></div>
+                  <div style="font-size:11px; font-weight:700; color:rgb(var(--fb-a4,255,130,154)); margin-top:2px;">{{ p.delta }}</div>
+                </div>
+              </button>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isPrograms }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; flex-direction:column; gap:14px;">
+
+        <section style="border-radius:24px; padding:18px; display:flex; flex-direction:column; gap:12px; background:linear-gradient(160deg, rgba(var(--fb-s1,58,22,32),.45), rgba(var(--fb-card,22,16,14),.75)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.10)); box-shadow:var(--fb-cardsh,none);">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="width:36px; height:36px; border-radius:12px; display:grid; place-items:center; background:rgba(var(--fb-a,236,40,78),.14); color:rgb(var(--fb-a4,255,130,154));"><span style="font-family:'Material Symbols Rounded'; font-size:19px;">calendar_month</span></div>
+              <div style="font-weight:700; font-size:14px;">Planning de la semaine</div>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); gap:6px;">
+            <sc-for list="{{ plan }}" as="d" hint-placeholder-count="7">
+              <button onClick="{{ d.onClick }}" style="cursor:pointer; padding:10px 4px; border-radius:16px; display:flex; flex-direction:column; align-items:center; gap:6px; min-width:0; background:{{ d.bg }}; border:{{ d.border }}; color:var(--fb-tx,#f5efe9); font-family:Manrope;">
+                <span style="font-size:11px; color:var(--fb-tx3,#a8978c);">{{ d.short }}</span>
+                <span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 1; color:{{ d.iconColor }};">{{ d.icon }}</span>
+                <span style="font-size:11px; font-weight:700; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:{{ d.nameColor }};">{{ d.name }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ hasPlanDay }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:10px; border-radius:16px; background:rgba(var(--fb-ink,0,0,0),.3);">
+              <span style="font-size:13px; font-weight:700; margin-right:4px;">{{ planDayName }} :</span>
+              <sc-for list="{{ planOptions }}" as="o" hint-placeholder-count="4">
+                <button onClick="{{ o.onClick }}" style="white-space:nowrap; display:flex; align-items:center; gap:5px; padding:7px 12px; border-radius:99px; cursor:pointer; font:600 12px Manrope; background:{{ o.bg }}; color:{{ o.color }}; border:{{ o.border }};"><span style="font-family:'Material Symbols Rounded'; font-size:15px;">{{ o.icon }}</span>{{ o.name }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+        </section>
+
+        <div style="display:flex; gap:8px; overflow-x:auto; padding-bottom:2px;">
+          <sc-for list="{{ progTabs }}" as="t" hint-placeholder-count="3">
+            <button onClick="{{ t.onClick }}" style="white-space:nowrap; flex-shrink:0; display:flex; align-items:center; gap:6px; padding:9px 16px; border-radius:99px; cursor:pointer; font:600 13px Manrope; background:{{ t.bg }}; color:{{ t.color }}; border:{{ t.border }}; box-shadow:{{ t.shadow }};"><span style="font-family:'Material Symbols Rounded'; font-size:17px; font-variation-settings:'FILL' 1;">{{ t.icon }}</span>{{ t.name }}</button>
+          </sc-for>
+          <button onClick="{{ addProgram }}" style="white-space:nowrap; flex-shrink:0; display:flex; align-items:center; gap:5px; padding:9px 16px; border-radius:99px; cursor:pointer; font:600 13px Manrope; background:transparent; color:rgb(var(--fb-a4,255,130,154)); border:1.5px dashed rgba(var(--fb-a3,255,92,124),.45);"><span style="font-family:'Material Symbols Rounded'; font-size:17px;">add</span>Nouveau</button>
+        </div>
+
+        <sc-if value="{{ noPrograms }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:40px 20px; border-radius:24px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:10px; border:1.5px dashed rgba(var(--fb-fg,255,255,255),.1);">
+            <span style="font-family:'Material Symbols Rounded'; font-size:40px; color:rgb(var(--fb-a4,255,130,154));">playlist_add</span>
+            <div style="font-weight:700;">Aucun programme</div>
+            <div style="font-size:13px; color:var(--fb-tx3,#a8978c);">Crée ton premier programme avec le bouton « Nouveau ».</div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ hasProg }}" hint-placeholder-val="{{ true }}">
+          <section style="border-radius:24px; padding:18px; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:18px; background:radial-gradient(500px 260px at 0% 0%, rgba(var(--fb-a,236,40,78),calc(.32 * var(--fb-gk,1))), transparent 70%), linear-gradient(160deg, rgb(var(--fb-s2,36,12,20)), rgb(var(--fb-bg2,20,11,15))); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.16)); box-shadow:var(--fb-cardsh,none);">
+            <div style="display:flex; flex-direction:column; justify-content:space-between; gap:16px; padding:4px;">
+              <sc-if value="{{ notEditing }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                  <div style="display:flex; gap:5px; flex-wrap:wrap;">
+                    <sc-for list="{{ prog.dayTags }}" as="d" hint-placeholder-count="1">
+                      <span style="font-size:11px; font-weight:700; padding:4px 9px; border-radius:99px; background:rgba(var(--fb-a,236,40,78),.18); color:rgb(var(--fb-a4,255,130,154));">{{ d }}</span>
+                    </sc-for>
+                    <sc-if value="{{ prog.noDays }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px; font-weight:700; padding:4px 9px; border-radius:99px; background:rgba(var(--fb-fg,255,255,255),.06); color:var(--fb-tx3,#a8978c);">Aucun jour assigné</span></sc-if>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:12px;">
+                    <div style="width:48px; height:48px; border-radius:16px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a2,220,30,96))); box-shadow:0 8px 24px rgba(var(--fb-a,236,40,78),.4); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:26px; font-variation-settings:'FILL' 1; color:var(--fb-on,#fff);">{{ prog.icon }}</span></div>
+                    <div>
+                      <div style="font-family:Sora; font-weight:700; font-size:clamp(26px,3.4vw,34px); letter-spacing:-.03em; line-height:1.1;">{{ prog.name }}</div>
+                      <div style="font-size:13px; color:var(--fb-tx2,#e8d6ca);">{{ prog.subtitle }}</div>
+                    </div>
+                  </div>
+                </div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                  <button onClick="{{ startSelected }}" style="white-space:nowrap; display:flex; align-items:center; gap:6px; padding:11px 20px; border-radius:99px; border:none; background:rgb(var(--fb-a,236,40,78)); color:var(--fb-on,#fff); font:700 14px Manrope; cursor:pointer; box-shadow:0 8px 24px rgba(var(--fb-a,236,40,78),.4);"><span style="font-family:'Material Symbols Rounded'; font-size:18px; font-variation-settings:'FILL' 1;">play_arrow</span>Lancer la séance</button>
+                  <button onClick="{{ toggleEdit }}" style="white-space:nowrap; display:flex; align-items:center; gap:6px; padding:11px 18px; border-radius:99px; border:1px solid rgba(var(--fb-fg,255,255,255),.2); background:rgba(var(--fb-ink,0,0,0),.25); color:var(--fb-tx,#f5efe9); font:600 14px Manrope; cursor:pointer;"><span style="font-family:'Material Symbols Rounded'; font-size:17px;">edit</span>Modifier</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ isEditing }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; flex-direction:column; gap:12px;">
+                  <label style="display:flex; flex-direction:column; gap:5px; font-size:12px; color:var(--fb-tx3,#a8978c);">Nom du programme
+                    <input value="{{ prog.name }}" onChange="{{ onProgName }}" style="height:42px; padding:0 12px; border-radius:12px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font:600 16px Sora; outline:none;">
+                  </label>
+                  <label style="display:flex; flex-direction:column; gap:5px; font-size:12px; color:var(--fb-tx3,#a8978c);">Muscles ciblés
+                    <input value="{{ prog.subtitle }}" onChange="{{ onProgSub }}" placeholder="Pecs · Épaules · Triceps" style="height:40px; padding:0 12px; border-radius:12px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font-size:14px; outline:none;">
+                  </label>
+                  <div style="display:flex; flex-direction:column; gap:6px; font-size:12px; color:var(--fb-tx3,#a8978c);">Icône
+                    <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                      <sc-for list="{{ iconPicker }}" as="i" hint-placeholder-count="8">
+                        <button onClick="{{ i.onClick }}" style="width:38px; height:38px; border-radius:12px; cursor:pointer; display:grid; place-items:center; background:{{ i.bg }}; border:{{ i.border }}; color:var(--fb-on,#fff);"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 1;">{{ i.icon }}</span></button>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <div style="display:flex; flex-direction:column; gap:6px; font-size:12px; color:var(--fb-tx3,#a8978c);">Jours
+                    <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                      <sc-for list="{{ dayPicker }}" as="d" hint-placeholder-count="7">
+                        <button onClick="{{ d.onClick }}" style="width:38px; height:38px; border-radius:50%; cursor:pointer; font:700 13px Manrope; background:{{ d.bg }}; border:{{ d.border }}; color:{{ d.color }}; box-shadow:{{ d.shadow }};">{{ d.label }}</button>
+                      </sc-for>
+                    </div>
+                  </div>
+                </div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                  <button onClick="{{ toggleEdit }}" style="white-space:nowrap; display:flex; align-items:center; gap:6px; padding:11px 20px; border-radius:99px; border:none; background:var(--fb-inv,#fff); color:rgb(var(--fb-bg2,20,11,15)); font:700 14px Manrope; cursor:pointer;"><span style="font-family:'Material Symbols Rounded'; font-size:18px;">check</span>Terminé</button>
+                  <button onClick="{{ deleteProgram }}" style="white-space:nowrap; display:flex; align-items:center; gap:6px; padding:11px 18px; border-radius:99px; border:1px solid rgba(255,90,70,.4); background:{{ delBg }}; color:#ff8a73; font:600 14px Manrope; cursor:pointer;"><span style="font-family:'Material Symbols Rounded'; font-size:17px;">delete</span>{{ delLabel }}</button>
+                </div>
+              </sc-if>
+            </div>
+          </section>
+
+          <sc-if value="{{ notEditing }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap:10px;">
+              <sc-for list="{{ prog.exercises }}" as="e" hint-placeholder-count="5">
+                <div style="display:flex; gap:12px; align-items:center; padding:14px; border-radius:20px; background:linear-gradient(160deg, rgba(var(--fb-s1,58,22,32),.45), rgba(var(--fb-card,22,16,14),.75)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.10)); box-shadow:var(--fb-cardsh,none);">
+                  <div style="position:relative; width:44px; height:44px; flex-shrink:0; border-radius:14px; display:grid; place-items:center; background:rgba(var(--fb-a,236,40,78),.14); color:rgb(var(--fb-a4,255,130,154));">
+                    <span style="font-family:'Material Symbols Rounded'; font-size:22px; font-variation-settings:'FILL' 1;">{{ e.icon }}</span>
+                    <span style="position:absolute; top:-5px; right:-5px; min-width:18px; height:18px; padding:0 4px; border-radius:99px; background:rgb(var(--fb-a,236,40,78)); color:var(--fb-on,#fff); font:700 10px Sora; display:grid; place-items:center;">{{ e.num }}</span>
+                  </div>
+                  <div style="flex:1; min-width:0;">
+                    <div style="font-weight:700; font-size:14px;">{{ e.name }}</div>
+                    <div style="display:flex; align-items:center; gap:4px; font-size:12px; color:var(--fb-tx3,#a8978c); margin-top:3px;"><span style="font-family:'Material Symbols Rounded'; font-size:14px;">location_on</span>{{ e.machine }}</div>
+                  </div>
+                  <div style="text-align:right; flex-shrink:0;">
+                    <div style="font-family:Sora; font-weight:600; font-size:15px;">{{ e.sets }} × {{ e.reps }}</div>
+                    <div style="font-size:12px; color:rgb(var(--fb-a4,255,130,154)); margin-top:2px;">{{ e.weightLabel }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isEditing }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap:10px;">
+              <sc-for list="{{ prog.exercises }}" as="e" hint-placeholder-count="5">
+                <div style="display:flex; flex-direction:column; gap:10px; padding:14px; border-radius:20px; background:linear-gradient(160deg, rgba(var(--fb-s1,58,22,32),.45), rgba(var(--fb-card,22,16,14),.75)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.14)); box-shadow:var(--fb-cardsh,none);">
+                  <div style="display:flex; gap:8px; align-items:center;">
+                    <div style="width:38px; height:38px; flex-shrink:0; border-radius:12px; display:grid; place-items:center; background:rgba(var(--fb-a,236,40,78),.14); color:rgb(var(--fb-a4,255,130,154));"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 1;">{{ e.icon }}</span></div>
+                    <input value="{{ e.name }}" onChange="{{ e.onName }}" placeholder="Nom de l'exercice" style="flex:1; min-width:0; height:38px; padding:0 10px; border-radius:10px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font:700 14px Manrope; outline:none;">
+                    <button onClick="{{ e.onDelete }}" aria-label="Supprimer" style="width:38px; height:38px; flex-shrink:0; border-radius:10px; cursor:pointer; display:grid; place-items:center; background:rgba(255,90,70,.1); border:1px solid rgba(255,90,70,.25); color:#ff8a73;"><span style="font-family:'Material Symbols Rounded'; font-size:19px;">delete</span></button>
+                  </div>
+                  <div style="display:grid; grid-template-columns:1fr 120px; gap:8px;">
+                    <input value="{{ e.machine }}" onChange="{{ e.onMachine }}" placeholder="Machine / emplacement" style="min-width:0; height:36px; padding:0 10px; border-radius:10px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font-size:13px; outline:none;">
+                    <select value="{{ e.group }}" onChange="{{ e.onGroup }}" style="height:36px; padding:0 8px; border-radius:10px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font-size:13px; outline:none;">
+                      <option value="pecs">Pecs</option><option value="dos">Dos</option><option value="epaules">Épaules</option><option value="bras">Bras</option><option value="jambes">Jambes</option><option value="abdos">Abdos</option><option value="cardio">Cardio</option>
+                    </select>
+                  </div>
+                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px;">
+                    <label style="display:flex; flex-direction:column; gap:4px; font-size:11px; color:var(--fb-tx3,#a8978c);">Séries<input type="number" value="{{ e.sets }}" onChange="{{ e.onSets }}" style="height:36px; padding:0 10px; border-radius:10px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font:600 14px Sora; outline:none; width:100%;"></label>
+                    <label style="display:flex; flex-direction:column; gap:4px; font-size:11px; color:var(--fb-tx3,#a8978c);">Reps<input type="number" value="{{ e.reps }}" onChange="{{ e.onReps }}" style="height:36px; padding:0 10px; border-radius:10px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font:600 14px Sora; outline:none; width:100%;"></label>
+                    <label style="display:flex; flex-direction:column; gap:4px; font-size:11px; color:var(--fb-tx3,#a8978c);">Poids (kg)<input type="number" value="{{ e.weight }}" onChange="{{ e.onWeight }}" style="height:36px; padding:0 10px; border-radius:10px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font:600 14px Sora; outline:none; width:100%;"></label>
+                  </div>
+                </div>
+              </sc-for>
+              <button onClick="{{ addExercise }}" style="min-height:120px; border-radius:20px; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; background:transparent; border:1.5px dashed rgba(var(--fb-a3,255,92,124),.4); color:rgb(var(--fb-a4,255,130,154)); font:600 14px Manrope;"><span style="font-family:'Material Symbols Rounded'; font-size:28px;">add_circle</span>Ajouter un exercice</button>
+            </div>
+          </sc-if>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isSession }}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{ noSession }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap:12px;">
+          <sc-for list="{{ progTabs }}" as="t" hint-placeholder-count="3">
+            <button onClick="{{ t.onStart }}" style="text-align:left; cursor:pointer; padding:18px; border-radius:22px; color:var(--fb-tx,#f5efe9); font-family:Manrope; display:flex; flex-direction:column; gap:12px; background:radial-gradient(260px 160px at 100% 0%, rgba(var(--fb-a,236,40,78),calc(.3 * var(--fb-gk,1))), transparent 70%), linear-gradient(160deg, rgba(var(--fb-s1,58,22,32),.55), rgba(var(--fb-card,22,16,14),.75)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.12)); box-shadow:var(--fb-cardsh,none);">
+              <div style="width:44px; height:44px; border-radius:14px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a2,220,30,96))); box-shadow:0 6px 18px rgba(var(--fb-a,236,40,78),.4); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:24px; font-variation-settings:'FILL' 1;">{{ t.icon }}</span></div>
+              <div><div style="font-family:Sora; font-weight:700; font-size:24px;">{{ t.name }}</div><div style="font-size:12px; color:var(--fb-tx3,#a8978c); margin-top:2px;">{{ t.subtitle }}</div></div>
+              <span style="align-self:flex-start; display:inline-flex; align-items:center; gap:5px; padding:8px 14px; border-radius:99px; background:var(--fb-inv,#fff); color:rgb(var(--fb-bg2,20,11,15)); font-weight:700; font-size:13px;"><span style="font-family:'Material Symbols Rounded'; font-size:16px; font-variation-settings:'FILL' 1;">play_arrow</span>Démarrer</span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ hasSession }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start;">
+          <div style="flex:1.6 1 380px; min-width:0; display:flex; flex-direction:column; gap:12px;">
+            <section style="border-radius:22px; padding:14px 16px; display:flex; flex-direction:column; gap:12px; background:linear-gradient(160deg, rgba(var(--fb-s1,58,22,32),.5), rgba(var(--fb-card,22,16,14),.8)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.12)); box-shadow:var(--fb-cardsh,none);">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:40px; height:40px; flex-shrink:0; border-radius:13px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a,236,40,78))); box-shadow:0 0 18px rgba(var(--fb-a,236,40,78),.45); color:var(--fb-on,#fff);"><span style="font-family:'Material Symbols Rounded'; font-size:22px; font-variation-settings:'FILL' 1;">{{ sess.icon }}</span></div>
+                <div style="flex:1; min-width:0;"><div style="font-size:12px; color:var(--fb-tx3,#a8978c);">Séance en cours</div><div style="font-family:Sora; font-weight:700; font-size:18px;">{{ sess.name }}</div></div>
+                <div style="text-align:right;">
+                  <div style="font:700 28px Sora; letter-spacing:-.02em; font-variant-numeric:tabular-nums; line-height:1;">{{ sess.elapsed }}</div>
+                  <div style="display:flex; align-items:center; justify-content:flex-end; gap:4px; font-size:11px; color:var(--fb-tx3,#a8978c); margin-top:4px;"><span style="font-family:'Material Symbols Rounded'; font-size:13px; font-variation-settings:'FILL' 0;">schedule</span>durée</div>
+                </div>
+              </div>
+              <div style="display:flex; gap:4px;">
+                <sc-for list="{{ sess.list }}" as="s" hint-placeholder-count="5">
+                  <div style="flex:1; height:5px; border-radius:99px; background:{{ s.seg }}; box-shadow:{{ s.segGlow }}; transition:background .4s, box-shadow .4s;"></div>
+                </sc-for>
+              </div>
+              <sc-if value="{{ hasRestInline }}" hint-placeholder-val="{{ false }}">
+                <div ref="{{ popRef }}" style="display:flex; align-items:center; gap:10px; padding:8px 8px 8px 12px; border-radius:16px; background:rgba(var(--fb-a,236,40,78),.12); border:1px solid rgba(var(--fb-a,236,40,78),.3);">
+                  <span style="font-family:'Material Symbols Rounded'; font-size:20px; color:rgb(var(--fb-a3,255,92,124));">timer</span>
+                  <div style="flex:1; display:flex; align-items:baseline; gap:8px;"><span style="font-size:12px; color:var(--fb-tx2,#d4c2b6);">Repos</span><span style="font:700 18px Sora; font-variant-numeric:tabular-nums;">{{ restLabel }}</span></div>
+                  <button onClick="{{ restPlus }}" style="height:34px; padding:0 12px; border-radius:99px; border:1px solid rgba(var(--fb-fg,255,255,255),.15); background:transparent; color:var(--fb-tx,#f5efe9); font:700 12px Manrope; cursor:pointer;">+15s</button>
+                  <button onClick="{{ restSkip }}" style="height:34px; padding:0 14px; border-radius:99px; border:none; background:rgb(var(--fb-a,236,40,78)); color:var(--fb-on,#fff); font:700 12px Manrope; cursor:pointer;">Passer</button>
+                </div>
+              </sc-if>
+            </section>
+
+            <section ref="{{ curRef }}" style="border-radius:26px; padding:20px; display:flex; flex-direction:column; gap:18px; background:radial-gradient(460px 240px at 50% 0%, rgba(var(--fb-a,236,40,78),calc(.32 * var(--fb-gk,1))), transparent 75%), linear-gradient(180deg, rgb(var(--fb-s2,36,12,20)), rgb(var(--fb-bg2,20,11,15))); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.18)); box-shadow:var(--fb-cardsh,none);">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                <span style="white-space:nowrap; font-size:12px; font-weight:700; padding:5px 11px; border-radius:99px; background:rgba(var(--fb-ink,0,0,0),.3); border:1px solid rgba(var(--fb-fg,255,255,255),.1);">Exercice {{ sess.c.num }} / {{ sess.total }}</span>
+                <div style="display:flex; gap:6px;">
+                  <button onClick="{{ sess.prev }}" aria-label="Précédent" style="width:36px; height:36px; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-ink,0,0,0),.3); border:1px solid rgba(var(--fb-fg,255,255,255),.1); color:var(--fb-tx,#f5efe9); opacity:{{ sess.prevOp }};"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0;">chevron_left</span></button>
+                  <button onClick="{{ sess.next }}" aria-label="Suivant" style="width:36px; height:36px; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-ink,0,0,0),.3); border:1px solid rgba(var(--fb-fg,255,255,255),.1); color:var(--fb-tx,#f5efe9); opacity:{{ sess.nextOp }};"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0;">chevron_right</span></button>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:14px;">
+                <div style="width:60px; height:60px; flex-shrink:0; border-radius:18px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a6,150,14,48))); box-shadow:0 10px 28px rgba(var(--fb-a,236,40,78),.4); color:var(--fb-on,#fff);"><span style="font-family:'Material Symbols Rounded'; font-size:30px; font-variation-settings:'FILL' 1;">{{ sess.c.icon }}</span></div>
+                <div style="min-width:0;">
+                  <div style="font-family:Sora; font-weight:700; font-size:clamp(24px,3vw,30px); letter-spacing:-.03em; line-height:1.1;">{{ sess.c.name }}</div>
+                  <div style="display:flex; align-items:center; gap:4px; font-size:13px; color:var(--fb-tx2,#d4c2b6); margin-top:5px;"><span style="font-family:'Material Symbols Rounded'; font-size:15px; font-variation-settings:'FILL' 0;">location_on</span>{{ sess.c.machine }}</div>
+                </div>
+              </div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <span style="white-space:nowrap; display:flex; align-items:center; gap:5px; font-size:12px; font-weight:600; padding:6px 11px; border-radius:99px; background:rgba(var(--fb-fg,255,255,255),.06);"><span style="font-family:'Material Symbols Rounded'; font-size:15px; font-variation-settings:'FILL' 0; color:rgb(var(--fb-a4,255,130,154));">repeat</span>{{ sess.c.target }}</span>
+                <span style="white-space:nowrap; display:flex; align-items:center; gap:5px; font-size:12px; font-weight:600; padding:6px 11px; border-radius:99px; background:rgba(var(--fb-fg,255,255,255),.06);"><span style="font-family:'Material Symbols Rounded'; font-size:15px; font-variation-settings:'FILL' 1; color:rgb(var(--fb-a4,255,130,154));">emoji_events</span>Record {{ sess.c.best }}</span>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+              <div style="display:flex; flex-direction:column; gap:8px; padding:12px; border-radius:20px; background:rgba(var(--fb-ink,0,0,0),.32); border:1px solid rgba(var(--fb-fg,255,255,255),.06);">
+                <div style="font-size:12px; color:var(--fb-tx3,#a8978c); text-align:center;">Charge max (kg)</div>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <button onClick="{{ sess.c.wMinus }}" style="width:44px; height:44px; flex-shrink:0; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.06); border:1px solid rgba(var(--fb-fg,255,255,255),.08); color:var(--fb-tx,#f5efe9);"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0;">remove</span></button>
+                  <input type="number" inputmode="decimal" value="{{ sess.c.w }}" onChange="{{ sess.c.onW }}" style="flex:1; min-width:0; width:100%; height:48px; text-align:center; border:none; background:transparent; color:var(--fb-tx,#f5efe9); font:700 30px Sora; letter-spacing:-.02em; outline:none;">
+                  <button onClick="{{ sess.c.wPlus }}" style="width:44px; height:44px; flex-shrink:0; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.06); border:1px solid rgba(var(--fb-fg,255,255,255),.08); color:var(--fb-tx,#f5efe9);"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0;">add</span></button>
+                </div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:8px; padding:12px; border-radius:20px; background:rgba(var(--fb-ink,0,0,0),.32); border:1px solid rgba(var(--fb-fg,255,255,255),.06);">
+                <div style="font-size:12px; color:var(--fb-tx3,#a8978c); text-align:center;">Reps</div>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <button onClick="{{ sess.c.rMinus }}" style="width:44px; height:44px; flex-shrink:0; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.06); border:1px solid rgba(var(--fb-fg,255,255,255),.08); color:var(--fb-tx,#f5efe9);"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0;">remove</span></button>
+                  <input type="number" inputmode="numeric" value="{{ sess.c.r }}" onChange="{{ sess.c.onR }}" style="flex:1; min-width:0; width:100%; height:48px; text-align:center; border:none; background:transparent; color:var(--fb-tx,#f5efe9); font:700 30px Sora; letter-spacing:-.02em; outline:none;">
+                  <button onClick="{{ sess.c.rPlus }}" style="width:44px; height:44px; flex-shrink:0; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.06); border:1px solid rgba(var(--fb-fg,255,255,255),.08); color:var(--fb-tx,#f5efe9);"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0;">add</span></button>
+                </div>
+              </div>
+              </div>
+              <button onClick="{{ sess.c.validate }}" style="height:54px; border-radius:99px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; border:{{ sess.c.btnBorder }}; background:{{ sess.c.btnBg }}; color:{{ sess.c.btnColor }}; font:700 15px Manrope; box-shadow:{{ sess.c.btnShadow }};"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0;">{{ sess.c.btnIcon }}</span>{{ sess.c.validateLabel }}</button>
+            </section>
+          </div>
+
+          <div style="flex:1 1 280px; min-width:0; display:flex; flex-direction:column; gap:12px;">
+            <section style="border-radius:22px; padding:8px; display:flex; flex-direction:column; gap:4px; background:linear-gradient(160deg, rgba(var(--fb-s1,58,22,32),.4), rgba(var(--fb-card,22,16,14),.8)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.10)); box-shadow:var(--fb-cardsh,none);">
+              <sc-for list="{{ sess.list }}" as="e" hint-placeholder-count="5">
+                <button onClick="{{ e.onClick }}" style="width:100%; display:flex; align-items:center; gap:12px; padding:10px; border-radius:16px; cursor:pointer; text-align:left; background:{{ e.bg }}; border:{{ e.border }}; color:var(--fb-tx,#f5efe9); font-family:Manrope;">
+                  <div style="width:34px; height:34px; flex-shrink:0; border-radius:50%; display:grid; place-items:center; background:{{ e.dotBg }}; color:{{ e.dotColor }}; box-shadow:{{ e.dotGlow }};"><span style="font-family:'Material Symbols Rounded'; font-size:18px; font-variation-settings:'FILL' 1;">{{ e.stIcon }}</span></div>
+                  <div style="flex:1; min-width:0;">
+                    <div style="font-weight:700; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:{{ e.nameColor }};">{{ e.name }}</div>
+                    <div style="font-size:12px; color:var(--fb-tx3,#a8978c); margin-top:1px;">{{ e.sub }}</div>
+                  </div>
+                </button>
+              </sc-for>
+            </section>
+            <div style="display:flex; gap:8px;">
+              <button onClick="{{ cancelSession }}" style="white-space:nowrap; padding:12px 18px; border-radius:99px; border:1px solid rgba(var(--fb-fg,255,255,255),.16); background:transparent; color:var(--fb-tx2,#d4c2b6); font:600 14px Manrope; cursor:pointer;">Abandonner</button>
+              <button onClick="{{ finishSession }}" style="flex:1; white-space:nowrap; display:flex; align-items:center; justify-content:center; gap:6px; padding:12px 20px; border-radius:99px; border:none; background:var(--fb-inv,#fff); color:#140d0a; font:700 14px Manrope; cursor:pointer;"><span style="font-family:'Material Symbols Rounded'; font-size:18px; font-variation-settings:'FILL' 0;">flag</span>Terminer</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+    </sc-if>
+
+    <sc-if value="{{ isPerf }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; flex-direction:column; gap:14px; max-width:900px;">
+        <section style="border-radius:24px; padding:20px; display:flex; flex-direction:column; gap:14px; background:linear-gradient(160deg, rgba(var(--fb-s1,58,22,32),.45), rgba(var(--fb-card,22,16,14),.78)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.10)); box-shadow:var(--fb-cardsh,none);">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="width:36px; height:36px; flex-shrink:0; border-radius:12px; display:grid; place-items:center; background:rgba(var(--fb-a,236,40,78),.14); color:rgb(var(--fb-a4,255,130,154));"><span style="font-family:'Material Symbols Rounded'; font-size:19px; font-variation-settings:'FILL' 1;">compare</span></div>
+              <div><div style="font-weight:700; font-size:14px;">Évolution physique</div></div>
+            </div>
+            <div style="display:flex; gap:4px; padding:4px; border-radius:99px; background:rgba(var(--fb-ink,0,0,0),.3);">
+              <sc-for list="{{ cmpModes }}" as="m" hint-placeholder-count="2">
+                <button onClick="{{ m.onClick }}" style="white-space:nowrap; padding:7px 13px; border-radius:99px; border:none; cursor:pointer; font:600 12px Manrope; background:{{ m.bg }}; color:{{ m.color }};">{{ m.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <sc-if value="{{ canCompare }}" hint-placeholder-val="{{ false }}">
+            <div ref="{{ cmpRef }}" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+              <sc-for list="{{ cmp }}" as="c" hint-placeholder-count="0">
+                <div style="position:relative; aspect-ratio:3/4; border-radius:18px; overflow:hidden; background:rgba(var(--fb-ink,0,0,0),.35); border:{{ c.border }};">
+                  <div role="img" aria-label="{{ c.title }}" style="position:absolute; inset:0; background-size:cover; background-position:center; background-image:{{ c.bgImg }};"></div>
+                  <div style="position:absolute; left:0; right:0; bottom:0; padding:28px 12px 10px; background:linear-gradient(transparent, rgba(0,0,0,.75));">
+                    <div style="font-family:Sora; font-weight:700; font-size:15px;">{{ c.title }}</div>
+                    <div style="font-size:12px; color:var(--fb-tx2,#e8d6ca); text-transform:capitalize;">{{ c.date }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:center; gap:6px; font-size:13px; color:var(--fb-tx2,#d4c2b6);"><span style="font-family:'Material Symbols Rounded'; font-size:16px; font-variation-settings:'FILL' 0; color:rgb(var(--fb-a4,255,130,154));">date_range</span>{{ cmpGap }}</div>
+          </sc-if>
+          <sc-if value="{{ noCompare }}" hint-placeholder-val="{{ true }}">
+            <div style="padding:28px 16px; border-radius:18px; display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center; border:1.5px dashed rgba(var(--fb-fg,255,255,255),.1);">
+              <span style="font-family:'Material Symbols Rounded'; font-size:36px; font-variation-settings:'FILL' 0; color:rgb(var(--fb-a4,255,130,154));">add_a_photo</span>
+              <div style="font-size:13px; color:var(--fb-tx2,#d4c2b6); max-width:340px; text-wrap:pretty;">{{ cmpEmpty }}</div>
+            </div>
+          </sc-if>
+          <div style="display:flex; gap:8px; overflow-x:auto; padding-bottom:2px;">
+            <button onClick="{{ pickPhoto }}" style="width:76px; flex-shrink:0; aspect-ratio:3/4; border-radius:14px; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; background:{{ addBg }}; border:1.5px dashed rgba(var(--fb-a3,255,92,124),.45); color:rgb(var(--fb-a4,255,130,154)); font:600 11px Manrope;"><span style="font-family:'Material Symbols Rounded'; font-size:22px; font-variation-settings:'FILL' 0;">{{ addIcon }}</span>{{ addLabel }}</button>
+            <sc-for list="{{ photoList }}" as="p" hint-placeholder-count="0">
+              <div style="position:relative; width:76px; flex-shrink:0; display:flex; flex-direction:column; gap:4px;">
+                <div role="img" aria-label="{{ p.label }}" style="width:100%; aspect-ratio:3/4; border-radius:14px; background-size:cover; background-position:center; background-image:{{ p.bgImg }}; border:{{ p.border }};"></div>
+                <button onClick="{{ p.onDelete }}" aria-label="Supprimer" style="position:absolute; top:4px; right:4px; width:24px; height:24px; border-radius:50%; cursor:pointer; display:grid; place-items:center; border:none; background:{{ p.delBg }}; color:var(--fb-on,#fff);"><span style="font-family:'Material Symbols Rounded'; font-size:14px; font-variation-settings:'FILL' 0;">{{ p.delIcon }}</span></button>
+                <span style="font-size:11px; color:var(--fb-tx3,#a8978c); text-align:center;">{{ p.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+
+        <section style="border-radius:24px; padding:20px; display:flex; flex-direction:column; gap:14px; background:linear-gradient(160deg, rgba(var(--fb-s1,58,22,32),.45), rgba(var(--fb-card,22,16,14),.78)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.10)); box-shadow:var(--fb-cardsh,none);">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="width:36px; height:36px; flex-shrink:0; border-radius:12px; display:grid; place-items:center; background:rgba(var(--fb-a,236,40,78),.14); color:rgb(var(--fb-a4,255,130,154));"><span style="font-family:'Material Symbols Rounded'; font-size:19px; font-variation-settings:'FILL' 1;">bar_chart</span></div>
+              <div><div style="font-weight:700; font-size:14px;">Séances par semaine</div><div style="font-size:12px; color:var(--fb-tx3,#a8978c);">12 dernières semaines</div></div>
+            </div>
+            <div style="font-size:12px; color:var(--fb-tx2,#d4c2b6);">Moyenne <span style="font:700 15px Sora; color:var(--fb-tx,#f5efe9);">{{ barAvg }}</span> / sem.</div>
+          </div>
+          <div style="position:relative; height:150px; display:flex; align-items:flex-end; gap:6px;">
+            <div style="position:absolute; left:0; right:0; bottom:{{ goalPct }}; border-top:1.5px dashed rgba(var(--fb-a,236,40,78),.45); pointer-events:none;">
+              <span style="position:absolute; right:0; bottom:3px; font-size:10px; font-weight:700; color:rgb(var(--fb-a4,255,130,154));">objectif {{ settings.goal }}</span>
+            </div>
+            <sc-for list="{{ bars }}" as="b" hint-placeholder-count="12">
+              <div title="{{ b.title }}" style="flex:1; min-width:0; height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center;">
+                <div data-bar="1" style="width:100%; max-width:30px; height:{{ b.h }}; min-height:4px; border-radius:8px 8px 4px 4px; background:{{ b.bg }}; box-shadow:{{ b.shadow }}; transform-origin:bottom;"></div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex; gap:6px; margin-top:-6px;">
+            <sc-for list="{{ bars }}" as="b" hint-placeholder-count="12">
+              <span style="flex:1; min-width:0; text-align:center; font-size:10px; color:{{ b.labelColor }}; white-space:nowrap;">{{ b.label }}</span>
+            </sc-for>
+          </div>
+        </section>
+
+        <section style="border-radius:24px; padding:20px; display:flex; flex-direction:column; gap:14px; background:linear-gradient(160deg, rgba(var(--fb-s1,58,22,32),.45), rgba(var(--fb-card,22,16,14),.78)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.10)); box-shadow:var(--fb-cardsh,none);">
+          <div style="display:flex; align-items:center; gap:10px;">
+              <div style="width:36px; height:36px; flex-shrink:0; border-radius:12px; display:grid; place-items:center; background:rgba(var(--fb-a,236,40,78),.14); color:rgb(var(--fb-a4,255,130,154));"><span style="font-family:'Material Symbols Rounded'; font-size:19px; font-variation-settings:'FILL' 1;">trending_up</span></div>
+              <div><div style="font-weight:700; font-size:14px;">Ce qui a changé</div><div style="font-size:12px; color:var(--fb-tx3,#a8978c);">30 derniers jours</div></div>
+            </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <sc-for list="{{ changeStats }}" as="s" hint-placeholder-count="2">
+              <div style="padding:14px; border-radius:18px; background:rgba(var(--fb-ink,0,0,0),.28); display:flex; flex-direction:column; gap:4px;">
+                <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:var(--fb-tx2,#d4c2b6);"><span style="font-family:'Material Symbols Rounded'; font-size:16px; font-variation-settings:'FILL' 1; color:rgb(var(--fb-a4,255,130,154));">{{ s.icon }}</span>{{ s.label }}</div>
+                <div style="font-family:Sora; font-weight:700; font-size:24px;">{{ s.value }}</div>
+                <div style="font-size:11px; color:var(--fb-tx3,#a8978c);">{{ s.sub }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex; flex-direction:column;">
+            <sc-for list="{{ changes }}" as="c" hint-placeholder-count="4">
+              <div style="display:flex; align-items:center; gap:12px; padding:11px 0; border-top:1px solid rgba(var(--fb-fg,255,255,255),.06);">
+                <div style="width:36px; height:36px; flex-shrink:0; border-radius:12px; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.05); color:rgb(var(--fb-a4,255,130,154));"><span style="font-family:'Material Symbols Rounded'; font-size:19px; font-variation-settings:'FILL' 1;">{{ c.icon }}</span></div>
+                <div style="flex:1; min-width:0;">
+                  <div style="font-weight:700; font-size:13px;">{{ c.name }}</div>
+                  <div style="font-size:12px; color:var(--fb-tx3,#a8978c); margin-top:1px;">{{ c.from }} → {{ c.to }}</div>
+                </div>
+                <div style="position:relative; width:clamp(64px,14vw,120px); height:34px; flex-shrink:0;">
+                  <svg viewBox="0 0 100 34" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; overflow:visible;">
+                    <path d="{{ c.area }}" style="fill:rgba(var(--fb-a,236,40,78),.16)"></path>
+                    <polyline points="{{ c.spark }}" fill="none" style="stroke:{{ c.stroke }}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></polyline>
+                  </svg>
+                  <div style="position:absolute; left:100%; top:{{ c.lastY }}; width:7px; height:7px; border-radius:50%; transform:translate(-50%,-50%); background:{{ c.stroke }}; box-shadow:0 0 8px {{ c.stroke }};"></div>
+                </div>
+                <span style="white-space:nowrap; display:flex; align-items:center; gap:3px; font-size:12px; font-weight:700; padding:4px 9px; border-radius:99px; background:{{ c.pillBg }}; color:{{ c.pillColor }};"><span style="font-family:'Material Symbols Rounded'; font-size:14px; font-variation-settings:'FILL' 0;">{{ c.arrow }}</span>{{ c.delta }}</span>
+              </div>
+            </sc-for>
+            <sc-if value="{{ noChanges }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:12px 0; font-size:13px; color:var(--fb-tx3,#a8978c); border-top:1px solid rgba(var(--fb-fg,255,255,255),.06);">Rien de nouveau ce mois-ci. Continue comme ça.</div>
+            </sc-if>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isSettings }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; flex-direction:column; gap:14px; max-width:760px;">
+        <section style="border-radius:24px; padding:20px; display:flex; flex-direction:column; gap:16px; background:linear-gradient(160deg, rgba(var(--fb-s1,58,22,32),.45), rgba(var(--fb-card,22,16,14),.78)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.10)); box-shadow:var(--fb-cardsh,none);">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:36px; height:36px; border-radius:12px; display:grid; place-items:center; background:rgba(var(--fb-a,236,40,78),.14); color:rgb(var(--fb-a4,255,130,154));"><span style="font-family:'Material Symbols Rounded'; font-size:19px; font-variation-settings:'FILL' 1;">contrast</span></div>
+            <div style="font-weight:700; font-size:14px;">Apparence</div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <sc-for list="{{ modes }}" as="m" hint-placeholder-count="2">
+              <button onClick="{{ m.onClick }}" style="cursor:pointer; padding:8px 8px 12px; border-radius:18px; display:flex; flex-direction:column; gap:10px; text-align:left; background:rgba(var(--fb-ink,0,0,0),.2); border:{{ m.border }}; color:var(--fb-tx,#f5efe9); font-family:Manrope;">
+                <div style="position:relative; height:70px; border-radius:12px; overflow:hidden; padding:10px; display:flex; flex-direction:column; justify-content:flex-end; gap:5px; background:{{ m.preview }};">
+                  <span style="position:absolute; top:8px; left:10px; font-family:'Material Symbols Rounded'; font-size:22px; font-variation-settings:'FILL' 1; color:{{ m.iconColor }};">{{ m.icon }}</span>
+                  <div style="height:6px; width:70%; border-radius:99px; background:{{ m.bar1 }};"></div>
+                  <div style="height:6px; width:45%; border-radius:99px; background:{{ m.bar2 }};"></div>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:0 4px;"><span style="font-weight:700; font-size:13px;">{{ m.label }}</span><span style="font-family:'Material Symbols Rounded'; font-size:18px; font-variation-settings:'FILL' 1; color:rgb(var(--fb-a,236,40,78)); opacity:{{ m.checkOp }};">check_circle</span></div>
+              </button>
+            </sc-for>
+          </div>
+        </section>
+        <section style="border-radius:24px; padding:20px; display:flex; flex-direction:column; gap:16px; background:linear-gradient(160deg, rgba(var(--fb-s1,58,22,32),.45), rgba(var(--fb-card,22,16,14),.78)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.10)); box-shadow:var(--fb-cardsh,none);">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:36px; height:36px; border-radius:12px; display:grid; place-items:center; background:rgba(var(--fb-a,236,40,78),.14); color:rgb(var(--fb-a4,255,130,154));"><span style="font-family:'Material Symbols Rounded'; font-size:19px; font-variation-settings:'FILL' 1;">palette</span></div>
+            <div style="font-weight:700; font-size:14px;">Thème de couleur</div>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 130px), 1fr)); gap:10px;">
+            <sc-for list="{{ themes }}" as="t" hint-placeholder-count="5">
+              <button onClick="{{ t.onClick }}" style="cursor:pointer; padding:8px 8px 12px; border-radius:18px; display:flex; flex-direction:column; gap:10px; text-align:left; background:rgba(var(--fb-ink,0,0,0),.28); border:{{ t.border }}; color:var(--fb-tx,#f5efe9); font-family:Manrope;">
+                <div style="position:relative; height:70px; border-radius:12px; overflow:hidden; background:{{ t.bgPreview }};">
+                  <span style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-family:'Material Symbols Rounded'; font-size:34px; font-variation-settings:'FILL' 1; color:{{ t.iconColor }}; text-shadow:{{ t.glow }};">{{ t.icon }}</span>
+                  <div style="position:absolute; top:6px; right:6px; width:22px; height:22px; border-radius:50%; display:{{ t.check }}; place-items:center; background:var(--fb-inv,#fff); color:rgb(var(--fb-bg,12,8,10));"><span style="font-family:'Material Symbols Rounded'; font-size:15px;">check</span></div>
+                </div>
+                <div style="font-weight:700; font-size:13px; padding:0 4px;">{{ t.name }}</div>
+              </button>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+  </main>
+
+  <sc-if value="{{ hasRestFloat }}" hint-placeholder-val="{{ false }}">
+    <div ref="{{ popRef }}" style="position:fixed; right:clamp(14px,3vw,32px); bottom:{{ restBottom }}; display:flex; align-items:center; gap:10px; padding:8px 8px 8px 16px; border-radius:99px; background:rgba(var(--fb-s4,40,16,24),.85); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border:1px solid rgba(var(--fb-a3,255,92,124),.3); box-shadow:var(--fb-popsh,0 14px 34px rgba(0,0,0,.5)); z-index:25;">
+      <span style="font-family:'Material Symbols Rounded'; font-size:20px; color:rgb(var(--fb-a3,255,92,124));">timer</span>
+      <div><div style="font-size:11px; color:var(--fb-tx3,#a8978c);">Repos</div><div style="font:700 18px Sora; font-variant-numeric:tabular-nums;">{{ restLabel }}</div></div>
+      <button onClick="{{ restPlus }}" style="height:36px; padding:0 12px; border-radius:99px; border:1px solid rgba(var(--fb-fg,255,255,255),.15); background:transparent; color:var(--fb-tx,#f5efe9); font:700 12px Manrope; cursor:pointer;">+15s</button>
+      <button onClick="{{ restSkip }}" style="height:36px; padding:0 14px; border-radius:99px; border:none; background:rgb(var(--fb-a,236,40,78)); color:var(--fb-on,#fff); font:700 12px Manrope; cursor:pointer;">Passer</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+    <nav style="position:fixed; left:50%; bottom:16px; transform:translateX(-50%); display:flex; gap:6px; padding:7px; border-radius:99px; background:rgba(var(--fb-s4,40,16,24),.75); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border:1px solid rgba(var(--fb-fg,255,255,255),.1); box-shadow:var(--fb-popsh,0 20px 40px rgba(0,0,0,.5)); z-index:20;">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+        <button onClick="{{ n.onClick }}" aria-label="{{ n.label }}" style="width:48px; height:48px; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:{{ n.mbg }}; color:{{ n.color }}; border:{{ n.mborder }}; box-shadow:{{ n.shadow }};">
+          <span style="font-family:'Material Symbols Rounded'; font-size:22px; font-variation-settings:'FILL' 1;">{{ n.icon }}</span>
+        </button>
+      </sc-for>
+    </nav>
+  </sc-if>
+
+  <sc-if value="{{ profileOpen }}" hint-placeholder-val="{{ false }}">
+    <div ref="{{ backdropRef }}" onClick="{{ closeProfile }}" style="position:fixed; inset:0; z-index:40; display:flex; align-items:{{ sheetAlign }}; justify-content:center; padding:{{ sheetPad }}; background:rgba(5,3,2,.6); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);">
+      <div ref="{{ panelRef }}" onClick="{{ stop }}" style="width:100%; max-width:440px; max-height:{{ sheetMaxH }}; overflow-y:auto; border-radius:{{ sheetRadius }}; padding:20px; display:flex; flex-direction:column; gap:12px; background:radial-gradient(380px 200px at 50% 0%, rgba(var(--fb-a,236,40,78),calc(.28 * var(--fb-gk,1))), transparent 75%), rgb(var(--fb-bg2,20,11,15)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.16)); box-shadow:var(--fb-popsh,0 30px 80px rgba(0,0,0,.6));">
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div style="width:56px; height:56px; border-radius:50%; flex-shrink:0; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a6,150,14,48))); box-shadow:0 0 24px rgba(var(--fb-a,236,40,78),.45); font:700 22px Sora; color:#fff;">{{ initial }}</div>
+          <div style="flex:1; min-width:0;">
+            <div style="font-family:Sora; font-weight:700; font-size:19px;">{{ settings.name }}</div>
+            <div style="font-size:13px; color:var(--fb-tx3,#a8978c); overflow:hidden; text-overflow:ellipsis;">{{ settings.email }}</div>
+          </div>
+          <button onClick="{{ closeProfile }}" aria-label="Fermer" style="width:38px; height:38px; flex-shrink:0; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.06); border:1px solid rgba(var(--fb-fg,255,255,255),.08); color:var(--fb-tx2,#d4c2b6);"><span style="font-family:'Material Symbols Rounded'; font-size:20px;">close</span></button>
+        </div>
+        <div style="border-radius:20px; padding:16px; display:flex; flex-direction:column; gap:12px; background:rgba(var(--fb-fg,255,255,255),.03); border:1px solid rgba(var(--fb-fg,255,255,255),.06);">
+          <label style="display:flex; flex-direction:column; gap:5px; font-size:12px; color:var(--fb-tx3,#a8978c);">Prénom<input value="{{ settings.name }}" onChange="{{ onName }}" style="height:40px; padding:0 12px; border-radius:12px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font-size:14px; outline:none; width:100%;"></label>
+          <label style="display:flex; flex-direction:column; gap:5px; font-size:12px; color:var(--fb-tx3,#a8978c);">Email<input type="email" value="{{ settings.email }}" onChange="{{ onEmail }}" style="height:40px; padding:0 12px; border-radius:12px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font-size:14px; outline:none; width:100%;"></label>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <label style="display:flex; flex-direction:column; gap:5px; font-size:12px; color:var(--fb-tx3,#a8978c);">Poids (kg)<input type="number" value="{{ settings.bodyWeight }}" onChange="{{ onBodyWeight }}" style="height:40px; padding:0 12px; border-radius:12px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font-size:14px; outline:none; width:100%; font-family:Sora; font-weight:600;"></label>
+            <label style="display:flex; flex-direction:column; gap:5px; font-size:12px; color:var(--fb-tx3,#a8978c);">Taille (cm)<input type="number" value="{{ settings.height }}" onChange="{{ onHeight }}" style="height:40px; padding:0 12px; border-radius:12px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font-size:14px; outline:none; width:100%; font-family:Sora; font-weight:600;"></label>
+          </div>
+        </div>
+        <div style="border-radius:20px; padding:16px; display:flex; flex-direction:column; gap:12px; background:rgba(var(--fb-fg,255,255,255),.03); border:1px solid rgba(var(--fb-fg,255,255,255),.06);">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+            <div style="font-weight:600;">Séances / semaine</div>
+            <div style="display:flex; align-items:center; gap:4px; padding:4px; border-radius:99px; background:rgba(var(--fb-ink,0,0,0),.35);">
+              <button onClick="{{ goalDown }}" style="width:30px; height:30px; border-radius:50%; border:none; cursor:pointer; background:rgba(var(--fb-fg,255,255,255),.06); color:var(--fb-tx,#f5efe9); display:grid; place-items:center;"><span style="font-family:'Material Symbols Rounded'; font-size:18px;">remove</span></button>
+              <span style="min-width:24px; text-align:center; font:700 15px Sora;">{{ settings.goal }}</span>
+              <button onClick="{{ goalUp }}" style="width:30px; height:30px; border-radius:50%; border:none; cursor:pointer; background:rgb(var(--fb-a,236,40,78)); color:var(--fb-on,#fff); display:grid; place-items:center;"><span style="font-family:'Material Symbols Rounded'; font-size:18px;">add</span></button>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+            <div style="font-weight:600;">Repos</div>
+            <div style="display:flex; gap:5px;">
+              <sc-for list="{{ restOptions }}" as="o" hint-placeholder-count="4">
+                <button onClick="{{ o.onClick }}" style="white-space:nowrap; padding:6px 11px; border-radius:99px; cursor:pointer; font:600 12px Manrope; background:{{ o.bg }}; color:{{ o.color }}; border:{{ o.border }};">{{ o.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <sc-for list="{{ toggles }}" as="t" hint-placeholder-count="2">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+              <div style="font-weight:600;">{{ t.label }}</div>
+              <button onClick="{{ t.onClick }}" aria-label="{{ t.label }}" style="width:44px; height:26px; flex-shrink:0; border-radius:99px; border:none; cursor:pointer; padding:3px; display:flex; justify-content:{{ t.justify }}; background:{{ t.track }}; transition:background .2s;"><span style="width:20px; height:20px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.2);"></span></button>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button onClick="{{ logout }}" style="flex:1 1 100%; white-space:nowrap; display:flex; align-items:center; justify-content:center; gap:6px; padding:11px; border-radius:14px; cursor:pointer; background:transparent; border:1px solid rgba(var(--fb-fg,255,255,255),.1); color:var(--fb-tx2,#d4c2b6); font:600 13px Manrope;"><span style="font-family:'Material Symbols Rounded'; font-size:18px; font-variation-settings:'FILL' 0;">logout</span>Se déconnecter</button>
+          <button onClick="{{ redoOb }}" style="flex:1 1 100%; white-space:nowrap; display:flex; align-items:center; justify-content:center; gap:6px; padding:11px; border-radius:14px; cursor:pointer; background:rgba(var(--fb-fg,255,255,255),.04); border:1px solid rgba(var(--fb-fg,255,255,255),.08); color:var(--fb-tx,#f5efe9); font:600 13px Manrope;"><span style="font-family:'Material Symbols Rounded'; font-size:18px; color:rgb(var(--fb-a4,255,130,154));">quiz</span>Refaire le questionnaire</button>
+          <button onClick="{{ exportData }}" style="flex:1; white-space:nowrap; display:flex; align-items:center; justify-content:center; gap:6px; padding:11px; border-radius:14px; cursor:pointer; background:rgba(var(--fb-fg,255,255,255),.04); border:1px solid rgba(var(--fb-fg,255,255,255),.08); color:var(--fb-tx,#f5efe9); font:600 13px Manrope;"><span style="font-family:'Material Symbols Rounded'; font-size:18px; color:rgb(var(--fb-a4,255,130,154));">download</span>Exporter</button>
+          <button onClick="{{ resetData }}" style="flex:1; white-space:nowrap; display:flex; align-items:center; justify-content:center; gap:6px; padding:11px; border-radius:14px; cursor:pointer; background:{{ resetBg }}; border:1px solid rgba(255,90,70,.3); color:#ff8a73; font:600 13px Manrope;"><span style="font-family:'Material Symbols Rounded'; font-size:18px;">restart_alt</span>{{ resetLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <input ref="{{ fileRef }}" type="file" accept="image/*" onChange="{{ onFile }}" style="display:none;">
+  <sc-if value="{{ photoPrompt }}" hint-placeholder-val="{{ false }}">
+    <div ref="{{ fadeRef }}" onClick="{{ photoLater }}" style="position:fixed; inset:0; z-index:45; display:flex; align-items:{{ sheetAlign }}; justify-content:center; padding:{{ sheetPad }}; background:rgba(5,3,2,.6); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);">
+      <div ref="{{ popRef }}" onClick="{{ stop }}" style="width:100%; max-width:380px; border-radius:{{ sheetRadius }}; padding:26px 22px 22px; display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center; background:radial-gradient(340px 200px at 50% 0%, rgba(var(--fb-a,236,40,78),calc(.3 * var(--fb-gk,1))), transparent 75%), rgb(var(--fb-bg2,20,11,15)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.16)); box-shadow:var(--fb-popsh,0 30px 80px rgba(0,0,0,.6));">
+        <div style="width:64px; height:64px; border-radius:50%; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a6,150,14,48))); box-shadow:0 0 32px rgba(var(--fb-a,236,40,78),.55); color:var(--fb-on,#fff);"><span style="font-family:'Material Symbols Rounded'; font-size:32px; font-variation-settings:'FILL' 1;">photo_camera</span></div>
+        <div style="font-family:Sora; font-weight:700; font-size:21px;">Photo de la semaine</div>
+        <div style="font-size:13px; color:var(--fb-tx2,#d4c2b6); text-wrap:pretty;">Première séance de la semaine terminée. Prends ta photo pour suivre ton évolution.</div>
+        <div style="display:flex; flex-direction:column; gap:8px; width:100%; margin-top:4px;">
+          <button onClick="{{ pickPhoto }}" style="height:50px; border-radius:99px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; background:rgb(var(--fb-a,236,40,78)); color:var(--fb-on,#fff); font:700 15px Manrope; box-shadow:0 10px 28px rgba(var(--fb-a,236,40,78),.45);"><span style="font-family:'Material Symbols Rounded'; font-size:19px; font-variation-settings:'FILL' 1;">photo_camera</span>Prendre la photo</button>
+          <button onClick="{{ photoLater }}" style="height:44px; border-radius:99px; border:none; cursor:pointer; background:transparent; color:var(--fb-tx3,#a8978c); font:600 14px Manrope;">Plus tard</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showAuth }}" hint-placeholder-val="{{ false }}">
+    <div ref="{{ obWrapRef }}" style="position:fixed; inset:0; z-index:70; overflow-y:auto; display:flex; background:rgb(var(--fb-bg,12,8,10));">
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:1 1 50%; position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; padding:40px; background:radial-gradient(700px 520px at 30% 20%, rgba(var(--fb-a,236,40,78),calc(.35 * var(--fb-gk,1))), transparent 70%), rgb(var(--fb-s2,36,12,20)); border-right:1px solid rgba(var(--fb-fg,255,255,255),.06);">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:32px; height:32px; border-radius:10px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(255,92,124),rgb(236,40,78)); box-shadow:0 0 18px rgba(236,40,78,.55); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 1;">fitness_center</span></div>
+            <div style="font-family:Sora; font-weight:700; font-size:19px; letter-spacing:-.02em;">FitnessBoii</div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:7px; max-width:440px;">
+            <sc-for list="{{ authDots }}" as="row" hint-placeholder-count="7">
+              <div style="display:flex; gap:7px;">
+                <sc-for list="{{ row }}" as="d" hint-placeholder-count="14">
+                  <div style="width:16px; height:16px; border-radius:50%; flex-shrink:0; background:{{ d.bg }}; border:{{ d.border }}; box-shadow:{{ d.shadow }};"></div>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px; max-width:440px;">
+            <h2 style="margin:0; font-family:Sora; font-weight:700; font-size:40px; letter-spacing:-.035em; line-height:1.05;">Chaque séance compte.</h2>
+            <p style="margin:0; font-size:15px; color:var(--fb-tx2,#d4c2b6);">Tes programmes, tes perfs et ta régularité au même endroit.</p>
+          </div>
+        </div>
+      </sc-if>
+      <div style="flex:1 1 50%; min-height:100%; display:flex; padding:clamp(24px,5vh,48px) 20px;">
+        <div ref="{{ authFormRef }}" style="margin:auto; width:100%; max-width:400px; display:flex; flex-direction:column; gap:22px;">
+          <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+            <div style="width:56px; height:56px; border-radius:18px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(255,92,124),rgb(236,40,78)); box-shadow:0 0 36px rgba(236,40,78,.55); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:30px; font-variation-settings:'FILL' 1;">fitness_center</span></div>
+          </sc-if>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <h1 style="margin:0; font-family:Sora; font-weight:700; font-size:30px; letter-spacing:-.03em;">{{ authTitle }}</h1>
+            <p style="margin:0; font-size:14px; color:var(--fb-tx3,#a8978c);">{{ authSub }}</p>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <button onClick="{{ authGoogle }}" style="height:52px; border-radius:99px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; background:#ffffff; color:#1f1f1f; border:1px solid rgba(0,0,0,.08); font:700 14px Manrope;"><svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"></path><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"></path><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"></path><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"></path></svg>Continuer avec Google</button>
+            <button onClick="{{ authApple }}" style="height:52px; border-radius:99px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; background:#000000; color:#ffffff; border:1px solid rgba(var(--fb-fg,255,255,255),.14); font:700 14px Manrope;"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.76 2.27-1.6 2.78-.41 6.9 1.15 9.15.76 1.1 1.67 2.34 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.38 0 1.77.74 2.98.72 1.23-.02 2.01-1.12 2.76-2.23.87-1.28 1.23-2.52 1.25-2.58-.03-.01-2.4-.92-2.42-3.67zM14.1 5.84c.63-.77 1.06-1.83.94-2.89-.91.04-2.01.61-2.66 1.37-.58.67-1.09 1.75-.96 2.79 1.02.08 2.05-.52 2.68-1.27z"></path></svg>Continuer avec Apple</button>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; font-size:12px; color:var(--fb-tx3,#a8978c);"><div style="flex:1; height:1px; background:rgba(var(--fb-fg,255,255,255),.1);"></div>ou avec ton email<div style="flex:1; height:1px; background:rgba(var(--fb-fg,255,255,255),.1);"></div></div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="display:flex; align-items:center; gap:10px; height:54px; padding:0 14px; border-radius:16px; background:rgba(var(--fb-ink,0,0,0),.3); border:1px solid {{ authBorder }};">
+                <span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0; color:var(--fb-tx3,#a8978c);">mail</span>
+                <input type="email" value="{{ auth.email }}" onChange="{{ authEmail }}" onKeyDown="{{ authKey }}" placeholder="Email" style="flex:1; min-width:0; height:100%; border:none; background:transparent; color:var(--fb-tx,#f5efe9); font:500 15px Manrope; outline:none;">
+              </div>
+            <div style="display:flex; align-items:center; gap:10px; height:54px; padding:0 14px; border-radius:16px; background:rgba(var(--fb-ink,0,0,0),.3); border:1px solid {{ authBorder }};">
+                <span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0; color:var(--fb-tx3,#a8978c);">lock</span>
+                <input type="{{ pwType }}" value="{{ auth.pw }}" onChange="{{ authPw }}" onKeyDown="{{ authKey }}" placeholder="Mot de passe" style="flex:1; min-width:0; height:100%; border:none; background:transparent; color:var(--fb-tx,#f5efe9); font:500 15px Manrope; outline:none;">
+                <button onClick="{{ togglePw }}" aria-label="Afficher le mot de passe" style="width:36px; height:36px; border-radius:50%; border:none; cursor:pointer; display:grid; place-items:center; background:transparent; color:var(--fb-tx3,#a8978c);"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0;">{{ pwIcon }}</span></button>
+              </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; min-height:18px;">
+              <span style="font-size:12px; font-weight:600; color:#ff6b6b;">{{ auth.err }}</span>
+              <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}"><button onClick="{{ forgotPw }}" style="border:none; background:none; padding:0; cursor:pointer; color:rgb(var(--fb-a4,255,130,154)); font:600 12px Manrope; white-space:nowrap;">Mot de passe oublié ?</button></sc-if>
+            </div>
+          </div>
+          <button onClick="{{ authSubmit }}" style="height:56px; border-radius:99px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; background:rgb(var(--fb-a,236,40,78)); color:var(--fb-on,#fff); font:700 16px Manrope; box-shadow:0 12px 32px rgba(var(--fb-a,236,40,78),.45);">
+            <sc-if value="{{ authLoading }}" hint-placeholder-val="{{ false }}"><span ref="{{ spinRef }}" style="width:18px; height:18px; border-radius:50%; border:2.5px solid currentColor; border-right-color:transparent; display:block;"></span></sc-if>
+            {{ authCta }}
+          </button>
+          <div style="display:flex; justify-content:center; gap:6px; font-size:14px; color:var(--fb-tx3,#a8978c);">{{ authSwitchText }}<button onClick="{{ authSwitch }}" style="border:none; background:none; padding:0; cursor:pointer; color:rgb(var(--fb-a4,255,130,154)); font:700 14px Manrope;">{{ authSwitchCta }}</button></div>
+          <sc-if value="{{ isSignup }}" hint-placeholder-val="{{ true }}">
+            <p style="margin:0; font-size:12px; color:var(--fb-tx3,#a8978c); text-align:center; text-wrap:pretty;">En créant un compte, tu acceptes les conditions d’utilisation et la politique de confidentialité.</p>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showOb }}" hint-placeholder-val="{{ false }}">
+    <div ref="{{ obWrapRef }}" style="position:fixed; inset:0; z-index:60; overflow-y:auto; background:radial-gradient(800px 500px at 50% -10%, rgba(var(--fb-a,236,40,78),calc(.22 * var(--fb-gk,1))), transparent 70%), rgb(var(--fb-bg,12,8,10));">
+      <div style="min-height:100%; max-width:520px; margin:0 auto; padding:clamp(18px,4vh,40px) 20px 24px; display:flex; flex-direction:column; gap:24px;">
+        <div style="display:flex; align-items:center; gap:12px; min-height:40px;">
+          <button onClick="{{ obBack }}" aria-label="Retour" style="width:40px; height:40px; flex-shrink:0; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.05); border:1px solid rgba(var(--fb-fg,255,255,255),.08); color:var(--fb-tx,#f5efe9); visibility:{{ obBackVis }};"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0;">arrow_back</span></button>
+          <div style="flex:1; display:flex; gap:5px; visibility:{{ obBarVis }};">
+            <sc-for list="{{ obBar }}" as="s" hint-placeholder-count="5">
+              <div style="flex:1; height:5px; border-radius:99px; background:{{ s.bg }}; box-shadow:{{ s.glow }}; transition:background .4s, box-shadow .4s;"></div>
+            </sc-for>
+          </div>
+          <span style="width:40px; text-align:right; font-size:12px; color:var(--fb-tx3,#a8978c); visibility:{{ obBarVis }};">{{ obCount }}</span>
+        </div>
+
+        <div ref="{{ obRef }}" style="flex:1; display:flex; flex-direction:column; gap:22px;">
+          <sc-if value="{{ ob0 }}" hint-placeholder-val="{{ true }}">
+            <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:22px; padding-top:6vh;">
+              <div style="width:76px; height:76px; border-radius:24px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(255,92,124),rgb(236,40,78)); box-shadow:0 0 50px rgba(236,40,78,.55); color:var(--fb-on,#fff);"><span style="font-family:'Material Symbols Rounded'; font-size:42px; font-variation-settings:'FILL' 1;">fitness_center</span></div>
+              <div style="display:flex; flex-direction:column; gap:8px;"><h2 style="margin:0; font-family:Sora; font-weight:700; font-size:clamp(26px,5vw,32px); letter-spacing:-.03em; line-height:1.15; text-wrap:balance;">Bienvenue sur FitnessBoii</h2><p style="margin:0; font-size:14px; color:var(--fb-tx3,#a8978c); text-wrap:pretty;">Quelques questions pour créer ton profil et caler tes programmes. Ça prend une minute.</p></div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ ob1 }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; flex-direction:column; gap:8px;"><h2 style="margin:0; font-family:Sora; font-weight:700; font-size:clamp(26px,5vw,32px); letter-spacing:-.03em; line-height:1.15; text-wrap:balance;">Comment tu t’appelles ?</h2></div>
+            <input value="{{ obd.name }}" onChange="{{ obName }}" onKeyDown="{{ obKey }}" autoFocus placeholder="Ton prénom" style="height:62px; padding:0 20px; border-radius:20px; border:1.5px solid rgba(var(--fb-a,236,40,78),.35); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font:600 22px Sora; outline:none;">
+          </sc-if>
+          <sc-if value="{{ ob2 }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; flex-direction:column; gap:8px;"><h2 style="margin:0; font-family:Sora; font-weight:700; font-size:clamp(26px,5vw,32px); letter-spacing:-.03em; line-height:1.15; text-wrap:balance;">Ton objectif principal ?</h2><p style="margin:0; font-size:14px; color:var(--fb-tx3,#a8978c); text-wrap:pretty;">On adapte les conseils et les comparatifs en fonction.</p></div>
+            <div style="display:grid; grid-template-columns:1fr; gap:10px;">
+            <sc-for list="{{ obGoals }}" as="o" hint-placeholder-count="3">
+              <button onClick="{{ o.onClick }}" style="cursor:pointer; padding:16px; border-radius:20px; display:flex; align-items:center; gap:14px; text-align:left; background:{{ o.bg }}; border:{{ o.border }}; color:var(--fb-tx,#f5efe9); font-family:Manrope; box-shadow:{{ o.shadow }};">
+                <div style="width:44px; height:44px; flex-shrink:0; border-radius:14px; display:grid; place-items:center; background:{{ o.iconBg }}; color:{{ o.iconColor }};"><span style="font-family:'Material Symbols Rounded'; font-size:24px; font-variation-settings:'FILL' 1;">{{ o.icon }}</span></div>
+                <div style="flex:1; min-width:0;"><div style="font-weight:700; font-size:15px;">{{ o.label }}</div><div style="font-size:12px; color:var(--fb-tx3,#a8978c); margin-top:2px;">{{ o.desc }}</div></div>
+                <span style="font-family:'Material Symbols Rounded'; font-size:22px; font-variation-settings:'FILL' 1; color:rgb(var(--fb-a,236,40,78)); opacity:{{ o.checkOp }};">check_circle</span>
+              </button>
+            </sc-for>
+          </div>
+          </sc-if>
+          <sc-if value="{{ ob3 }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; flex-direction:column; gap:8px;"><h2 style="margin:0; font-family:Sora; font-weight:700; font-size:clamp(26px,5vw,32px); letter-spacing:-.03em; line-height:1.15; text-wrap:balance;">Ton niveau à la salle ?</h2></div>
+            <div style="display:grid; grid-template-columns:1fr; gap:10px;">
+            <sc-for list="{{ obLevels }}" as="o" hint-placeholder-count="3">
+              <button onClick="{{ o.onClick }}" style="cursor:pointer; padding:16px; border-radius:20px; display:flex; align-items:center; gap:14px; text-align:left; background:{{ o.bg }}; border:{{ o.border }}; color:var(--fb-tx,#f5efe9); font-family:Manrope; box-shadow:{{ o.shadow }};">
+                <div style="width:44px; height:44px; flex-shrink:0; border-radius:14px; display:grid; place-items:center; background:{{ o.iconBg }}; color:{{ o.iconColor }};"><span style="font-family:'Material Symbols Rounded'; font-size:24px; font-variation-settings:'FILL' 1;">{{ o.icon }}</span></div>
+                <div style="flex:1; min-width:0;"><div style="font-weight:700; font-size:15px;">{{ o.label }}</div><div style="font-size:12px; color:var(--fb-tx3,#a8978c); margin-top:2px;">{{ o.desc }}</div></div>
+                <span style="font-family:'Material Symbols Rounded'; font-size:22px; font-variation-settings:'FILL' 1; color:rgb(var(--fb-a,236,40,78)); opacity:{{ o.checkOp }};">check_circle</span>
+              </button>
+            </sc-for>
+          </div>
+          </sc-if>
+          <sc-if value="{{ ob4 }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; flex-direction:column; gap:8px;"><h2 style="margin:0; font-family:Sora; font-weight:700; font-size:clamp(26px,5vw,32px); letter-spacing:-.03em; line-height:1.15; text-wrap:balance;">Tes mensurations</h2><p style="margin:0; font-size:14px; color:var(--fb-tx3,#a8978c); text-wrap:pretty;">Pour suivre ton évolution. Tu pourras les changer plus tard.</p></div>
+            <div style="display:flex; flex-direction:column; gap:10px; padding:16px; border-radius:22px; background:rgba(var(--fb-fg,255,255,255),.04); border:1px solid rgba(var(--fb-fg,255,255,255),.07);">
+              <div style="font-size:13px; color:var(--fb-tx3,#a8978c);">Poids</div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <button onClick="{{ obBwM }}" style="width:48px; height:48px; flex-shrink:0; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.06); border:1px solid rgba(var(--fb-fg,255,255,255),.08); color:var(--fb-tx,#f5efe9);"><span style="font-family:'Material Symbols Rounded'; font-size:22px; font-variation-settings:'FILL' 0;">remove</span></button>
+                <div style="flex:1; display:flex; align-items:baseline; justify-content:center; gap:6px;"><input type="number" inputmode="numeric" value="{{ obd.bodyWeight }}" onChange="{{ obBw }}" style="width:110px; text-align:center; border:none; background:transparent; color:var(--fb-tx,#f5efe9); font:700 38px Sora; letter-spacing:-.03em; outline:none;"><span style="font-size:14px; color:var(--fb-tx3,#a8978c);">kg</span></div>
+                <button onClick="{{ obBwP }}" style="width:48px; height:48px; flex-shrink:0; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.06); border:1px solid rgba(var(--fb-fg,255,255,255),.08); color:var(--fb-tx,#f5efe9);"><span style="font-family:'Material Symbols Rounded'; font-size:22px; font-variation-settings:'FILL' 0;">add</span></button>
+              </div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:10px; padding:16px; border-radius:22px; background:rgba(var(--fb-fg,255,255,255),.04); border:1px solid rgba(var(--fb-fg,255,255,255),.07);">
+              <div style="font-size:13px; color:var(--fb-tx3,#a8978c);">Taille</div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <button onClick="{{ obHtM }}" style="width:48px; height:48px; flex-shrink:0; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.06); border:1px solid rgba(var(--fb-fg,255,255,255),.08); color:var(--fb-tx,#f5efe9);"><span style="font-family:'Material Symbols Rounded'; font-size:22px; font-variation-settings:'FILL' 0;">remove</span></button>
+                <div style="flex:1; display:flex; align-items:baseline; justify-content:center; gap:6px;"><input type="number" inputmode="numeric" value="{{ obd.height }}" onChange="{{ obHt }}" style="width:110px; text-align:center; border:none; background:transparent; color:var(--fb-tx,#f5efe9); font:700 38px Sora; letter-spacing:-.03em; outline:none;"><span style="font-size:14px; color:var(--fb-tx3,#a8978c);">cm</span></div>
+                <button onClick="{{ obHtP }}" style="width:48px; height:48px; flex-shrink:0; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.06); border:1px solid rgba(var(--fb-fg,255,255,255),.08); color:var(--fb-tx,#f5efe9);"><span style="font-family:'Material Symbols Rounded'; font-size:22px; font-variation-settings:'FILL' 0;">add</span></button>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ ob5 }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; flex-direction:column; gap:8px;"><h2 style="margin:0; font-family:Sora; font-weight:700; font-size:clamp(26px,5vw,32px); letter-spacing:-.03em; line-height:1.15; text-wrap:balance;">Quels jours tu t’entraînes ?</h2><p style="margin:0; font-size:14px; color:var(--fb-tx3,#a8978c); text-wrap:pretty;">Tes programmes seront répartis sur ces jours.</p></div>
+            <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:6px;">
+              <sc-for list="{{ obDays }}" as="d" hint-placeholder-count="7">
+                <button onClick="{{ d.onClick }}" style="aspect-ratio:1; border-radius:50%; cursor:pointer; display:grid; place-items:center; font:700 15px Sora; background:{{ d.bg }}; border:{{ d.border }}; color:{{ d.color }}; box-shadow:{{ d.shadow }};">{{ d.label }}</button>
+              </sc-for>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; padding:14px 16px; border-radius:18px; background:rgba(var(--fb-fg,255,255,255),.04); font-size:14px; color:var(--fb-tx2,#d4c2b6);"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0; color:rgb(var(--fb-a4,255,130,154));">event_repeat</span>{{ obDaysLabel }}</div>
+          </sc-if>
+          <sc-if value="{{ ob6 }}" hint-placeholder-val="{{ false }}">
+            <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:20px; padding-top:4vh;">
+              <div style="width:76px; height:76px; border-radius:50%; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a6,150,14,48))); box-shadow:0 0 50px rgba(var(--fb-a,236,40,78),.55); color:var(--fb-on,#fff);"><span style="font-family:'Material Symbols Rounded'; font-size:42px; font-variation-settings:'FILL' 0;">check</span></div>
+              <div style="display:flex; flex-direction:column; gap:8px;"><h2 style="margin:0; font-family:Sora; font-weight:700; font-size:clamp(26px,5vw,32px); letter-spacing:-.03em; line-height:1.15; text-wrap:balance;">C’est parti, {{ obd.name }} !</h2><p style="margin:0; font-size:14px; color:var(--fb-tx3,#a8978c); text-wrap:pretty;">Ton profil est prêt et tes programmes sont calés sur tes jours.</p></div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <sc-for list="{{ obSummary }}" as="s" hint-placeholder-count="3">
+                  <span style="white-space:nowrap; display:flex; align-items:center; gap:6px; font-size:13px; font-weight:600; padding:8px 13px; border-radius:99px; background:rgba(var(--fb-fg,255,255,255),.06); border:1px solid rgba(var(--fb-fg,255,255,255),.08);"><span style="font-family:'Material Symbols Rounded'; font-size:17px; font-variation-settings:'FILL' 1; color:rgb(var(--fb-a4,255,130,154));">{{ s.icon }}</span>{{ s.label }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+
+        <button onClick="{{ obNext }}" style="height:56px; border-radius:99px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; background:rgb(var(--fb-a,236,40,78)); color:var(--fb-on,#fff); font:700 16px Manrope; box-shadow:0 12px 32px rgba(var(--fb-a,236,40,78),.45); opacity:{{ obCtaOp }};">{{ obCta }}<span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0;">arrow_forward</span></button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+    <div ref="{{ toastRef }}" style="position:fixed; top:20px; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:8px; padding:12px 20px; border-radius:99px; background:rgb(var(--fb-a,236,40,78)); color:var(--fb-on,#fff); font-weight:700; font-size:13px; box-shadow:0 12px 36px rgba(var(--fb-a,236,40,78),.5); z-index:30; white-space:nowrap;"><span style="font-family:'Material Symbols Rounded'; font-size:18px; font-variation-settings:'FILL' 1;">check_circle</span>{{ toast }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const GROUPS = { pecs:'fitness_center', dos:'rowing', epaules:'accessibility_new', bras:'sports_martial_arts', jambes:'directions_run', abdos:'self_improvement', cardio:'monitor_heart' };
+const PROG_ICONS = ['fitness_center','rowing','directions_run','sports_gymnastics','local_fire_department','bolt','self_improvement','sprint'];
+const DEFAULT_PROGRAMS = [
+  { id:'push', name:'Push', icon:'fitness_center', days:[0,3], subtitle:'Pecs · Épaules · Triceps', exercises:[
+    { id:'dc', name:'Développé couché', machine:'Banc plat — barre', sets:4, reps:8, weight:80, group:'pecs' },
+    { id:'di', name:'Développé incliné', machine:'Smith machine', sets:3, reps:10, weight:60, group:'pecs' },
+    { id:'ec', name:'Écarté poulie', machine:'Poulie vis-à-vis', sets:3, reps:12, weight:15, group:'pecs' },
+    { id:'dm', name:'Développé militaire', machine:'Machine épaules', sets:3, reps:10, weight:40, group:'epaules' },
+    { id:'tri', name:'Extension triceps', machine:'Poulie haute — corde', sets:3, reps:12, weight:25, group:'bras' } ] },
+  { id:'pull', name:'Pull', icon:'rowing', days:[1,4], subtitle:'Dos · Biceps', exercises:[
+    { id:'tv', name:'Tirage vertical', machine:'Lat pulldown', sets:4, reps:10, weight:65, group:'dos' },
+    { id:'ro', name:'Rowing assis', machine:'Machine rowing', sets:4, reps:10, weight:60, group:'dos' },
+    { id:'tr', name:'Tractions', machine:'Barre fixe', sets:3, reps:8, weight:0, group:'dos' },
+    { id:'fp', name:'Face pull', machine:'Poulie haute — corde', sets:3, reps:15, weight:20, group:'epaules' },
+    { id:'cu', name:'Curl pupitre', machine:'Banc Larry Scott', sets:3, reps:10, weight:25, group:'bras' } ] },
+  { id:'legs', name:'Legs', icon:'directions_run', days:[2,5], subtitle:'Quadris · Ischios · Mollets', exercises:[
+    { id:'sq', name:'Squat', machine:'Rack à squat', sets:4, reps:6, weight:100, group:'jambes' },
+    { id:'pr', name:'Presse à cuisses', machine:'Presse 45°', sets:4, reps:10, weight:180, group:'jambes' },
+    { id:'lc', name:'Leg curl', machine:'Machine ischios allongé', sets:3, reps:12, weight:45, group:'jambes' },
+    { id:'le', name:'Leg extension', machine:'Leg extension', sets:3, reps:12, weight:55, group:'jambes' },
+    { id:'mo', name:'Mollets debout', machine:'Machine mollets', sets:4, reps:15, weight:70, group:'jambes' } ] }
+];
+const DEFAULT_SETTINGS = { theme:'rubis', themeV2:true, name:'Boii', email:'boii@mail.com', bodyWeight:78, height:180, goal:4, rest:90, autoTimer:true, remind:true, recap:false };
+const THEMES = [
+  { id:'rubis', icon:'diamond', name:'Rubis', v:{ a:'236,40,78', a2:'220,30,96', a3:'255,92,124', a4:'255,130,154', a5:'255,182,198', a6:'150,14,48', s1:'58,22,32', s2:'36,12,20', s3:'110,15,40', s4:'40,16,24', bg:'12,8,10', bg2:'20,11,15' } },
+  { id:'braise', icon:'local_fire_department', name:'Braise', v:{ a:'255,74,36', a2:'255,59,47', a3:'255,122,61', a4:'255,138,99', a5:'255,176,138', a6:'184,41,14', s1:'60,32,20', s2:'36,18,11', s3:'120,30,10', s4:'40,24,18', bg:'12,9,8', bg2:'20,13,10' } },
+  { id:'ocean', icon:'waves', name:'Océan', v:{ a:'42,140,255', a2:'32,112,240', a3:'92,170,255', a4:'124,188,255', a5:'172,212,255', a6:'16,70,170', s1:'22,36,62', s2:'12,20,38', s3:'15,50,120', s4:'16,24,40', bg:'8,10,14', bg2:'12,15,22' } },
+  { id:'menthe', icon:'eco', name:'Menthe', v:{ a:'30,200,130', a2:'20,182,112', a3:'84,222,162', a4:'112,226,172', a5:'172,240,206', a6:'10,120,76', s1:'20,50,40', s2:'10,30,22', s3:'10,90,60', s4:'14,36,28', bg:'8,12,10', bg2:'12,19,16' } },
+  { id:'violet', icon:'nights_stay', name:'Violet', v:{ a:'150,92,255', a2:'128,72,240', a3:'180,132,255', a4:'192,152,255', a5:'216,192,255', a6:'80,36,170', s1:'42,28,66', s2:'24,16,40', s3:'70,30,140', s4:'28,20,44', bg:'10,9,14', bg2:'16,14,22' } },
+  { id:'solaire', icon:'wb_sunny', name:'Solaire', v:{ a:'255,176,32', a2:'255,150,20', a3:'255,196,80', a4:'255,206,110', a5:'255,226,170', a6:'170,100,8', s1:'60,44,16', s2:'36,26,10', s3:'120,80,10', s4:'40,30,14', bg:'12,10,7', bg2:'20,16,10' } }
+];
+const T_NOIR = { id:'noir', icon:'dark_mode', name:'Noir', v:{ a:'240,240,240', a2:'225,225,225', a3:'255,255,255', a4:'235,235,235', a5:'255,255,255', a6:'120,120,120', s1:'36,36,36', s2:'22,22,22', s3:'60,60,60', s4:'28,28,28', bg:'7,7,7', bg2:'14,14,14' },
+    n:{ tx:'#f2f2f2', tx2:'#c9c9c9', tx3:'#9c9c9c', tx4:'#787878', card:'16,16,16', on:'#0b0b0b' } };
+const T_BLANC = { id:'blanc', icon:'light_mode', name:'Blanc', v:{ a:'22,22,22', a2:'40,40,40', a3:'30,30,30', a4:'45,45,45', a5:'90,90,90', a6:'0,0,0', s1:'232,232,230', s2:'238,238,236', s3:'210,210,208', s4:'255,255,255', bg:'244,243,241', bg2:'255,255,255' },
+    n:{ tx:'#141414', tx2:'#3a3a3a', tx3:'#686868', tx4:'#8c8c8c', fg:'0,0,0', ink:'255,255,255', card:'255,255,255', inv:'#141414', on:'#ffffff' } };
+const LIGHT = { tx:'#18130f', tx2:'#4b423c', tx3:'#766a62', tx4:'#9b8f87', fg:'28,20,14', ink:'226,219,213', card:'255,255,255', inv:'#18130f',
+  s1:'255,255,255', s2:'255,255,255', s3:'255,255,255', s4:'255,255,255', bg:'245,243,240', bg2:'255,255,255',
+  line:'rgba(28,20,14,.08)', cardsh:'0 1px 2px rgba(28,20,14,.04), 0 12px 32px -12px rgba(28,20,14,.12)', popsh:'0 18px 44px -10px rgba(28,20,14,.22)', gk:'.42' };
+const OPT_KEYS = ['line','cardsh','popsh','gk'];
+const prev = (v, mode) => mode === 'light' ? `radial-gradient(120px 70px at 50% 0%, rgba(${v.a},.45), transparent 80%), linear-gradient(180deg, #f4f1ee, #ffffff)` : `radial-gradient(120px 70px at 50% 0%, rgba(${v.a},.55), transparent 80%), linear-gradient(180deg, rgb(${v.s2}), rgb(${v.bg2}))`;
+const NEUTRAL = { tx:'#f5efe9', tx2:'#d4c2b6', tx3:'#a8978c', tx4:'#8e7d72', fg:'255,255,255', ink:'0,0,0', card:'22,16,14', inv:'#fff', on:'#fff' };
+function applyTheme(id, mode){ const light = mode === 'light'; const r = document.documentElement.style; let vars;
+  if (id === 'neutral') vars = light ? { ...NEUTRAL, ...LIGHT, ...T_BLANC.v, ...T_BLANC.n, s1:'255,255,255', s2:'255,255,255', s4:'255,255,255', bg:'245,243,240', bg2:'255,255,255', card:'255,255,255', ink:'226,219,213', fg:'28,20,14' } : { ...NEUTRAL, ...T_NOIR.v, ...T_NOIR.n };
+  else { const t = THEMES.find(x => x.id === id) || THEMES[0]; vars = { ...NEUTRAL, ...t.v, ...(light ? { ...LIGHT, a4:t.v.a, a5:t.v.a } : {}) }; }
+  OPT_KEYS.forEach(k => { if (!(k in vars)) r.removeProperty('--fb-'+k); });
+  Object.entries(vars).forEach(([k,v]) => r.setProperty('--fb-'+k, v)); applyTheme.cur = id + '|' + (light ? 'light' : 'dark'); r.colorScheme = light ? 'light' : 'dark'; }
+const OB_GOALS = [['masse','Prise de masse','Gagner du muscle','fitness_center'],['seche','Perte de poids','Sécher, perdre du gras','local_fire_department'],['force','Force','Soulever plus lourd','bolt'],['forme','Remise en forme','Bouger, être en forme','favorite']];
+const OB_LEVELS = [['debutant','Débutant','Moins de 6 mois de salle','eco'],['inter','Intermédiaire','6 mois à 2 ans','trending_up'],['avance','Avancé','Plus de 2 ans','military_tech']];
+const DAYS = ['L','M','M','J','V','S','D'];
+const DAY_SHORT = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+const DAY_NAMES = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+const KEY = 'fitnessboii-v2';
+const pad = n => String(n).padStart(2,'0');
+const dk = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const addDays = (d,n) => { const x = new Date(d); x.setDate(x.getDate()+n); return x; };
+const mondayOf = d => { const x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); return addDays(x, -((x.getDay()+6)%7)); };
+const r25 = v => Math.round(v/2.5)*2.5;
+const uid = p => p + Date.now().toString(36) + Math.floor(Math.random()*1e4);
+function rng(seed){ let s = seed; return () => (s = (s*9301+49297)%233280)/233280; }
+const clone = o => JSON.parse(JSON.stringify(o));
+
+function buildMock(){
+  const today = new Date(); const rand = rng(7); const days = new Set();
+  for (let i = 1; i < 160; i++){ const d = addDays(today,-i); const wd = (d.getDay()+6)%7;
+    const p = [0,2,4].includes(wd) ? .85 : wd===5 ? .35 : .08; if (rand() < p) days.add(dk(d)); }
+  const hist = {};
+  DEFAULT_PROGRAMS.flatMap(p => p.exercises).forEach((e,i) => { const rr = rng(i+3); hist[e.id] = [];
+    for (let k = 7; k >= 0; k--){ const d = addDays(today, -7*k - 2);
+      const w = e.weight === 0 ? 0 : r25(e.weight*(0.84 + (7-k)*0.022 + (rr()-.5)*.03));
+      const r = e.weight === 0 ? Math.round(5 + (7-k)*0.5 + rr()) : e.reps + Math.round((rr()-.4)*2);
+      hist[e.id].push({ date:dk(d), w, r }); } });
+  return { days, hist };
+}
+const MOCK = buildMock();
+const defaults = () => ({ programs:clone(DEFAULT_PROGRAMS), settings:{ ...DEFAULT_SETTINGS }, session:null, logs:[], perf:{} });
+
+class Component extends DCLogic {
+  state = (() => {
+    let saved = {}; try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) {}
+    const d = defaults();
+    return { tab: (saved.tab && saved.tab !== 'profile') ? saved.tab : 'home', profileOpen:false, ob:0, obd:null, auth:{ mode:'signup', email:'', pw:'', show:false, err:'', loading:false }, photoPrompt:false, cmpMode:'start', confirmPhoto:null, photos:(() => { try { return JSON.parse(localStorage.getItem('fitnessboii-photos')) || []; } catch(e) { return []; } })(), progId:'push', exId:'dc', editing:false, confirmDel:false, confirmReset:false, planDay:null,
+      programs: saved.programs || d.programs, settings: (() => { const s = { ...d.settings, ...(saved.settings||{}) }; if (saved.settings && !saved.settings.themeV2) { s.theme = 'rubis'; s.themeV2 = true; } return s; })(), session: (saved.session && saved.session.ex) ? saved.session : null,
+      logs: saved.logs || [], perf: saved.perf || {}, w: window.innerWidth, toast:null, restEnd:null, now:Date.now() };
+  })();
+  componentDidMount(){
+    this.onResize = () => this.setState({ w: window.innerWidth }); window.addEventListener('resize', this.onResize);
+    this.ensureTheme(); this._prev = this.snap(); requestAnimationFrame(() => this.enter(true));
+    this.tick = setInterval(() => { const s = this.state; if (!s.restEnd && !(s.session && s.tab === 'session')) return; const now = Date.now();
+      this.setState(s.restEnd && now >= s.restEnd ? { restEnd:null, now } : { now }); }, 500);
+  }
+  reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  ease = 'cubic-bezier(.2,.8,.2,1)';
+  anim(el, kf, o){ if (el && el.animate && !this.reduced) return el.animate(kf, { easing:this.ease, fill:'backwards', ...o }); }
+  mainRef = el => { this.mainEl = el; };
+  curRef = el => { this.curEl = el; };
+  obRef = el => { this.obEl = el; };
+  authFormRef = el => { this.authEl = el; };
+  spinRef = el => { if (el && el.animate && !el._s){ el._s = 1; el.animate([{ transform:'rotate(0)' }, { transform:'rotate(360deg)' }], { duration:700, iterations:Infinity }); } };
+  setA(p){ this.setState(s => ({ auth:{ ...s.auth, ...p } })); }
+  login(email, how){ const S = this.state.settings; const signup = this.state.auth.mode === 'signup';
+    this.setA({ loading:true, err:'' });
+    setTimeout(() => { const patch = { ...S, loggedIn:true, email: email || S.email };
+      if (signup && how === 'email') Object.assign(patch, { onboarded:false });
+      this.persist({ settings:patch, ob:0, obd:null, auth:{ mode:'login', email:'', pw:'', show:false, err:'', loading:false } });
+      if (patch.onboarded) { this.flash(how === 'email' ? 'Connecté' : `Connecté avec ${how}`); setTimeout(() => this.enter(true), 30); } }, 900); }
+  obWrapRef = el => { if (el && !el._in){ el._in = 1; this.anim(el, [{ opacity:0 }, { opacity:1 }], { duration:300 }); } };
+  draft(){ const S = this.state.settings; return this.state.obd || { name: S.onboarded ? S.name : '', goalType:S.goalType || null, level:S.level || null, bodyWeight:+S.bodyWeight || 75, height:+S.height || 175,
+    days: S.onboarded ? [...new Set(this.state.programs.flatMap(p => p.days))].sort() : [0,2,4], theme:(THEMES.some(t => t.id === S.theme) ? S.theme : 'rubis'), mode:S.mode || 'dark' }; }
+  setD(patch){ this.setState({ obd:{ ...this.draft(), ...patch } }); }
+  obValid(step, d){ return step === 1 ? !!(d.name||'').trim() : step === 2 ? !!d.goalType : step === 3 ? !!d.level : step === 5 ? d.days.length > 0 : true; }
+  obGo(n){ this._obDir = n > this.state.ob ? 1 : -1; this.setState({ ob:n }); }
+  obFinish(){ const d = this.draft(); const days = [...d.days].sort(); const ps = this.state.programs;
+    const programs = ps.map(p => ({ ...p, days:[] })); if (programs.length) days.forEach((dy,i) => programs[i % programs.length].days.push(dy));
+    applyTheme(d.theme, d.mode);
+    this.persist({ programs, settings:{ ...this.state.settings, name:d.name.trim(), goalType:d.goalType, level:d.level, bodyWeight:d.bodyWeight, height:d.height, goal:days.length, theme:d.theme, mode:d.mode, onboarded:true }, obd:null, ob:0, tab:'home' });
+    this.flash(`Bienvenue ${d.name.trim()}`); setTimeout(() => this.enter(true), 30); }
+  fileRef = el => { this.fileEl = el; };
+  fadeRef = el => { if (el && !el._in){ el._in = 1; this.anim(el, [{ opacity:0 }, { opacity:1 }], { duration:260 }); } };
+  cmpRef = el => { this.cmpEl = el; };
+  pickPhoto = () => { if (this.fileEl) this.fileEl.click(); };
+  onFile = ev => { const f = ev.target.files && ev.target.files[0]; ev.target.value = ''; if (!f) return;
+    const url = URL.createObjectURL(f); const img = new Image();
+    img.onload = () => { const sc = Math.min(1, 720/Math.max(img.width, img.height)); const c = document.createElement('canvas');
+      c.width = Math.round(img.width*sc); c.height = Math.round(img.height*sc); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url); const now = new Date(); const week = dk(mondayOf(now));
+      const list = [...this.state.photos.filter(p => p.week !== week), { week, date:dk(now), src:c.toDataURL('image/jpeg', .8) }].sort((x,y) => x.week < y.week ? -1 : 1);
+      this.setState({ photoPrompt:false }); if (this.savePhotos(list)) this.flash('Photo ajoutée'); };
+    img.src = url; };
+  savePhotos(list){ this.setState({ photos:list }); try { localStorage.setItem('fitnessboii-photos', JSON.stringify(list)); return true; } catch(e) { this.flash('Stockage plein, supprime des photos'); return false; } }
+  titleRef = el => { this.titleEl = el; };
+  enter(full){ const m = this.mainEl; if (!m) return;
+    if (full) this.anim(this.titleEl, [{ opacity:0, transform:'translateY(6px)' }, { opacity:1, transform:'none' }], { duration:320 });
+    const roots = [...m.children].slice(1); let i = 0;
+    roots.forEach(r => [...r.children].slice(0,14).forEach(c => {
+      this.anim(c, [{ opacity:0, transform:'translateY(14px) scale(.985)' }, { opacity:1, transform:'none' }], { duration:460, delay:40 + i++*45 }); }));
+    if (this.state.tab === 'perf') m.querySelectorAll('[data-bar]').forEach((b,k) => this.anim(b, [{ transform:'scaleY(0)' }, { transform:'scaleY(1)' }], { duration:520, delay:120 + k*35, easing:'cubic-bezier(.2,.9,.3,1.15)' }));
+    if (full && this.state.tab === 'home') m.querySelectorAll('[title]').forEach((c,k) => {
+      const col = k % (this.state.w < 860 ? 14 : 24); this.anim(c, [{ transform:'scale(0)', opacity:0 }, { transform:'scale(1)', opacity:1 }], { duration:380, delay:220 + col*14, easing:'cubic-bezier(.3,1.5,.5,1)' }); });
+  }
+  snap(){ const s = this.state; return { tab:s.tab, progId:s.progId, editing:s.editing, session:!!s.session, exId:s.exId }; }
+  ensureTheme(){ const S = this.state.settings; const d = !S.onboarded ? this.draft() : null;
+    const id = d ? d.theme : (S.theme || 'rubis'); const mode = d ? (d.mode || 'dark') : (S.mode || 'dark');
+    if (id + '|' + mode !== applyTheme.cur) applyTheme(id, mode); }
+  vt(fn){ if (document.startViewTransition && !this.reduced) document.startViewTransition(fn); else fn(); }
+  componentDidUpdate(){ this.ensureTheme(); const p = this._prev || this.snap(); const s = this.snap(); this._prev = s;
+    const cc = this.state.session ? this.state.session.cur : null;
+    if (this._cur != null && cc != null && cc !== this._cur && p.tab === s.tab) this.anim(this.curEl, [{ opacity:0, transform:`translateX(${cc > this._cur ? 28 : -28}px)` }, { opacity:1, transform:'none' }], { duration:340 });
+    this._cur = cc;
+    if (this._cm && this._cm !== this.state.cmpMode && this.cmpEl) this.anim(this.cmpEl, [{ opacity:0, transform:'scale(.97)' }, { opacity:1, transform:'none' }], { duration:320 });
+    this._cm = this.state.cmpMode;
+    if (this._am && this._am !== this.state.auth.mode && this.authEl) this.anim(this.authEl, [{ opacity:0, transform:'translateY(10px)' }, { opacity:1, transform:'none' }], { duration:320 });
+    this._am = this.state.auth.mode;
+    if (this._ob != null && this._ob !== this.state.ob && this.obEl) this.anim(this.obEl, [{ opacity:0, transform:`translateX(${(this._obDir||1)*36}px)` }, { opacity:1, transform:'none' }], { duration:380 });
+    this._ob = this.state.ob;
+    if (p.tab !== s.tab) this.enter(true);
+    else if (p.progId !== s.progId || p.editing !== s.editing || p.session !== s.session || p.exId !== s.exId) this.enter(false); }
+  backdropRef = el => { if (!el) return; this.bdEl = el; if (!el._in){ el._in = 1; this.anim(el, [{ opacity:0 }, { opacity:1 }], { duration:260 }); } };
+  panelRef = el => { if (!el) return; this.pnEl = el; if (!el._in){ el._in = 1; const mob = this.state.w < 860;
+    this.anim(el, mob ? [{ transform:'translateY(100%)' }, { transform:'none' }] : [{ opacity:0, transform:'translateY(16px) scale(.96)' }, { opacity:1, transform:'none' }], { duration: mob ? 420 : 340, easing:'cubic-bezier(.2,.9,.25,1)' }); } };
+  closeProfile = () => { if (this.closing) return; const mob = this.state.w < 860; const done = () => { this.closing = false; this.setState({ profileOpen:false }); };
+    if (this.reduced || !this.pnEl || !this.pnEl.animate) return done(); this.closing = true;
+    this.bdEl.animate([{ opacity:1 }, { opacity:0 }], { duration:220, fill:'forwards' });
+    this.pnEl.animate(mob ? [{ transform:'none' }, { transform:'translateY(100%)' }] : [{ opacity:1, transform:'none' }, { opacity:0, transform:'translateY(12px) scale(.97)' }], { duration:240, easing:'cubic-bezier(.4,0,.8,.4)', fill:'forwards' }); clearTimeout(this.ct); this.ct = setTimeout(done, 250); };
+  popRef = el => { if (el && !el._in){ el._in = 1; this.anim(el, [{ opacity:0, transform:'translateY(20px) scale(.9)' }, { opacity:1, transform:'none' }], { duration:380, easing:'cubic-bezier(.3,1.4,.5,1)' }); } };
+  toastRef = el => { if (el && !el._in){ el._in = 1; this.anim(el, [{ opacity:0, transform:'translate(-50%,-24px) scale(.9)' }, { opacity:1, transform:'translate(-50%,0)' }], { duration:420, easing:'cubic-bezier(.3,1.4,.5,1)' }); } };
+  pop(el){ this.anim(el, [{ transform:'scale(1)' }, { transform:'scale(1.28)' }, { transform:'scale(1)' }], { duration:360, easing:'cubic-bezier(.3,1.5,.5,1)', fill:'none' }); }
+  componentWillUnmount(){ window.removeEventListener('resize', this.onResize); clearInterval(this.tick); }
+  persist(patch){ this.setState(patch, () => { const { tab, session, logs, perf, programs, settings } = this.state;
+    try { localStorage.setItem(KEY, JSON.stringify({ tab, session, logs, perf, programs, settings })); } catch(e) {} }); }
+  flash(msg){ this.setState({ toast:msg }); clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast:null }), 2400); }
+  go(tab){ if (tab === this.state.tab) return; this.persist({ tab, planDay:null }); window.scrollTo({ top:0, behavior: this.reduced ? 'auto' : 'smooth' }); }
+  setTheme(id){ if (id === this.state.settings.theme) return; this.vt(() => applyTheme(id, this.state.settings.mode || 'dark')); this.setting('theme', id); }
+  setMode(m){ if (m === (this.state.settings.mode || 'dark')) return; this.vt(() => applyTheme(this.state.settings.theme || 'rubis', m)); this.setting('mode', m); }
+  setting(k,v){ this.persist({ settings:{ ...this.state.settings, [k]:v } }); }
+  progs(fn){ this.persist({ programs: fn(this.state.programs) }); }
+  updProg(pid, patch){ this.progs(ps => ps.map(p => p.id === pid ? { ...p, ...patch } : p)); }
+  updEx(pid, eid, patch){ this.progs(ps => ps.map(p => p.id !== pid ? p : { ...p, exercises:p.exercises.map(e => e.id === eid ? { ...e, ...patch } : e) })); }
+  assignDay(day, pid){ this.progs(ps => ps.map(p => { const days = p.days.filter(d => d !== day); if (p.id === pid) days.push(day); return { ...p, days:days.sort() }; })); }
+  history(id){ return [...(MOCK.hist[id]||[]), ...(this.state.perf[id]||[])]; }
+  start(pid){ const p = this.state.programs.find(x => x.id === pid); if (!p) return; const ex = {};
+    p.exercises.forEach(e => { const last = this.history(e.id).slice(-1)[0]; ex[e.id] = { w: last ? last.w : (+e.weight||0), r: +e.reps||0, done:false }; });
+    this.persist({ session:{ programId:pid, ex, cur:0, startedAt:Date.now() }, tab:'session', now:Date.now() }); window.scrollTo(0,0); }
+  updSx(id, patch){ const s = this.state.session; this.persist({ session:{ ...s, ex:{ ...s.ex, [id]:{ ...s.ex[id], ...patch } } } }); }
+  setCur(i){ const s = this.state.session; this.persist({ session:{ ...s, cur:i } }); }
+  fmtDur(ms){ const t = Math.max(0, Math.floor(ms/1000)); const hh = Math.floor(t/3600), m = Math.floor(t/60)%60, s = t%60; return hh ? `${hh}:${pad(m)}:${pad(s)}` : `${pad(m)}:${pad(s)}`; }
+  finish(){ const s = this.state.session; const today = dk(new Date()); const perf = { ...this.state.perf };
+    Object.entries(s.ex).forEach(([id, x]) => { if (!x.done) return; perf[id] = [...(perf[id]||[]).filter(y => y.date !== today), { date:today, w:+x.w||0, r:+x.r||0 }]; });
+    const mins = Math.max(1, Math.round((Date.now() - s.startedAt)/60000));
+    const logs = [...this.state.logs.filter(l => l.date !== today), { date:today, programId:s.programId, minutes:mins }];
+    this.persist({ session:null, logs, perf, tab:'home', restEnd:null }); this.flash(`Séance enregistrée · ${mins} min`);
+    const wk = dk(mondayOf(new Date())); if (!this.state.photos.some(p => p.week === wk)) setTimeout(() => this.setState({ photoPrompt:true }), 700); }
+
+  modeList(cur, set){ return [['dark','Sombre','dark_mode'],['light','Clair','light_mode']].map(([id,label,icon]) => { const on = (cur||'dark') === id;
+      return { label, icon, onClick:() => set(id), checkOp: on ? 1 : 0, border: on ? '1.5px solid rgb(var(--fb-a,236,40,78))' : '1px solid rgba(var(--fb-fg,255,255,255),.08)',
+        preview: id === 'dark' ? 'linear-gradient(160deg,#2a2420,#0e0b0a)' : 'linear-gradient(160deg,#ffffff,#ece8e4)', iconColor: id === 'dark' ? '#f5efe9' : '#1a1512',
+        bar1: id === 'dark' ? 'rgba(255,255,255,.14)' : 'rgba(var(--fb-ink,0,0,0),.1)', bar2: id === 'dark' ? 'rgba(255,255,255,.08)' : 'rgba(var(--fb-ink,0,0,0),.06)' }; }); }
+  authVals(S){ const st = this.state; const au = st.auth; if (S.loggedIn) return { showAuth:false };
+    const signup = au.mode === 'signup'; const today = new Date(); const rnd = rng(11);
+    const submit = () => { if (au.loading) return; const em = (au.email||'').trim();
+      if (!/^\S+@\S+\.\S+$/.test(em)) return this.setA({ err:'Adresse email invalide' });
+      if ((au.pw||'').length < 6) return this.setA({ err:'6 caractères minimum pour le mot de passe' });
+      this.login(em, 'email'); };
+    return { showAuth:true, auth:au, isSignup:signup, isLogin:!signup, authLoading:au.loading,
+      authTitle: signup ? 'Crée ton compte' : 'Bon retour 👋'.replace(' 👋',''), authSub: signup ? 'Commence à suivre tes séances en quelques secondes.' : 'Connecte-toi pour retrouver tes séances.',
+      authCta: au.loading ? (signup ? 'Création…' : 'Connexion…') : signup ? 'Créer mon compte' : 'Se connecter',
+      authSwitchText: signup ? 'Déjà un compte ?' : 'Pas encore de compte ?', authSwitchCta: signup ? 'Se connecter' : 'Créer un compte',
+      authSwitch:() => this.setA({ mode: signup ? 'login' : 'signup', err:'' }),
+      authEmail: ev => this.setA({ email:ev.target.value, err:'' }), authPw: ev => this.setA({ pw:ev.target.value, err:'' }),
+      authKey: ev => { if (ev.key === 'Enter') submit(); }, authSubmit:submit,
+      authBorder: au.err ? 'rgba(255,107,107,.6)' : 'rgba(var(--fb-fg,255,255,255),.1)',
+      pwType: au.show ? 'text' : 'password', pwIcon: au.show ? 'visibility_off' : 'visibility', togglePw:() => this.setA({ show:!au.show }),
+      forgotPw:() => { const em = (au.email||'').trim(); if (!/^\S+@\S+\.\S+$/.test(em)) return this.setA({ err:'Entre ton email d’abord' }); this.flash(`Lien envoyé à ${em}`); },
+      authGoogle:() => !au.loading && this.login(S.email, 'Google'), authApple:() => !au.loading && this.login(S.email, 'Apple'),
+      authDots: Array.from({ length:7 }, (_, r) => Array.from({ length:18 }, (_, c) => { const on = rnd() < ([0,2,4].includes(r) ? .75 : r === 5 ? .3 : .1) * (0.5 + c/36);
+        return { bg: on ? 'rgb(var(--fb-a,236,40,78))' : 'transparent', border: on ? 'none' : '1.5px solid rgba(var(--fb-fg,255,255,255),.12)', shadow: on ? '0 0 10px rgba(var(--fb-a,236,40,78),.6)' : 'none' }; })) }; }
+  obVals(S){ const st = this.state; const show = !S.onboarded && !!S.loggedIn; if (!show) return { showOb:false };
+    const d = this.draft(); const step = st.ob; const sel = (on) => ({ bg: on ? 'rgba(var(--fb-a,236,40,78),.14)' : 'rgba(var(--fb-fg,255,255,255),.04)', border: on ? '1.5px solid rgb(var(--fb-a,236,40,78))' : '1px solid rgba(var(--fb-fg,255,255,255),.08)',
+      shadow: on ? '0 0 24px rgba(var(--fb-a,236,40,78),.25)' : 'none', iconBg: on ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-fg,255,255,255),.06)', iconColor: on ? 'var(--fb-on,#fff)' : 'rgb(var(--fb-a4,255,130,154))', checkOp: on ? 1 : 0 });
+    const mk = (arr, key) => arr.map(([id,label,desc,icon]) => ({ label, desc, icon, ...sel(d[key] === id), onClick:() => this.setD({ [key]:id }) }));
+    const valid = this.obValid(step, d); const n = d.days.length;
+    const next = () => { if (!valid) return; if (step >= 6) return this.obFinish(); this.obGo(step+1); };
+    const modes = this.modeList(d.mode, m => { this.vt(() => applyTheme(d.theme, m)); this.setD({ mode:m }); });
+    const vals = { showOb:true, obd:d, obModes:modes, obBar: Array.from({ length:5 }, (_,i) => ({ bg: i < step ? 'rgb(var(--fb-a,236,40,78))' : i === step - 1 ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-fg,255,255,255),.1)', glow: i < step ? '0 0 8px rgba(var(--fb-a,236,40,78),.5)' : 'none' })),
+      obBarVis: step > 0 && step < 6 ? 'visible' : 'hidden', obBackVis: step > 0 && step < 6 ? 'visible' : 'hidden', obCount: `${Math.min(step,5)}/5`,
+      obBack:() => step > 0 && this.obGo(step-1), obNext:next, obKey: ev => { if (ev.key === 'Enter') next(); },
+      obCta: step === 0 ? 'Commencer' : step === 6 ? 'Démarrer' : 'Continuer', obCtaOp: valid ? 1 : .4,
+      obName: ev => this.setD({ name:ev.target.value }), obGoals: mk(OB_GOALS,'goalType'), obLevels: mk(OB_LEVELS,'level'),
+      obBw: ev => this.setD({ bodyWeight:ev.target.value }), obHt: ev => this.setD({ height:ev.target.value }),
+      obBwM:() => this.setD({ bodyWeight:Math.max(30, (+d.bodyWeight||0)-1) }), obBwP:() => this.setD({ bodyWeight:(+d.bodyWeight||0)+1 }),
+      obHtM:() => this.setD({ height:Math.max(120, (+d.height||0)-1) }), obHtP:() => this.setD({ height:(+d.height||0)+1 }),
+      obDays: DAYS.map((label,i) => { const on = d.days.includes(i); return { label, onClick:() => this.setD({ days: on ? d.days.filter(x => x !== i) : [...d.days, i].sort() }),
+        bg: on ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-fg,255,255,255),.05)', color: on ? 'var(--fb-on,#fff)' : 'var(--fb-tx2,#d4c2b6)', border: on ? 'none' : '1px solid rgba(var(--fb-fg,255,255,255),.1)', shadow: on ? '0 0 16px rgba(var(--fb-a,236,40,78),.5)' : 'none' }; }),
+      obDaysLabel: n ? `${n} séance${n > 1 ? 's' : ''} par semaine` : 'Sélectionne au moins un jour',
+      obThemes: THEMES.map(t => { const on = d.theme === t.id; const v = t.v; return { name:t.name, icon:t.icon,
+        onClick:() => { this.vt(() => applyTheme(t.id, d.mode)); this.setD({ theme:t.id }); }, bgPreview:prev(v, d.mode),
+        iconColor:`rgb(${v.a3})`, glow:`0 0 18px rgba(${v.a},.7)`, border: on ? `1.5px solid rgb(${v.a})` : '1px solid rgba(var(--fb-fg,255,255,255),.08)' }; }),
+      obSummary: [ { icon:(OB_GOALS.find(g => g[0] === d.goalType)||[])[3] || 'flag', label:(OB_GOALS.find(g => g[0] === d.goalType)||[])[1] || '—' },
+        { icon:(OB_LEVELS.find(g => g[0] === d.level)||[])[3] || 'star', label:(OB_LEVELS.find(g => g[0] === d.level)||[])[1] || '—' },
+        { icon:'event_repeat', label:`${n} séance${n > 1 ? 's' : ''} / sem.` } ] };
+    for (let i = 0; i <= 6; i++) vals['ob'+i] = step === i; return vals; }
+  renderVals(){
+    const st = this.state, S = st.settings; const isMobile = st.w < 860; const today = new Date(); const tk = dk(today); const wd = (today.getDay()+6)%7;
+    const attended = new Set([...MOCK.days, ...st.logs.map(l => l.date)]);
+    const programs = st.programs; const allEx = programs.flatMap(p => p.exercises.map(e => ({ ...e, programId:p.id })));
+    const titles = { home:`Salut ${S.name}`, programs:'Mes programmes', session:'Séance', perf:'Performances', settings:'Réglages' };
+    const nav = [['home','Accueil','home'],['programs','Programmes','fitness_center'],['session','Séance','timer'],['perf','Perfs','monitoring'],['settings','Réglages','settings']]
+      .map(([id,label,icon]) => { const a = st.tab === id; return { label, icon, onClick:() => this.go(id),
+        bg: a ? 'linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a2,220,30,96)))' : 'transparent', mbg: a ? 'linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a2,220,30,96)))' : 'rgba(var(--fb-fg,255,255,255),.05)',
+        mborder: a ? 'none' : '1px solid rgba(var(--fb-fg,255,255,255),.08)', color: a ? 'var(--fb-on,#fff)' : 'var(--fb-tx2,#c9b8ad)', shadow: a ? '0 6px 20px rgba(var(--fb-a,236,40,78),.4)' : 'none' }; });
+
+    const mon = mondayOf(today);
+    const weekRow = DAYS.map((label,i) => { const d = addDays(mon,i); const k = dk(d); const done = attended.has(k); const isT = k === tk;
+      return { label, num:d.getDate(), checkDisplay: done ? 'block':'none', numDisplay: done ? 'none':'block',
+        bg: done ? (isT ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-a2,220,30,96),.85)') : 'rgba(var(--fb-fg,255,255,255),.04)',
+        border: isT && !done ? '1.5px solid rgb(var(--fb-a,236,40,78))' : done ? 'none' : '1px solid rgba(var(--fb-fg,255,255,255),.08)',
+        shadow: done ? '0 0 14px rgba(var(--fb-a2,220,30,96),.5)' : 'none' }; });
+    let streak = 0; for (let w = 0; w < 30; w++){ const m = addDays(mon, -7*w); let c = 0;
+      for (let i = 0; i < 7; i++) if (attended.has(dk(addDays(m,i)))) c++;
+      if (c >= 2) streak++; else if (w > 0) break; }
+    const weekCount = weekRow.filter(d => d.checkDisplay === 'block').length;
+    const monthCount = [...attended].filter(k => k.startsWith(tk.slice(0,7))).length;
+    const stats = [{ icon:'flag', value:`${weekCount}/${S.goal}`, label:'objectif sem.' }, { icon:'calendar_today', value:monthCount, label:'ce mois' }, { icon:'bolt', value:attended.size, label:'au total' }];
+
+    const heatCols = isMobile ? 14 : 24; const start = addDays(mon, -7*(heatCols-1));
+    const heatRows = DAYS.map((label, di) => ({ label, cells: Array.from({ length:heatCols }, (_, wi) => {
+      const d = addDays(start, wi*7 + di); const k = dk(d); const fut = d > today && k !== tk; const on = attended.has(k);
+      return { title: d.toLocaleDateString('fr-FR',{ day:'numeric', month:'short' }) + (on ? ' · séance' : ''),
+        bg: on ? 'rgb(var(--fb-a2,220,30,96))' : 'transparent', border: on ? 'none' : k === tk ? '1.5px solid rgb(var(--fb-a,236,40,78))' : '1.5px solid rgba(var(--fb-fg,255,255,255),.14)',
+        shadow: on ? '0 0 9px rgba(var(--fb-a2,220,30,96),.6)' : 'none', op: fut ? .25 : 1 }; }) }));
+    const fmtM = d => d.toLocaleDateString('fr-FR',{ month:'short' }).replace('.','');
+    const heatTotal = [...attended].filter(k => k >= dk(start)).length;
+
+    const info = p => { const ts = p.exercises.reduce((a,e) => a+(+e.sets||0), 0);
+      return { ...p, exCount:p.exercises.length, totalSets:ts, duration: ts*3 + 5 }; };
+    const todayP = programs.find(p => p.days.includes(wd));
+    let nextP = null, nextDay = null; for (let i = 1; i <= 7 && !nextP; i++){ const d = (wd+i)%7; const p = programs.find(x => x.days.includes(d)); if (p){ nextP = p; nextDay = d; } }
+    const heroP = todayP || nextP || programs[0];
+    const hero = !heroP ? { pill:'Aucun programme', pillIcon:'info', meta:'', icon:'add', subtitle:'Crée ton premier programme', name:'—', cta:'Créer', id:null }
+      : todayP ? { pill:'Séance du jour', pillIcon:'today', meta:`${info(todayP).exCount} exercices · ~${info(todayP).duration} min`, icon:todayP.icon, subtitle:todayP.subtitle, name:todayP.name, cta:'Commencer', id:todayP.id }
+      : { pill:'Jour de repos', pillIcon:'bedtime', meta: nextP ? `Prochaine : ${DAY_NAMES[nextDay].toLowerCase()}` : '', icon:'bedtime', subtitle: nextP ? `Prochaine séance : ${nextP.name}` : 'Récupère bien', name:'Repos', cta: `Faire ${heroP.name} quand même`, id:heroP.id };
+
+    const selP = programs.find(p => p.id === st.progId) || programs[0];
+    let prog = null;
+    if (selP){ prog = info(selP); const pid = selP.id;
+      prog.dayTags = selP.days.map(d => DAY_NAMES[d]); prog.noDays = !selP.days.length;
+      prog.exercises = selP.exercises.map((e,i) => ({ ...e, num:i+1, icon:GROUPS[e.group]||'fitness_center', weightLabel: +e.weight ? `${e.weight} kg` : 'Poids du corps',
+        onName: ev => this.updEx(pid, e.id, { name:ev.target.value }), onMachine: ev => this.updEx(pid, e.id, { machine:ev.target.value }),
+        onGroup: ev => this.updEx(pid, e.id, { group:ev.target.value }), onSets: ev => this.updEx(pid, e.id, { sets:ev.target.value }),
+        onReps: ev => this.updEx(pid, e.id, { reps:ev.target.value }), onWeight: ev => this.updEx(pid, e.id, { weight:ev.target.value }),
+        onDelete: () => this.updProg(pid, { exercises: selP.exercises.filter(x => x.id !== e.id) }) })); }
+    const progTabs = programs.map(p => { const a = selP && p.id === selP.id; return { name:p.name, subtitle:p.subtitle, icon:p.icon,
+      onClick:() => this.setState({ progId:p.id, editing:false, confirmDel:false }), onStart:() => this.start(p.id),
+      bg: a ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-fg,255,255,255),.05)', color: a ? 'var(--fb-on,#fff)' : 'var(--fb-tx2,#d4c2b6)',
+      border: a ? 'none' : '1px solid rgba(var(--fb-fg,255,255,255),.08)', shadow: a ? '0 6px 20px rgba(var(--fb-a,236,40,78),.35)' : 'none' }; });
+    const iconPicker = PROG_ICONS.map(icon => { const a = selP && selP.icon === icon; return { icon, onClick:() => this.updProg(selP.id, { icon }),
+      bg: a ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-fg,255,255,255),.05)', border: a ? 'none' : '1px solid rgba(var(--fb-fg,255,255,255),.1)' }; });
+    const dayPicker = DAYS.map((label, d) => { const a = selP && selP.days.includes(d); const other = programs.find(p => p.id !== selP?.id && p.days.includes(d));
+      return { label, onClick:() => a ? this.updProg(selP.id, { days:selP.days.filter(x => x !== d) }) : this.assignDay(d, selP.id),
+        bg: a ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-fg,255,255,255),.05)', color: a ? 'var(--fb-on,#fff)' : other ? 'var(--fb-tx4,#6f6058)' : 'var(--fb-tx2,#d4c2b6)',
+        border: a ? 'none' : '1px solid rgba(var(--fb-fg,255,255,255),.1)', shadow: a ? '0 0 12px rgba(var(--fb-a,236,40,78),.5)' : 'none' }; });
+    const plan = DAY_SHORT.map((short, d) => { const p = programs.find(x => x.days.includes(d)); const sel = st.planDay === d; const isT = d === wd;
+      return { short, name: p ? p.name : 'Repos', icon: p ? p.icon : 'bedtime', iconColor: p ? 'rgb(var(--fb-a3,255,92,124))' : 'var(--fb-tx4,#5f514a)', nameColor: p ? 'var(--fb-tx,#f5efe9)' : 'var(--fb-tx4,#8e7d72)',
+        onClick:() => this.setState({ planDay: sel ? null : d }),
+        bg: sel ? 'rgba(var(--fb-a,236,40,78),.18)' : p ? 'rgba(var(--fb-a,236,40,78),.07)' : 'rgba(var(--fb-ink,0,0,0),.25)',
+        border: sel ? '1.5px solid rgb(var(--fb-a,236,40,78))' : isT ? '1.5px solid rgba(var(--fb-a3,255,92,124),.5)' : '1px solid rgba(var(--fb-fg,255,255,255),.06)' }; });
+    const pd = st.planDay; const curPlan = pd != null ? programs.find(x => x.days.includes(pd)) : null;
+    const planOptions = pd == null ? [] : [...programs.map(p => ({ id:p.id, name:p.name, icon:p.icon })), { id:null, name:'Repos', icon:'bedtime' }]
+      .map(o => { const a = (curPlan ? curPlan.id : null) === o.id; return { ...o, onClick:() => { this.assignDay(pd, o.id); this.setState({ planDay:null }); },
+        bg: a ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-fg,255,255,255),.05)', color: a ? 'var(--fb-on,#fff)' : 'var(--fb-tx2,#d4c2b6)', border: a ? 'none' : '1px solid rgba(var(--fb-fg,255,255,255),.1)' }; });
+
+    const best = id => this.history(id).reduce((a,b) => (!a || b.w > a.w || (b.w === a.w && b.r > a.r)) ? b : a, null);
+    const prs = allEx.filter(e => this.history(e.id).length && +e.weight).slice(0, 12).filter((_,i) => i % 3 === 0).slice(0,3).map(e => { const h = this.history(e.id); const b = best(e.id);
+      const diff = b.w - h[0].w; return { name:e.name, icon:GROUPS[e.group]||'fitness_center', w:b.w, r:b.r, delta: diff > 0 ? `+${diff} kg en 2 mois` : 'stable',
+        onClick:() => { this.setState({ exId:e.id }); this.go('perf'); } }; });
+
+    let sess = null; const sp = st.session && st.session.ex && programs.find(x => x.id === st.session.programId);
+    if (sp){ const se = st.session; const order = sp.exercises.filter(e => se.ex[e.id]);
+      const ci = Math.min(Math.max(0, se.cur||0), Math.max(0, order.length-1)); const ce = order[ci]; const doneCount = order.filter(e => se.ex[e.id].done).length;
+      let c = { num:0, name:'Aucun exercice', machine:'', icon:'fitness_center', target:'', best:'—', w:0, r:0 };
+      if (ce){ const x = se.ex[ce.id]; const b = best(ce.id); const isLastTodo = order.every((e,i) => i === ci || se.ex[e.id].done);
+        c = { num:ci+1, name:ce.name, machine:ce.machine || '—', icon:GROUPS[ce.group]||'fitness_center', target:`${ce.sets} × ${ce.reps}${+ce.weight ? ' · ' + ce.weight + ' kg' : ''}`,
+          best: b ? `${b.w} kg × ${b.r}` : '—', w:x.w, r:x.r,
+          onW: ev => this.updSx(ce.id, { w:ev.target.value }), onR: ev => this.updSx(ce.id, { r:ev.target.value }),
+          wMinus:() => this.updSx(ce.id, { w:Math.max(0, r25((+x.w||0) - 2.5)) }), wPlus:() => this.updSx(ce.id, { w:r25((+x.w||0) + 2.5) }),
+          rMinus:() => this.updSx(ce.id, { r:Math.max(0, (+x.r||0) - 1) }), rPlus:() => this.updSx(ce.id, { r:(+x.r||0) + 1 }),
+          validate:() => { const exs = { ...se.ex, [ce.id]:{ ...x, done:true } }; let nx = ci;
+            for (let k = 1; k <= order.length; k++){ const j = (ci+k) % order.length; if (!exs[order[j].id].done){ nx = j; break; } }
+            this.persist({ session:{ ...se, ex:exs, cur:nx } }); if (!x.done && S.autoTimer && nx !== ci) this.setState({ restEnd:Date.now()+S.rest*1000, now:Date.now() }); },
+          validateLabel: x.done ? 'Mettre à jour' : isLastTodo ? 'Valider le dernier exo' : 'Valider · exo suivant', btnIcon: x.done ? 'edit' : 'check',
+          btnBg: x.done ? 'rgba(var(--fb-fg,255,255,255),.06)' : 'rgb(var(--fb-a,236,40,78))', btnColor: 'var(--fb-on,#fff)', btnBorder: x.done ? '1px solid rgba(var(--fb-fg,255,255,255),.14)' : 'none',
+          btnShadow: x.done ? 'none' : '0 10px 28px rgba(var(--fb-a,236,40,78),.45)' }; }
+      const list = order.map((e,i) => { const x = se.ex[e.id]; const cur = i === ci;
+        return { name:e.name, onClick:() => this.setCur(i), sub: x.done ? `${x.w} kg × ${x.r}` : `${e.sets} × ${e.reps}`,
+          stIcon: x.done ? 'check' : (GROUPS[e.group]||'fitness_center'),
+          bg: cur ? 'rgba(var(--fb-a,236,40,78),.14)' : 'transparent', border: cur ? '1px solid rgba(var(--fb-a,236,40,78),.35)' : '1px solid transparent',
+          dotBg: x.done ? 'rgb(var(--fb-a,236,40,78))' : cur ? 'rgba(var(--fb-a,236,40,78),.2)' : 'rgba(var(--fb-fg,255,255,255),.05)', dotColor: x.done ? 'var(--fb-on,#fff)' : cur ? 'rgb(var(--fb-a4,255,130,154))' : 'var(--fb-tx4,#8e7d72)',
+          dotGlow: x.done ? '0 0 12px rgba(var(--fb-a,236,40,78),.55)' : 'none', nameColor: x.done && !cur ? 'var(--fb-tx3,#a8978c)' : 'var(--fb-tx,#f5efe9)',
+          seg: x.done ? 'rgb(var(--fb-a,236,40,78))' : cur ? 'rgba(var(--fb-a,236,40,78),.45)' : 'rgba(var(--fb-fg,255,255,255),.08)', segGlow: x.done ? '0 0 8px rgba(var(--fb-a,236,40,78),.6)' : 'none' }; });
+      sess = { name:sp.name, icon:sp.icon, total:order.length, done:doneCount, elapsed:this.fmtDur(st.now - se.startedAt), c, list,
+        prev:() => ci > 0 && this.setCur(ci-1), next:() => ci < order.length-1 && this.setCur(ci+1), prevOp: ci > 0 ? 1 : .35, nextOp: ci < order.length-1 ? 1 : .35 }; }
+    const cut = dk(addDays(today,-30)); const thisM = tk.slice(0,7); const pm = new Date(today.getFullYear(), today.getMonth()-1, 1); const prevM = dk(pm).slice(0,7);
+    const changes = allEx.map(e => { const hh = this.history(e.id); const rec = hh.filter(x => x.date >= cut), old = hh.filter(x => x.date < cut);
+      if (!rec.length || !old.length) return null; const bw = !+e.weight; const key = x => bw ? x.r : x.w;
+      const r = Math.max(...rec.map(key)), o = Math.max(...old.map(key)); const d = Math.round((r-o)*10)/10; if (!d) return null; const u = bw ? 'reps' : 'kg';
+      const vs = hh.slice(-8).map(key); const mx = Math.max(...vs), mn = Math.min(...vs), rg = (mx-mn) || 1;
+      const pts = vs.map((v,i) => [vs.length > 1 ? i/(vs.length-1)*100 : 50, 29 - (v-mn)/rg*24]);
+      const spark = pts.map(p => p.map(n => n.toFixed(1)).join(',')).join(' ');
+      return { spark, area:`M0,34 L${spark.split(' ').join(' L')} L100,34 Z`, lastY:`${(pts[pts.length-1][1]/34*100).toFixed(1)}%`, stroke: d > 0 ? 'rgb(var(--fb-a3,255,92,124))' : 'var(--fb-tx4,#8e7d72)',
+        name:e.name, icon:GROUPS[e.group]||'fitness_center', from:`${o} ${u}`, to:`${r} ${u}`, delta:`${d > 0 ? '+' : ''}${d} ${u}`, score:Math.abs(d)/(o||1), up:d > 0,
+        arrow: d > 0 ? 'arrow_upward' : 'arrow_downward', pillBg: d > 0 ? 'rgba(var(--fb-a,236,40,78),.16)' : 'rgba(var(--fb-fg,255,255,255),.06)', pillColor: d > 0 ? 'rgb(var(--fb-a4,255,130,154))' : 'var(--fb-tx3,#a8978c)' }; })
+      .filter(Boolean).sort((x,y) => y.score - x.score);
+    const wkCounts = Array.from({ length:12 }, (_, i) => { const m = addDays(mon, -7*(11-i)); let n = 0; for (let j = 0; j < 7; j++) if (attended.has(dk(addDays(m,j)))) n++; return { m, n }; });
+    const bMax = Math.max(+S.goal || 1, ...wkCounts.map(w => w.n)) + .5;
+    const bars = wkCounts.map((w,i) => { const cur = i === 11; const hit = w.n >= (+S.goal||1);
+      return { h:`${w.n/bMax*100}%`, title:`Semaine du ${w.m.toLocaleDateString('fr-FR',{ day:'numeric', month:'short' })} · ${w.n} séance${w.n > 1 ? 's' : ''}`,
+        label: cur ? 'Cette sem.' : i % 3 === 0 ? w.m.toLocaleDateString('fr-FR',{ day:'numeric', month:'short' }).replace('.','') : '',
+        labelColor: cur ? 'rgb(var(--fb-a4,255,130,154))' : 'var(--fb-tx4,#8e7d72)',
+        bg: cur ? 'linear-gradient(180deg, rgb(var(--fb-a3,255,92,124)), rgb(var(--fb-a,236,40,78)))' : hit ? 'rgba(var(--fb-a,236,40,78),.75)' : 'rgba(var(--fb-fg,255,255,255),.1)',
+        shadow: cur ? '0 0 16px rgba(var(--fb-a,236,40,78),.55)' : 'none' }; });
+    const barAvg = (wkCounts.slice(0,11).reduce((s,w) => s + w.n, 0)/11).toFixed(1).replace('.', ',');
+    const goalPct = `${(+S.goal||1)/bMax*100}%`;
+    const lastMCount = [...attended].filter(k => k.startsWith(prevM)).length;
+    const changeStats = [{ icon:'calendar_today', label:'Séances ce mois', value:monthCount, sub:`${lastMCount} le mois dernier` },
+      { icon:'emoji_events', label:'Records battus', value:changes.filter(c => c.up).length, sub:'sur 30 jours' }];
+    const photos = st.photos; const fdate = k => new Date(k+'T12:00').toLocaleDateString('fr-FR',{ day:'numeric', month:'short' }).replace('.','');
+    const mlabel = k => new Date(k+'T12:00').toLocaleDateString('fr-FR',{ month:'long', year:'numeric' });
+    let cmp = [], cmpGap = '', cmpEmpty = '';
+    if (photos.length < 2) cmpEmpty = 'Ajoute au moins 2 photos pour voir ton évolution. L’app te propose une photo après ta première séance de chaque semaine.';
+    else if (st.cmpMode === 'month'){ const months = [...new Set(photos.map(p => p.date.slice(0,7)))].sort();
+      if (months.length < 2) cmpEmpty = 'Il faut des photos sur deux mois différents pour comparer.';
+      else { const mB = months[months.length-1], mA = months[months.length-2]; const pick = m => photos.filter(p => p.date.startsWith(m)).slice(-1)[0];
+        const pa = pick(mA), pb = pick(mB); cmp = [{ title:'Avant', date:mlabel(pa.date), src:pa.src }, { title:'Après', date:mlabel(pb.date), src:pb.src }];
+        cmpGap = 'Dernière photo de chaque mois'; } }
+    else { const pa = photos[0], pb = photos[photos.length-1]; const wks = Math.round((new Date(pb.week) - new Date(pa.week))/604800000);
+      cmp = [{ title:'Début', date:fdate(pa.date), src:pa.src }, { title:'Aujourd’hui', date:fdate(pb.date), src:pb.src }]; cmpGap = `${wks} semaine${wks > 1 ? 's' : ''} d’écart`; }
+    cmp = cmp.map((c,i) => ({ ...c, bgImg:`url("${c.src}")`, border: i ? '1.5px solid rgba(var(--fb-a,236,40,78),.5)' : '1px solid rgba(var(--fb-fg,255,255,255),.08)' }));
+    const wk = dk(mondayOf(today)); const hasWeek = photos.some(p => p.week === wk);
+    const photoList = [...photos].reverse().map(p => { const conf = st.confirmPhoto === p.week; return { src:p.src, bgImg:`url("${p.src}")`, label:fdate(p.date),
+      border: p.week === wk ? '1.5px solid rgba(var(--fb-a,236,40,78),.6)' : '1px solid rgba(var(--fb-fg,255,255,255),.08)', delIcon: conf ? 'delete' : 'close', delBg: conf ? '#e5484d' : 'rgba(var(--fb-ink,0,0,0),.55)',
+      onDelete:() => { if (!conf) return this.setState({ confirmPhoto:p.week }); this.savePhotos(photos.filter(x => x.week !== p.week)); this.setState({ confirmPhoto:null }); } }; });
+    const cmpModes = [['start','Début vs aujourd’hui'],['month','Mois par mois']].map(([id,label]) => { const on = st.cmpMode === id;
+      return { label, onClick:() => this.setState({ cmpMode:id }), bg: on ? 'rgb(var(--fb-a,236,40,78))' : 'transparent', color: on ? 'var(--fb-on,#fff)' : 'var(--fb-tx2,#d4c2b6)' }; });
+    const restOptions = [60,90,120,180].map(v => { const a = S.rest === v; return { label: v < 120 ? `${v} s` : `${v/60} min`, onClick:() => this.setting('rest', v),
+      bg: a ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-fg,255,255,255),.05)', color: a ? 'var(--fb-on,#fff)' : 'var(--fb-tx2,#d4c2b6)', border: a ? 'none' : '1px solid rgba(var(--fb-fg,255,255,255),.1)' }; });
+    const tg = [['autoTimer','timer','Minuteur de repos auto',''], ['remind','notifications','Rappels les jours de séance','']];
+    const toggles = tg.map(([k,icon,label,desc],i) => ({ icon, label, desc, onClick:() => this.setting(k, !S[k]),
+      track: S[k] ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-fg,255,255,255),.12)', justify: S[k] ? 'flex-end' : 'flex-start', border: i < tg.length-1 ? '1px solid rgba(var(--fb-fg,255,255,255),.06)' : 'none' }));
+    const prCount = allEx.filter(e => this.history(e.id).length).length;
+    const profileStats = [{ icon:'bolt', value:attended.size, label:'séances' }, { icon:'local_fire_department', value:streak, label:'sem. de série' }, { icon:'emoji_events', value:prCount, label:'records' }];
+
+    const restLeft = st.restEnd ? Math.max(0, Math.ceil((st.restEnd - st.now)/1000)) : 0;
+    const num = v => +v || 0;
+
+    return {
+      isMobile, isDesktop:!isMobile, mainML: isMobile ? '0' : '224px', nav, streak, weekRow, stats, settings:S, initial:(S.name||'?').trim().charAt(0).toUpperCase(),
+      dateLabel: today.toLocaleDateString('fr-FR',{ weekday:'long', day:'numeric', month:'long' }), pageTitle: titles[st.tab],
+      isHome: st.tab==='home', isPrograms: st.tab==='programs', isSession: st.tab==='session', isPerf: st.tab==='perf', isSettings: st.tab==='settings',
+      modes: this.modeList(S.mode, m => this.setMode(m)),
+      themes: THEMES.map(t => { const a = (S.theme||'rubis') === t.id; const v = t.v; return { name:t.name, onClick:() => this.setTheme(t.id), bgPreview:prev(v, S.mode),
+        icon:t.icon, iconColor:`rgb(${v.a3})`, glow:`0 0 18px rgba(${v.a},.7)`,
+        check: a ? 'grid' : 'none', border: a ? `1.5px solid rgb(${v.a})` : '1px solid rgba(var(--fb-fg,255,255,255),.08)' }; }),
+      heatRows, heatCols, heatTotal, heatRange: `${fmtM(start)} → ${fmtM(today)}`,
+      hero, prog, progTabs, prs, sess,
+      ...this.obVals(S), ...this.authVals(S), authFormRef:this.authFormRef, spinRef:this.spinRef,
+      logout:() => { this.setState({ profileOpen:false }); this.persist({ settings:{ ...S, loggedIn:false }, auth:{ mode:'login', email:'', pw:'', show:false, err:'', loading:false } }); },
+      redoOb:() => this.setState({ profileOpen:false, ob:0, obd:null, auth:{ mode:'signup', email:'', pw:'', show:false, err:'', loading:false }, settings:{ ...S, onboarded:false } }),
+      bars, barAvg, goalPct, changes, changeStats, noChanges: !changes.length, cmp, cmpGap, cmpEmpty, canCompare: cmp.length === 2, noCompare: cmp.length !== 2, cmpModes, photoList,
+      addIcon: hasWeek ? 'cached' : 'add_a_photo', addLabel: hasWeek ? 'Remplacer' : 'Cette sem.', addBg: hasWeek ? 'transparent' : 'rgba(var(--fb-a,236,40,78),.08)',
+      photoPrompt: st.photoPrompt, photoLater:() => this.setState({ photoPrompt:false }), pickPhoto:this.pickPhoto, onFile:this.onFile, fileRef:this.fileRef, obRef:this.obRef, obWrapRef:this.obWrapRef, fadeRef:this.fadeRef, cmpRef:this.cmpRef, noSession: !sess, hasSession: !!sess,
+      hasProg: !!prog, noPrograms: !programs.length, isEditing: st.editing && !!prog, notEditing: !st.editing,
+      iconPicker, dayPicker, plan, planOptions, hasPlanDay: pd != null, planDayName: pd != null ? DAY_NAMES[pd] : '',
+      startToday:() => hero.id ? this.start(hero.id) : (this.go('programs')),
+      goHeroProgram:() => { if (hero.id) this.setState({ progId:hero.id }); this.go('programs'); },
+      startSelected:() => selP && this.start(selP.id), goPrograms:() => this.go('programs'), goPerf:() => this.go('perf'), goProfile:() => this.setState({ profileOpen:true, confirmReset:false }), closeProfile:this.closeProfile, mainRef:this.mainRef, curRef:this.curRef, titleRef:this.titleRef, backdropRef:this.backdropRef, panelRef:this.panelRef, popRef:this.popRef, toastRef:this.toastRef, stop: ev => ev.stopPropagation(),
+      profileOpen: st.profileOpen, sheetAlign: isMobile ? 'flex-end' : 'center', sheetPad: isMobile ? '0' : '24px', sheetMaxH: isMobile ? '90vh' : '86vh', sheetRadius: isMobile ? '26px 26px 0 0' : '26px',
+      toggleEdit:() => this.setState({ editing:!st.editing, confirmDel:false }),
+      onProgName: ev => this.updProg(selP.id, { name:ev.target.value }), onProgSub: ev => this.updProg(selP.id, { subtitle:ev.target.value }),
+      addProgram:() => { const id = uid('p'); this.progs(ps => [...ps, { id, name:'Nouveau programme', subtitle:'', icon:'bolt', days:[], exercises:[] }]); this.setState({ progId:id, editing:true }); },
+      addExercise:() => this.updProg(selP.id, { exercises:[...selP.exercises, { id:uid('e'), name:'Nouvel exercice', machine:'', sets:3, reps:10, weight:20, group:'pecs' }] }),
+      deleteProgram:() => { if (!st.confirmDel) return this.setState({ confirmDel:true });
+        const rest = programs.filter(p => p.id !== selP.id); this.persist({ programs:rest, progId: rest[0]?.id, editing:false, confirmDel:false }); this.flash('Programme supprimé'); },
+      delLabel: st.confirmDel ? 'Confirmer la suppression' : 'Supprimer', delBg: st.confirmDel ? 'rgba(255,90,70,.18)' : 'transparent',
+      cancelSession:() => this.persist({ session:null, tab:'home', restEnd:null }), finishSession:() => this.finish(),
+      onName: ev => this.setting('name', ev.target.value), onEmail: ev => this.setting('email', ev.target.value),
+      onBodyWeight: ev => this.setting('bodyWeight', ev.target.value), onHeight: ev => this.setting('height', ev.target.value),
+      goalDown:() => this.setting('goal', Math.max(1, num(S.goal)-1)), goalUp:() => this.setting('goal', Math.min(7, num(S.goal)+1)),
+      restOptions, toggles, profileStats,
+      exportData:() => { const blob = new Blob([JSON.stringify({ programs, logs:st.logs, perf:st.perf, settings:S }, null, 2)], { type:'application/json' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'fitnessboii.json'; a.click(); },
+      resetData:() => { if (!st.confirmReset){ this.setState({ confirmReset:true }); return; }
+        this.persist({ ...defaults(), confirmReset:false, progId:'push', exId:'dc', tab:'home' }); this.flash('Données réinitialisées'); },
+      resetLabel: st.confirmReset ? 'Confirmer la réinitialisation' : 'Réinitialiser l’application', resetBg: st.confirmReset ? 'rgba(255,90,70,.15)' : 'transparent',
+      hasRestFloat: !!st.restEnd && st.tab !== 'session', hasRestInline: !!st.restEnd && st.tab === 'session', restLabel: `${Math.floor(restLeft/60)}:${pad(restLeft%60)}`, restBottom: isMobile ? '92px' : '28px',
+      restPlus:() => this.setState({ restEnd: st.restEnd + 15000 }), restSkip:() => this.setState({ restEnd:null }),
+      hasToast: !!st.toast, toast: st.toast
+    };
+  }
+}
+</script>
+</body>
+</html>
