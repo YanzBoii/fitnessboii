@@ -1,4 +1,5 @@
 # FitnessBoii
+n[![CI](https://github.com/YanzBoii/fitnessboii/actions/workflows/ci.yml/badge.svg)](https://github.com/YanzBoii/fitnessboii/actions/workflows/ci.yml)
 
 Application de suivi de musculation : programmes (exercices, machine, séries × reps × charge), séances guidées un exercice à la fois, perf max par exercice, régularité (heatmap de présence, série de semaines) et évolution physique (photo hebdomadaire + comparatifs).
 
