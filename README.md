@@ -1,104 +1,118 @@
+<div align="center">
+
+<img src="public/icon.svg" width="72" alt="Logo FitnessBoii">
+
 # FitnessBoii
 
+**Chaque séance compte.**
+
+Application de suivi de musculation : tes programmes, tes perfs et ta régularité au même endroit.
+
 [![CI](https://github.com/YanzBoii/fitnessboii/actions/workflows/ci.yml/badge.svg)](https://github.com/YanzBoii/fitnessboii/actions/workflows/ci.yml)
+![React](https://img.shields.io/badge/React_18-20232a?logo=react&logoColor=61dafb)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178c6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646cff?logo=vite&logoColor=white)
+![PWA](https://img.shields.io/badge/PWA-5a0fc8?logo=pwa&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-dd2c00?logo=firebase&logoColor=white)
+![Netlify](https://img.shields.io/badge/Netlify-00ad9f?logo=netlify&logoColor=white)
 
-Application de suivi de musculation : programmes (exercices, machine, séries × reps × charge), séances guidées un exercice à la fois, perf max par exercice, régularité (heatmap de présence, série de semaines) et évolution physique (photo hebdomadaire + comparatifs).
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/showcase-dark.png">
+  <img src="docs/screenshots/showcase-light.png" alt="Écrans Accueil, Séance, Programmes et Performances">
+</picture>
 
-Responsive PC / mobile, installable (PWA), utilisable hors-ligne à la salle, multi-utilisateur, hébergée gratuitement.
+</div>
+
+## Le concept
+
+À la salle, on oublie vite ce qu'on a soulevé la semaine dernière, et la régularité se perd sans qu'on s'en rende compte. FitnessBoii garde tout ça pour toi.
+
+1. **Tes programmes** (Push, Pull, Legs…) sont calés sur tes jours d'entraînement : exercices, machine, séries × reps × charge.
+2. **Pendant la séance**, l'app te guide un exercice à la fois, reprend ta dernière perf et lance le minuteur de repos.
+3. **Après**, tu vois ta progression : records, série de semaines, présence à la salle et photo de la semaine.
+
+Un questionnaire au premier lancement (objectif, niveau, mensurations, jours d'entraînement) répartit automatiquement les programmes sur la semaine.
+
+## Fonctionnalités
+
+- 🏋️ **Séance guidée** : un exercice à la fois, charge et reps pré-remplies avec ta dernière perf, record affiché
+- ⏱️ **Chrono et minuteur de repos** automatique (60 s à 3 min, +15 s, passer)
+- 🗓️ **Programmes éditables** et planning de la semaine : exercices, machine, muscles, jours
+- 🔥 **Régularité** : série de semaines, heatmap de présence, objectif de séances par semaine
+- 🏆 **Records** : perf max par exercice, progression sur 30 jours, records récents
+- 📸 **Évolution physique** : une photo par semaine, comparatif début / aujourd'hui ou mois par mois
+- 🔐 **Comptes** email (avec vérification) ou Google ; chacun ne voit que ses données
+- 📱 **PWA installable** sur iPhone, Android et PC, utilisable hors ligne à la salle
+- 🎨 **6 thèmes de couleur**, mode clair / sombre, interface responsive (nav flottante mobile, sidebar desktop)
+- 📤 **Export JSON** de toutes les données, suppression complète du compte
+
+<table>
+  <tr>
+    <td><img src="docs/screenshots/desktop-home.png" alt="Accueil desktop, thème sombre"></td>
+    <td><img src="docs/screenshots/desktop-programs.png" alt="Programmes desktop, thème clair"></td>
+  </tr>
+</table>
 
 ## Stack
 
 | | |
 |---|---|
-| Front | React 18, TypeScript strict, Vite |
-| Données | Firebase Auth (Google + email), Cloud Firestore (cache persistant hors-ligne) |
-| Sécurité | Règles Firestore testées, App Check (reCAPTCHA v3), en-têtes HTTP stricts |
-| PWA | vite-plugin-pwa (Workbox) |
-| Tests | Vitest (logique métier) + émulateur Firestore (règles de sécurité) |
-| CI / hébergement | GitHub Actions, Netlify |
+| **Front** | React 18, TypeScript strict, Vite |
+| **PWA** | vite-plugin-pwa (Workbox), cache hors ligne |
+| **Back** | Firebase Auth (Google + email), Cloud Firestore (cache persistant hors ligne) |
+| **Sécurité** | Règles Firestore testées, App Check (reCAPTCHA v3), en-têtes HTTP stricts |
+| **Hébergement** | Netlify |
+| **Tests / CI** | Vitest (logique métier) + émulateur Firestore (règles), GitHub Actions |
 
 Coût : 0 € (Firebase forfait Spark, Netlify gratuit).
 
-## Architecture
+## Points techniques
 
-```
-src/
-  domain/     logique pure, testée : dates, statistiques (série, présence, progrès), normalisation, séance
-  firebase/   seul code qui parle à Firebase : config, auth, accès Firestore, photos
-  state/      données temps réel (onSnapshot), état partagé, écritures différées
-  ui/         thèmes (variables CSS --fb-*), animations (respect de prefers-reduced-motion)
-  features/   un dossier par écran : <Écran>View.tsx (rendu) + <écran>Vals.ts (logique d'affichage)
-tests/
-  domain/     tests unitaires
-  rules/      tests des règles Firestore contre l'émulateur
-```
+- **Données isolées et validées** : chaque utilisateur n'accède qu'à `users/{son uid}` ; les règles vérifient champs, types, bornes et formats. Elles sont testées contre l'émulateur à chaque push.
+- **Photos privées sans Storage** : compressées dans le navigateur (720 px, l'original n'est jamais envoyé), stockées en octets dans Firestore et lisibles uniquement par leur propriétaire.
+- **Hors ligne** : cache Firestore persistant ; la séance en cours est sauvegardée et reprise après fermeture, même sur un autre appareil.
+- **Écritures groupées** : les saisies s'affichent tout de suite et partent dans Firestore avec un léger délai, pas une écriture par frappe.
+- **Aucune donnée dupliquée** : série, présence, graphiques et records sont recalculés depuis l'historique des séances.
+- **Rendu séparé de la logique** : chaque écran = une vue pure + un hook qui calcule ce qu'elle affiche.
 
-Chaque écran sépare **le rendu** (`*View.tsx`, composant pur qui reçoit un objet `v`) de **sa logique** (`use*Vals`, hook qui calcule cet objet à partir des données). Les vues ont été produites depuis le prototype de design (`design/`) pour garder styles et animations à l'identique ; leur typage est vérifié contre les hooks.
+Détails (modèle de données, sécurité) dans [docs/architecture.md](docs/architecture.md).
 
-Les saisies (noms, charges, réglages) s'affichent immédiatement et sont écrites dans Firestore avec un léger délai groupé (`useOverlay`), ce qui évite une écriture par frappe.
+## Lancer le projet
 
-## Modèle de données
-
-Tout est rangé sous `users/{uid}` :
-
-| Chemin | Contenu |
-|---|---|
-| `users/{uid}` | profil et réglages |
-| `programs/{id}` | programme et ses exercices |
-| `sessionLogs/{AAAA-MM-JJ}` | séance terminée : durée + perf max par exercice |
-| `session/current` | séance en cours (reprise après fermeture, multi-appareils) |
-| `photos/{lundi}` | métadonnées de la photo de la semaine |
-| `photoData/{lundi}` | image JPEG compressée (octets) |
-
-Présence, série, graphiques et historique des perfs sont calculés à partir de `sessionLogs` : aucune donnée dupliquée.
-
-## Sécurité
-
-- **Isolation** : un utilisateur ne peut lire/écrire que `users/{son uid}` ; tout le reste est refusé par défaut ([`firestore.rules`](firestore.rules)).
-- **Email vérifié** obligatoire pour les comptes email/mot de passe, imposé côté serveur (`request.auth.token.email_verified`).
-- **Validation des écritures** dans les règles : champs autorisés (`hasOnly`), types, bornes, énumérations, format des identifiants et des dates, taille des listes, image JPEG ≤ 900 Ko. Ce que les règles ne peuvent pas vérifier (éléments d'une liste) est normalisé côté client avec les mêmes bornes ([`normalize.ts`](src/domain/normalize.ts)).
-- **Tests automatisés des règles** ([`tests/rules`](tests/rules/firestore.test.ts)) : autre utilisateur, visiteur, email non vérifié, champs inconnus, valeurs hors bornes, image trop lourde… exécutés à chaque push.
-- **Photos privées** : compressées dans le navigateur (720 px, l'original n'est jamais envoyé), stockées dans Firestore et lues uniquement avec le jeton du propriétaire. Aucune URL publique.
-- **App Check** : seule l'app déployée peut appeler le projet Firebase.
-- **En-têtes HTTP** ([`netlify.toml`](netlify.toml)) : CSP restreinte à Firebase / Google Fonts, HSTS, `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy`, `Permissions-Policy`.
-- **Déconnexion** : le cache Firestore local est effacé (appareil partagé).
-- **Suppression de compte** : ré-authentification, effacement de toutes les données, puis du compte. Export JSON disponible.
-
-> La config web Firebase (`apiKey`…) est publique par nature : la sécurité repose sur les règles et App Check, pas sur le secret de ces valeurs.
-
-## Lancer en local
-
-Prérequis : Node 22+, Java 21+ (émulateurs).
+**Avec les émulateurs** (aucun projet Firebase requis, Java 21+) :
 
 ```bash
 npm install
-cp .env.example .env        # puis renseigner la config web Firebase
-npm run dev
+npm run emulators   # terminal 1
+npm run dev:emu     # terminal 2
 ```
 
-Sans projet Firebase, avec les émulateurs locaux (aucun appel réseau vers Firebase) :
+**Avec un vrai projet Firebase** : copier `.env.example` en `.env`, le remplir, puis `npm run dev`.
+
+Le pas-à-pas complet (Firebase, Netlify, App Check) est dans [SETUP.md](SETUP.md).
 
 ```bash
-npm run emulators           # terminal 1
-npm run dev:emu             # terminal 2
+npm test            # tests unitaires (dates, stats, séance, normalisation)
+npm run test:rules  # règles Firestore sur l'émulateur (Java 21 requis)
+npm run build       # build de production
 ```
 
-Le lien de vérification d'email est alors visible dans la sortie de l'émulateur Auth.
+## Structure
 
-## Tests
-
-```bash
-npm test                    # logique métier
-npm run test:rules          # règles de sécurité (lance l'émulateur Firestore)
-npm run typecheck
+```
+src/
+├── domain/      # logique pure testée : dates, stats, séance, normalisation
+├── firebase/    # config, auth, accès Firestore, photos
+├── state/       # données temps réel, état partagé, toasts
+├── ui/          # thèmes, animations, styles globaux
+└── features/    # un dossier par écran (Accueil, Programmes, Séance, Perfs…)
+design/          # prototype de design d'origine
+firestore.rules  # règles de sécurité
 ```
 
-## Déploiement
+## Crédits
 
-1. **Firebase** : projet Spark, Authentication (Email/Mot de passe + Google), Firestore. Déployer les règles : `npm run deploy:rules`.
-2. **Netlify** : importer le dépôt GitHub (build et en-têtes lus depuis `netlify.toml`), ajouter les variables `VITE_*` de `.env.example`.
-3. **Firebase Auth → Paramètres → Domaines autorisés** : ajouter le domaine Netlify.
-4. **App Check** : enregistrer l'app web avec une clé reCAPTCHA v3 (domaine Netlify), renseigner `VITE_RECAPTCHA_SITE_KEY`, redéployer, vérifier les métriques puis activer l'application (« Enforce ») pour Firestore et Authentication.
+Design et conception de l'interface : [YanzBoii](https://github.com/YanzBoii).
 
 ## Licence
 
