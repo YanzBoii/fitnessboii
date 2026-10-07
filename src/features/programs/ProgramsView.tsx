@@ -281,7 +281,7 @@ export function ProgramsView({ v }: { v: ProgramsVals }) {
                     </label>
                     <label style={{ display: "flex", flexDirection: "column", gap: "4px", fontSize: "11px", color: "var(--fb-tx3,#a8978c)" }}>
                       Poids (kg)
-                      <input type="number" value={e.weight} onChange={e.onWeight} style={{ height: "36px", padding: "0 10px", borderRadius: "10px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", font: "600 14px Sora", outline: "none", width: "100%" }} />
+                      <input type="text" inputMode="decimal" value={e.weight} onChange={e.onWeight} style={{ height: "36px", padding: "0 10px", borderRadius: "10px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", font: "600 14px Sora", outline: "none", width: "100%" }} />
                     </label>
                   </div>
                 </div>

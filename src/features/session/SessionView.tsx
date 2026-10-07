@@ -155,7 +155,7 @@ export function SessionView({ v }: { v: SessionVals }) {
                       remove
                     </span>
                   </button>
-                  <input type="number" inputMode="decimal" value={v.sess.c.w} onChange={v.sess.c.onW} style={{ flex: "1", minWidth: "0", width: "100%", height: "48px", textAlign: "center", border: "none", background: "transparent", color: "var(--fb-tx,#f5efe9)", font: "700 30px Sora", letterSpacing: "-.02em", outline: "none" }} />
+                  <input type="text" inputMode="decimal" value={v.sess.c.w} onChange={v.sess.c.onW} style={{ flex: "1", minWidth: "0", width: "100%", height: "48px", textAlign: "center", border: "none", background: "transparent", color: "var(--fb-tx,#f5efe9)", font: "700 30px Sora", letterSpacing: "-.02em", outline: "none" }} />
                   <button onClick={v.sess.c.wPlus} style={{ width: "44px", height: "44px", flexShrink: "0", borderRadius: "50%", cursor: "pointer", display: "grid", placeItems: "center", background: "rgba(var(--fb-fg,255,255,255),.06)", border: "1px solid rgba(var(--fb-fg,255,255,255),.08)", color: "var(--fb-tx,#f5efe9)" }}>
                     <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", fontVariationSettings: "'FILL' 0" }}>
                       add

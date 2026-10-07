@@ -37,7 +37,7 @@ export function ProfileView({ v }: { v: ProfileVals }) {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
             <label style={{ display: "flex", flexDirection: "column", gap: "5px", fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
               Poids (kg)
-              <input type="number" value={v.settings.bodyWeight} onChange={v.onBodyWeight} style={{ height: "40px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", fontSize: "14px", outline: "none", width: "100%", fontFamily: "Sora", fontWeight: "600" }} />
+              <input type="text" inputMode="decimal" value={v.settings.bodyWeight} onChange={v.onBodyWeight} style={{ height: "40px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", fontSize: "14px", outline: "none", width: "100%", fontFamily: "Sora", fontWeight: "600" }} />
             </label>
             <label style={{ display: "flex", flexDirection: "column", gap: "5px", fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
               Taille (cm)

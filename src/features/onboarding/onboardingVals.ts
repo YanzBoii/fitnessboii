@@ -7,6 +7,9 @@ import { useData } from '../../state/data';
 import { useToast } from '../../state/toast';
 import { anim, fadeRef } from '../../ui/anim';
 
+/** Accepte la virgule décimale ("75,5"). */
+const toNum = (v: number | string) => Number(String(v).replace(',', '.'));
+
 interface Draft {
   name: string;
   goalType: GoalType | null;
@@ -51,7 +54,7 @@ export function useOnboardingVals() {
     try {
       await completeOnboarding(uid, {
         name: d.name.trim(), goalType: d.goalType, level: d.level,
-        bodyWeight: +d.bodyWeight || 75, height: +d.height || 175, goal: days.length,
+        bodyWeight: toNum(d.bodyWeight) || 75, height: +d.height || 175, goal: days.length,
         ...(profile ? {} : { rest: DEFAULT_PROFILE.rest, autoTimer: DEFAULT_PROFILE.autoTimer, remind: DEFAULT_PROFILE.remind, theme: DEFAULT_PROFILE.theme, mode: DEFAULT_PROFILE.mode })
       }, distributeDays(base, days), !profile);
       flash(`Bienvenue ${d.name.trim()}`);
@@ -100,8 +103,8 @@ export function useOnboardingVals() {
     obLevels: OB_LEVELS.map(([id, label, desc, icon]) => ({ label, desc, icon, ...sel(d.level === id), onClick: () => setD({ level: id }) })),
     obBw: (ev: ChangeEvent<HTMLInputElement>) => setD({ bodyWeight: ev.target.value }),
     obHt: (ev: ChangeEvent<HTMLInputElement>) => setD({ height: ev.target.value }),
-    obBwM: () => setD({ bodyWeight: Math.max(30, (+d.bodyWeight || 0) - 1) }),
-    obBwP: () => setD({ bodyWeight: Math.min(400, (+d.bodyWeight || 0) + 1) }),
+    obBwM: () => setD({ bodyWeight: Math.max(30, (toNum(d.bodyWeight) || 0) - 1) }),
+    obBwP: () => setD({ bodyWeight: Math.min(400, (toNum(d.bodyWeight) || 0) + 1) }),
     obHtM: () => setD({ height: Math.max(120, (+d.height || 0) - 1) }),
     obHtP: () => setD({ height: Math.min(250, (+d.height || 0) + 1) }),
     obDays: DAYS.map((label, i) => {

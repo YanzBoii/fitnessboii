@@ -136,7 +136,7 @@ export function OnboardingView({ v }: { v: OnboardingVals }) {
                   </span>
                 </button>
                 <div style={{ flex: "1", display: "flex", alignItems: "baseline", justifyContent: "center", gap: "6px" }}>
-                  <input type="number" inputMode="numeric" value={v.obd.bodyWeight} onChange={v.obBw} style={{ width: "110px", textAlign: "center", border: "none", background: "transparent", color: "var(--fb-tx,#f5efe9)", font: "700 38px Sora", letterSpacing: "-.03em", outline: "none" }} />
+                  <input type="text" inputMode="decimal" value={v.obd.bodyWeight} onChange={v.obBw} style={{ width: "110px", textAlign: "center", border: "none", background: "transparent", color: "var(--fb-tx,#f5efe9)", font: "700 38px Sora", letterSpacing: "-.03em", outline: "none" }} />
                   <span style={{ fontSize: "14px", color: "var(--fb-tx3,#a8978c)" }}>
                     kg
                   </span>

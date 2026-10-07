@@ -6,8 +6,19 @@ import { fitSize } from '../domain/image';
 import { db } from './config';
 import { photoDataRef, photoMetaRef } from './repo';
 
-async function encode(img: ImageBitmap, max: number, quality: number) {
-  const { w, h } = fitSize(img.width, img.height, max);
+/** Décode via <img> : compatible partout et respecte l'orientation EXIF lors du dessin. */
+function loadImage(file: File) {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('not-image')); };
+    img.src = url;
+  });
+}
+
+async function encode(img: HTMLImageElement, max: number, quality: number) {
+  const { w, h } = fitSize(img.naturalWidth, img.naturalHeight, max);
   const c = document.createElement('canvas');
   c.width = w;
   c.height = h;
@@ -19,17 +30,13 @@ async function encode(img: ImageBitmap, max: number, quality: number) {
 
 /** JPEG ≤ 900 Ko : 720 px q.8, puis repli progressif. Le fichier original n'est jamais envoyé. */
 export async function compressToJpeg(file: File): Promise<Uint8Array> {
-  if (!file.type.startsWith('image/')) throw new Error('not-image');
-  const img = await createImageBitmap(file, { imageOrientation: 'from-image' });
-  try {
-    for (const [max, q] of [[720, 0.8], [720, 0.6], [560, 0.6], [420, 0.5]] as const) {
-      const out = await encode(img, max, q);
-      if (out.byteLength <= LIMITS.photoBytes) return out;
-    }
-    throw new Error('too-large');
-  } finally {
-    img.close();
+  if (file.type && !file.type.startsWith('image/')) throw new Error('not-image');
+  const img = await loadImage(file);
+  for (const [max, q] of [[720, 0.8], [720, 0.6], [560, 0.6], [420, 0.5]] as const) {
+    const out = await encode(img, max, q);
+    if (out.byteLength <= LIMITS.photoBytes) return out;
   }
+  throw new Error('too-large');
 }
 
 export async function savePhoto(uid: string, week: string, date: string, jpeg: Uint8Array) {
