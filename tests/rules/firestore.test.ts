@@ -21,10 +21,10 @@ const bob = () => env.authenticatedContext('bob', { email: 'bob@test.dev', email
 const unverified = () => env.authenticatedContext('alice', { email: 'alice@test.dev', email_verified: false }).firestore();
 const anon = () => env.unauthenticatedContext().firestore();
 
-const profile = { name: 'Alice', goalType: 'force', level: 'inter', bodyWeight: 62.5, height: 168, goal: 4, rest: 90,
+const profile = { name: 'Alice', goalType: 'force', level: 'inter', split: 'ppl', bodyWeight: 62.5, height: 168, goal: 4, rest: 90,
   autoTimer: true, remind: false, theme: 'ocean', mode: 'dark', onboarded: true };
 const program = { name: 'Push', subtitle: 'Pecs', icon: 'fitness_center', days: [0, 3], order: 0,
-  exercises: [{ id: 'dc', name: 'DC', machine: '', group: 'pecs', sets: 4, reps: 8, weight: 80 }] };
+  exercises: [{ id: 'dc', name: 'DC', machine: '', group: 'pecs', sets: 4, reps: 8, weight: 80, rest: 120, note: 'siège cran 4' }] };
 const log = { date: '2026-10-08', programId: 'push', programName: 'Push', minutes: 52,
   perf: { dc: { w: 80, r: 8, name: 'DC', group: 'pecs' } }, createdAt: Timestamp.now() };
 const session = { programId: 'push', startedAt: Date.now(), cur: 0, ex: { dc: { w: 80, r: 8, done: false } } };
@@ -89,6 +89,7 @@ describe('validation des écritures', () => {
     await assertFails(setDoc(doc(db, 'users/alice'), { ...profile, isAdmin: true }));
     await assertFails(setDoc(doc(db, 'users/alice'), { ...profile, goal: 9 }));
     await assertFails(setDoc(doc(db, 'users/alice'), { ...profile, theme: 'hacker' }));
+    await assertFails(setDoc(doc(db, 'users/alice'), { ...profile, split: 'bro' }));
     await assertFails(setDoc(doc(db, 'users/alice'), { ...profile, bodyWeight: 'lourd' }));
     await assertFails(setDoc(doc(db, 'users/alice'), { ...profile, name: 'x'.repeat(41) }));
     await assertFails(setDoc(doc(db, 'users/alice'), { ...profile, goalType: null }));

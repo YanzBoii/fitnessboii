@@ -73,7 +73,7 @@ export const DEFAULT_PROGRAMS: Program[] = [
 ];
 
 export const DEFAULT_PROFILE: Profile = {
-  name: '', goalType: null, level: null, bodyWeight: 75, height: 175, goal: 3, rest: 90,
+  name: '', goalType: null, level: null, split: null, bodyWeight: 75, height: 175, goal: 3, rest: 90,
   autoTimer: true, remind: false, theme: 'rubis', mode: 'dark', onboarded: false
 };
 

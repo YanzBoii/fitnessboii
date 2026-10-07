@@ -4,11 +4,14 @@ export type Level = 'debutant' | 'inter' | 'avance';
 export type ThemeId = 'rubis' | 'braise' | 'ocean' | 'menthe' | 'violet' | 'solaire';
 export type Mode = 'dark' | 'light';
 export type RestSeconds = 60 | 90 | 120 | 180;
+export type Split = 'ppl' | 'ul' | 'fb' | 'custom';
 
 export interface Profile {
   name: string;
   goalType: GoalType | null;
   level: Level | null;
+  /** Type de programme choisi à l'onboarding. */
+  split: Split | null;
   bodyWeight: number;
   height: number;
   /** Objectif de séances par semaine (1–7). */
@@ -28,8 +31,12 @@ export interface Exercise {
   group: Group;
   sets: number;
   reps: number;
-  /** 0 = poids du corps. */
+  /** Charge cible ; 0 = poids du corps ou « auto » (dernière perf). */
   weight: number;
+  /** Repos spécifique en secondes ; absent/0 = réglage global. */
+  rest?: number;
+  /** Consigne perso : réglage machine, prise, tempo… */
+  note?: string;
 }
 
 export interface Program {

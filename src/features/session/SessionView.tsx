@@ -143,6 +143,14 @@ export function SessionView({ v }: { v: SessionVals }) {
                 </span>
                 Record {v.sess.c.best}
               </span>
+              {v.sess.c.hasNote && (<>
+                <span style={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "12px", fontWeight: "600", padding: "6px 11px", borderRadius: "99px", background: "rgba(var(--fb-a,236,40,78),.12)", color: "var(--fb-tx,#f5efe9)" }}>
+                  <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "15px", fontVariationSettings: "'FILL' 1", color: "rgb(var(--fb-a4,255,130,154))" }}>
+                    sticky_note_2
+                  </span>
+                  {v.sess.c.note}
+                </span>
+              </>)}
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
               <div style={{ display: "flex", flexDirection: "column", gap: "8px", padding: "12px", borderRadius: "20px", background: "rgba(var(--fb-ink,0,0,0),.32)", border: "1px solid rgba(var(--fb-fg,255,255,255),.06)" }}>

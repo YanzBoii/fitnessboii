@@ -43,12 +43,13 @@ service cloud.firestore {
     // ---------- Profil + rÃ©glages : users/{uid} ----------
     function validProfile() {
       let d = data();
-      return d.keys().hasOnly(['name', 'goalType', 'level', 'bodyWeight', 'height', 'goal',
+      return d.keys().hasOnly(['name', 'goalType', 'level', 'split', 'bodyWeight', 'height', 'goal',
                                'rest', 'autoTimer', 'remind', 'theme', 'mode', 'onboarded',
                                'createdAt', 'updatedAt'])
         && isStr(d.get('name', ''), 0, 40)
         && (d.get('goalType', 'masse') in ['masse', 'seche', 'force', 'forme'])
         && (d.get('level', 'debutant') in ['debutant', 'inter', 'avance'])
+        && (d.get('split', 'custom') in ['ppl', 'ul', 'fb', 'custom'])
         && isNum(d.get('bodyWeight', 75), 20, 400)
         && isNum(d.get('height', 175), 100, 250)
         && isInt(d.get('goal', 3), 1, 7)

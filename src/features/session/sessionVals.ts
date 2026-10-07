@@ -73,7 +73,7 @@ export function useSessionVals() {
     const ce = order[ci];
     const doneCount = order.filter(e => se.ex[e.id].done).length;
     let c = {
-      num: 0, name: 'Aucun exercice', machine: '', icon: 'fitness_center', target: '', best: '—', w: '0', r: '0',
+      num: 0, name: 'Aucun exercice', machine: '', icon: 'fitness_center', target: '', best: '—', w: '0', r: '0', hasNote: false, note: '',
       onW: (_: ChangeEvent<HTMLInputElement>) => {}, onR: (_: ChangeEvent<HTMLInputElement>) => {},
       wMinus: () => {}, wPlus: () => {}, rMinus: () => {}, rPlus: () => {}, validate: () => {},
       validateLabel: '', btnIcon: 'check', btnBg: '', btnColor: '', btnBorder: '', btnShadow: ''
@@ -99,14 +99,14 @@ export function useSessionVals() {
       c = {
         num: ci + 1, name: ce.name, machine: ce.machine || '—', icon: groupIcon(ce.group),
         target: `${ce.sets} × ${ce.reps}${+ce.weight ? ` · ${fmtKg(ce.weight)} kg` : ''}`,
-        best: b ? `${fmtKg(b.w)} kg × ${b.r}` : '—', w: w.value, r: r.value, onW: w.onChange, onR: r.onChange,
+        best: b ? `${fmtKg(b.w)} kg × ${b.r}` : '—', w: w.value, r: r.value, hasNote: !!ce.note, note: ce.note || '', onW: w.onChange, onR: r.onChange,
         wMinus: () => step('w', Math.max(0, r25((+x.w || 0) - 2.5))), wPlus: () => step('w', Math.min(1000, r25((+x.w || 0) + 2.5))),
         rMinus: () => step('r', Math.max(0, (+x.r || 0) - 1)), rPlus: () => step('r', Math.min(500, (+x.r || 0) + 1)),
         validate: () => {
           const exs = { ...se.ex, [ce.id]: { ...x, done: true } };
           const nx = nextTodo(order.map(e => e.id), exs, ci);
           save({ ...se, ex: exs, cur: nx }, true);
-          if (!x.done && a.profile.autoTimer && nx !== ci) a.setRestEnd(Date.now() + a.profile.rest * 1000);
+          if (!x.done && a.profile.autoTimer && nx !== ci) a.setRestEnd(Date.now() + (+(ce.rest ?? 0) || a.profile.rest) * 1000);
         },
         validateLabel: x.done ? 'Mettre à jour' : isLastTodo ? 'Valider le dernier exo' : 'Valider · exo suivant',
         btnIcon: x.done ? 'edit' : 'check',

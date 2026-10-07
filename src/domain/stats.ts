@@ -86,7 +86,8 @@ export function changes30d(history: Record<string, PerfPoint[]>, exercises: Exer
     const hh = history[e.id] || [];
     const rec = hh.filter(x => x.date >= cut), old = hh.filter(x => x.date < cut);
     if (!rec.length || !old.length) continue;
-    const bw = !+e.weight;
+    // Poids du corps = aucune perf notée avec une charge (une charge cible à 0 veut aussi dire « auto »).
+    const bw = hh.every(x => !x.w);
     const key = (x: PerfPoint) => (bw ? x.r : x.w);
     const to = Math.max(...rec.map(key)), from = Math.max(...old.map(key));
     const delta = Math.round((to - from) * 10) / 10;
@@ -107,11 +108,11 @@ export function changes30d(history: Record<string, PerfPoint[]>, exercises: Exer
 
 export interface Record3 { id: string; name: string; group: Group; w: number; r: number; diff: number; since: string }
 
-/** Top 3 des exercices chargés (hors poids du corps) par progression depuis la première perf. */
+/** Top 3 des exercices avec charge (hors poids du corps) par progression depuis la première perf. */
 export function recentRecords(history: Record<string, PerfPoint[]>, exercises: Exercise[]): Record3[] {
   const seen = new Set<string>();
   return exercises
-    .filter(e => +e.weight && (history[e.id] || []).length && !seen.has(e.id) && seen.add(e.id))
+    .filter(e => (history[e.id] || []).some(x => x.w > 0) && !seen.has(e.id) && seen.add(e.id))
     .map(e => {
       const h = history[e.id], b = best(h)!;
       return { id: e.id, name: e.name, group: e.group, w: b.w, r: b.r, diff: Math.round((b.w - h[0].w) * 10) / 10, since: h[0].date };

@@ -9,7 +9,7 @@ export function AuthView({ v }: { v: AuthVals }) {
       {v.isDesktop && (<>
         <div style={{ flex: "1 1 50%", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "40px", background: "radial-gradient(700px 520px at 30% 20%, rgba(var(--fb-a,236,40,78),calc(.35 * var(--fb-gk,1))), transparent 70%), rgb(var(--fb-s2,36,12,20))", borderRight: "1px solid rgba(var(--fb-fg,255,255,255),.06)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <div style={{ width: "32px", height: "32px", borderRadius: "10px", display: "grid", placeItems: "center", background: "linear-gradient(135deg,rgb(255,92,124),rgb(236,40,78))", boxShadow: "0 0 18px rgba(236,40,78,.55)", color: "#fff" }}>
+            <div style={{ width: "32px", height: "32px", borderRadius: "10px", display: "grid", placeItems: "center", background: "linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a,236,40,78)))", boxShadow: "0 0 18px rgba(var(--fb-a,236,40,78),.55)", color: "#fff" }}>
               <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", fontVariationSettings: "'FILL' 1" }}>
                 fitness_center
               </span>
@@ -45,7 +45,7 @@ export function AuthView({ v }: { v: AuthVals }) {
       <div style={{ flex: "1 1 50%", minHeight: "100%", display: "flex", padding: "clamp(24px,5vh,48px) 20px" }}>
         <div ref={v.authFormRef} style={{ margin: "auto", width: "100%", maxWidth: "400px", display: "flex", flexDirection: "column", gap: "22px" }}>
           {v.isMobile && (<>
-            <div style={{ width: "56px", height: "56px", borderRadius: "18px", display: "grid", placeItems: "center", background: "linear-gradient(135deg,rgb(255,92,124),rgb(236,40,78))", boxShadow: "0 0 36px rgba(236,40,78,.55)", color: "#fff" }}>
+            <div style={{ width: "56px", height: "56px", borderRadius: "18px", display: "grid", placeItems: "center", background: "linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a,236,40,78)))", boxShadow: "0 0 36px rgba(var(--fb-a,236,40,78),.55)", color: "#fff" }}>
               <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "30px", fontVariationSettings: "'FILL' 1" }}>
                 fitness_center
               </span>

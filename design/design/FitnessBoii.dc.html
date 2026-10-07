@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
 </head>
 <body>
+
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +32,7 @@ input:focus,select:focus{border-color:rgba(var(--fb-a3,255,92,124),.6)!important
   <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
     <aside style="position:fixed; left:0; top:0; bottom:0; width:224px; padding:24px 14px; display:flex; flex-direction:column; gap:24px; border-right:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.08)); background:rgba(var(--fb-bg,12,8,10),.7); backdrop-filter:blur(20px); z-index:10;">
       <div style="display:flex; align-items:center; gap:10px; padding:0 10px;">
-        <div style="width:28px; height:28px; border-radius:9px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(255,92,124),rgb(var(--fb-a2,220,30,96))); box-shadow:0 0 16px rgba(236,40,78,.55); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:18px; font-variation-settings:'FILL' 1; color:var(--fb-on,#fff);">fitness_center</span></div>
+        <div style="width:28px; height:28px; border-radius:9px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a,236,40,78))); box-shadow:0 0 16px rgba(var(--fb-a,236,40,78),.55); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:18px; font-variation-settings:'FILL' 1; color:var(--fb-on,#fff);">fitness_center</span></div>
         <div style="font-family:Sora; font-weight:700; font-size:17px; letter-spacing:-.02em;">FitnessBoii</div>
       </div>
       <nav style="display:flex; flex-direction:column; gap:4px;">
@@ -57,7 +57,7 @@ input:focus,select:focus{border-color:rgba(var(--fb-a3,255,92,124),.6)!important
       <div style="display:flex; flex-direction:column; gap:3px; min-width:0;">
         <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-            <div style="width:24px; height:24px; border-radius:8px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(255,92,124),rgb(var(--fb-a2,220,30,96))); box-shadow:0 0 12px rgba(236,40,78,.55); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:15px; font-variation-settings:'FILL' 1; color:var(--fb-on,#fff);">fitness_center</span></div>
+            <div style="width:24px; height:24px; border-radius:8px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a,236,40,78))); box-shadow:0 0 12px rgba(var(--fb-a,236,40,78),.55); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:15px; font-variation-settings:'FILL' 1; color:var(--fb-on,#fff);">fitness_center</span></div>
             <div style="font-family:Sora; font-weight:700; font-size:15px;">FitnessBoii</div>
           </div>
         </sc-if>
@@ -196,118 +196,50 @@ input:focus,select:focus{border-color:rgba(var(--fb-a3,255,92,124),.6)!important
           <sc-for list="{{ progTabs }}" as="t" hint-placeholder-count="3">
             <button onClick="{{ t.onClick }}" style="white-space:nowrap; flex-shrink:0; display:flex; align-items:center; gap:6px; padding:9px 16px; border-radius:99px; cursor:pointer; font:600 13px Manrope; background:{{ t.bg }}; color:{{ t.color }}; border:{{ t.border }}; box-shadow:{{ t.shadow }};"><span style="font-family:'Material Symbols Rounded'; font-size:17px; font-variation-settings:'FILL' 1;">{{ t.icon }}</span>{{ t.name }}</button>
           </sc-for>
-          <button onClick="{{ addProgram }}" style="white-space:nowrap; flex-shrink:0; display:flex; align-items:center; gap:5px; padding:9px 16px; border-radius:99px; cursor:pointer; font:600 13px Manrope; background:transparent; color:rgb(var(--fb-a4,255,130,154)); border:1.5px dashed rgba(var(--fb-a3,255,92,124),.45);"><span style="font-family:'Material Symbols Rounded'; font-size:17px;">add</span>Nouveau</button>
+          <button onClick="{{ newProgram }}" style="white-space:nowrap; flex-shrink:0; display:flex; align-items:center; gap:5px; padding:9px 16px; border-radius:99px; cursor:pointer; font:600 13px Manrope; background:transparent; color:rgb(var(--fb-a4,255,130,154)); border:1.5px dashed rgba(var(--fb-a3,255,92,124),.45);"><span style="font-family:'Material Symbols Rounded'; font-size:17px;">add</span>Nouveau</button>
         </div>
 
         <sc-if value="{{ noPrograms }}" hint-placeholder-val="{{ false }}">
           <div style="padding:40px 20px; border-radius:24px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:10px; border:1.5px dashed rgba(var(--fb-fg,255,255,255),.1);">
             <span style="font-family:'Material Symbols Rounded'; font-size:40px; color:rgb(var(--fb-a4,255,130,154));">playlist_add</span>
             <div style="font-weight:700;">Aucun programme</div>
-            <div style="font-size:13px; color:var(--fb-tx3,#a8978c);">Crée ton premier programme avec le bouton « Nouveau ».</div>
+            <div style="font-size:13px; color:var(--fb-tx3,#a8978c);">Choisis un modèle ou pars de zéro, ça prend 30 secondes.</div>
+            <button onClick="{{ newProgram }}" style="margin-top:6px; white-space:nowrap; display:flex; align-items:center; gap:6px; padding:11px 20px; border-radius:99px; border:none; cursor:pointer; background:rgb(var(--fb-a,236,40,78)); color:var(--fb-on,#fff); font:700 14px Manrope;"><span style="font-family:'Material Symbols Rounded'; font-size:18px; font-variation-settings:'FILL' 0;">add</span>Créer un programme</button>
           </div>
         </sc-if>
 
         <sc-if value="{{ hasProg }}" hint-placeholder-val="{{ true }}">
-          <section style="border-radius:24px; padding:18px; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:18px; background:radial-gradient(500px 260px at 0% 0%, rgba(var(--fb-a,236,40,78),calc(.32 * var(--fb-gk,1))), transparent 70%), linear-gradient(160deg, rgb(var(--fb-s2,36,12,20)), rgb(var(--fb-bg2,20,11,15))); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.16)); box-shadow:var(--fb-cardsh,none);">
-            <div style="display:flex; flex-direction:column; justify-content:space-between; gap:16px; padding:4px;">
-              <sc-if value="{{ notEditing }}" hint-placeholder-val="{{ true }}">
-                <div style="display:flex; flex-direction:column; gap:10px;">
-                  <div style="display:flex; gap:5px; flex-wrap:wrap;">
-                    <sc-for list="{{ prog.dayTags }}" as="d" hint-placeholder-count="1">
-                      <span style="font-size:11px; font-weight:700; padding:4px 9px; border-radius:99px; background:rgba(var(--fb-a,236,40,78),.18); color:rgb(var(--fb-a4,255,130,154));">{{ d }}</span>
-                    </sc-for>
-                    <sc-if value="{{ prog.noDays }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px; font-weight:700; padding:4px 9px; border-radius:99px; background:rgba(var(--fb-fg,255,255,255),.06); color:var(--fb-tx3,#a8978c);">Aucun jour assigné</span></sc-if>
-                  </div>
-                  <div style="display:flex; align-items:center; gap:12px;">
-                    <div style="width:48px; height:48px; border-radius:16px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a2,220,30,96))); box-shadow:0 8px 24px rgba(var(--fb-a,236,40,78),.4); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:26px; font-variation-settings:'FILL' 1; color:var(--fb-on,#fff);">{{ prog.icon }}</span></div>
-                    <div>
-                      <div style="font-family:Sora; font-weight:700; font-size:clamp(26px,3.4vw,34px); letter-spacing:-.03em; line-height:1.1;">{{ prog.name }}</div>
-                      <div style="font-size:13px; color:var(--fb-tx2,#e8d6ca);">{{ prog.subtitle }}</div>
-                    </div>
-                  </div>
-                </div>
-                <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                  <button onClick="{{ startSelected }}" style="white-space:nowrap; display:flex; align-items:center; gap:6px; padding:11px 20px; border-radius:99px; border:none; background:rgb(var(--fb-a,236,40,78)); color:var(--fb-on,#fff); font:700 14px Manrope; cursor:pointer; box-shadow:0 8px 24px rgba(var(--fb-a,236,40,78),.4);"><span style="font-family:'Material Symbols Rounded'; font-size:18px; font-variation-settings:'FILL' 1;">play_arrow</span>Lancer la séance</button>
-                  <button onClick="{{ toggleEdit }}" style="white-space:nowrap; display:flex; align-items:center; gap:6px; padding:11px 18px; border-radius:99px; border:1px solid rgba(var(--fb-fg,255,255,255),.2); background:rgba(var(--fb-ink,0,0,0),.25); color:var(--fb-tx,#f5efe9); font:600 14px Manrope; cursor:pointer;"><span style="font-family:'Material Symbols Rounded'; font-size:17px;">edit</span>Modifier</button>
-                </div>
-              </sc-if>
-              <sc-if value="{{ isEditing }}" hint-placeholder-val="{{ false }}">
-                <div style="display:flex; flex-direction:column; gap:12px;">
-                  <label style="display:flex; flex-direction:column; gap:5px; font-size:12px; color:var(--fb-tx3,#a8978c);">Nom du programme
-                    <input value="{{ prog.name }}" onChange="{{ onProgName }}" style="height:42px; padding:0 12px; border-radius:12px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font:600 16px Sora; outline:none;">
-                  </label>
-                  <label style="display:flex; flex-direction:column; gap:5px; font-size:12px; color:var(--fb-tx3,#a8978c);">Muscles ciblés
-                    <input value="{{ prog.subtitle }}" onChange="{{ onProgSub }}" placeholder="Pecs · Épaules · Triceps" style="height:40px; padding:0 12px; border-radius:12px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font-size:14px; outline:none;">
-                  </label>
-                  <div style="display:flex; flex-direction:column; gap:6px; font-size:12px; color:var(--fb-tx3,#a8978c);">Icône
-                    <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                      <sc-for list="{{ iconPicker }}" as="i" hint-placeholder-count="8">
-                        <button onClick="{{ i.onClick }}" style="width:38px; height:38px; border-radius:12px; cursor:pointer; display:grid; place-items:center; background:{{ i.bg }}; border:{{ i.border }}; color:var(--fb-on,#fff);"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 1;">{{ i.icon }}</span></button>
-                      </sc-for>
-                    </div>
-                  </div>
-                  <div style="display:flex; flex-direction:column; gap:6px; font-size:12px; color:var(--fb-tx3,#a8978c);">Jours
-                    <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                      <sc-for list="{{ dayPicker }}" as="d" hint-placeholder-count="7">
-                        <button onClick="{{ d.onClick }}" style="width:38px; height:38px; border-radius:50%; cursor:pointer; font:700 13px Manrope; background:{{ d.bg }}; border:{{ d.border }}; color:{{ d.color }}; box-shadow:{{ d.shadow }};">{{ d.label }}</button>
-                      </sc-for>
-                    </div>
-                  </div>
-                </div>
-                <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                  <button onClick="{{ toggleEdit }}" style="white-space:nowrap; display:flex; align-items:center; gap:6px; padding:11px 20px; border-radius:99px; border:none; background:var(--fb-inv,#fff); color:rgb(var(--fb-bg2,20,11,15)); font:700 14px Manrope; cursor:pointer;"><span style="font-family:'Material Symbols Rounded'; font-size:18px;">check</span>Terminé</button>
-                  <button onClick="{{ deleteProgram }}" style="white-space:nowrap; display:flex; align-items:center; gap:6px; padding:11px 18px; border-radius:99px; border:1px solid rgba(255,90,70,.4); background:{{ delBg }}; color:#ff8a73; font:600 14px Manrope; cursor:pointer;"><span style="font-family:'Material Symbols Rounded'; font-size:17px;">delete</span>{{ delLabel }}</button>
-                </div>
-              </sc-if>
+          <section style="position:relative; overflow:hidden; border-radius:28px; padding:clamp(22px,3.5vw,36px); min-height:clamp(280px,38vh,380px); display:flex; flex-direction:column; justify-content:space-between; gap:24px; background:radial-gradient(620px 360px at 85% 0%, rgba(var(--fb-a,236,40,78),calc(.45 * var(--fb-gk,1))), transparent 70%), radial-gradient(400px 260px at 0% 100%, rgba(var(--fb-a,236,40,78),calc(.18 * var(--fb-gk,1))), transparent 70%), linear-gradient(160deg, rgb(var(--fb-s2,36,12,20)), rgb(var(--fb-bg2,20,11,15))); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.16)); box-shadow:var(--fb-cardsh,none);">
+            <span style="position:absolute; right:clamp(-30px,-2vw,-10px); top:50%; transform:translateY(-50%) rotate(-12deg); font-family:'Material Symbols Rounded'; font-size:clamp(180px,24vw,280px); font-variation-settings:'FILL' 1; color:rgba(var(--fb-a,236,40,78),calc(.10 * var(--fb-gk,1))); pointer-events:none; line-height:1;">{{ prog.icon }}</span>
+            <div style="position:relative; display:flex; gap:6px; flex-wrap:wrap;">
+              <sc-for list="{{ prog.dayTags }}" as="d" hint-placeholder-count="1">
+                <span style="font-size:12px; font-weight:700; padding:5px 11px; border-radius:99px; background:rgba(var(--fb-a,236,40,78),.18); color:rgb(var(--fb-a4,255,130,154));">{{ d }}</span>
+              </sc-for>
+              <sc-if value="{{ prog.noDays }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px; font-weight:700; padding:5px 11px; border-radius:99px; background:rgba(var(--fb-fg,255,255,255),.06); color:var(--fb-tx3,#a8978c);">Aucun jour assigné</span></sc-if>
+            </div>
+            <div style="position:relative; display:flex; flex-direction:column; gap:10px;">
+              <div style="width:64px; height:64px; border-radius:20px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a,236,40,78))); box-shadow:0 10px 30px rgba(var(--fb-a,236,40,78),.45); color:var(--fb-on,#fff);"><span style="font-family:'Material Symbols Rounded'; font-size:34px; font-variation-settings:'FILL' 1;">{{ prog.icon }}</span></div>
+              <div style="font-family:Sora; font-weight:800; font-size:clamp(44px,7vw,72px); letter-spacing:-.045em; line-height:1;">{{ prog.name }}</div>
+              <div style="font-size:15px; color:var(--fb-tx2,#d4c2b6);">{{ prog.subtitle }} · {{ prog.exCount }} exercices</div>
+            </div>
+            <div style="position:relative; display:flex; gap:10px; flex-wrap:wrap;">
+              <button onClick="{{ startSelected }}" style="white-space:nowrap; display:flex; align-items:center; gap:8px; height:54px; padding:0 26px; border-radius:99px; border:none; background:rgb(var(--fb-a,236,40,78)); color:var(--fb-on,#fff); font:700 16px Manrope; cursor:pointer; box-shadow:0 10px 30px rgba(var(--fb-a,236,40,78),.45);"><span style="font-family:'Material Symbols Rounded'; font-size:22px; font-variation-settings:'FILL' 1;">play_arrow</span>Lancer la séance</button>
+              <button onClick="{{ editProgram }}" style="white-space:nowrap; display:flex; align-items:center; gap:6px; height:54px; padding:0 22px; border-radius:99px; border:1px solid rgba(var(--fb-fg,255,255,255),.2); background:rgba(var(--fb-ink,0,0,0),.25); color:var(--fb-tx,#f5efe9); font:600 15px Manrope; cursor:pointer;"><span style="font-family:'Material Symbols Rounded'; font-size:18px; font-variation-settings:'FILL' 0;">edit</span>Modifier</button>
             </div>
           </section>
 
-          <sc-if value="{{ notEditing }}" hint-placeholder-val="{{ true }}">
-            <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap:10px;">
-              <sc-for list="{{ prog.exercises }}" as="e" hint-placeholder-count="5">
-                <div style="display:flex; gap:12px; align-items:center; padding:14px; border-radius:20px; background:linear-gradient(160deg, rgba(var(--fb-s1,58,22,32),.45), rgba(var(--fb-card,22,16,14),.75)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.10)); box-shadow:var(--fb-cardsh,none);">
-                  <div style="position:relative; width:44px; height:44px; flex-shrink:0; border-radius:14px; display:grid; place-items:center; background:rgba(var(--fb-a,236,40,78),.14); color:rgb(var(--fb-a4,255,130,154));">
-                    <span style="font-family:'Material Symbols Rounded'; font-size:22px; font-variation-settings:'FILL' 1;">{{ e.icon }}</span>
-                    <span style="position:absolute; top:-5px; right:-5px; min-width:18px; height:18px; padding:0 4px; border-radius:99px; background:rgb(var(--fb-a,236,40,78)); color:var(--fb-on,#fff); font:700 10px Sora; display:grid; place-items:center;">{{ e.num }}</span>
-                  </div>
-                  <div style="flex:1; min-width:0;">
-                    <div style="font-weight:700; font-size:14px;">{{ e.name }}</div>
-                    <div style="display:flex; align-items:center; gap:4px; font-size:12px; color:var(--fb-tx3,#a8978c); margin-top:3px;"><span style="font-family:'Material Symbols Rounded'; font-size:14px;">location_on</span>{{ e.machine }}</div>
-                  </div>
-                  <div style="text-align:right; flex-shrink:0;">
-                    <div style="font-family:Sora; font-weight:600; font-size:15px;">{{ e.sets }} × {{ e.reps }}</div>
-                    <div style="font-size:12px; color:rgb(var(--fb-a4,255,130,154)); margin-top:2px;">{{ e.weightLabel }}</div>
-                  </div>
+          <section style="border-radius:22px; padding:6px 16px; display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 300px), 1fr)); column-gap:24px; background:rgba(var(--fb-fg,255,255,255),.02); border:1px solid rgba(var(--fb-fg,255,255,255),.06);">
+            <sc-for list="{{ prog.exercises }}" as="e" hint-placeholder-count="5">
+              <div style="display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid rgba(var(--fb-fg,255,255,255),.05);">
+                <span style="width:20px; flex-shrink:0; font:700 12px Sora; color:rgb(var(--fb-a4,255,130,154));">{{ e.num }}</span>
+                <div style="flex:1; min-width:0;">
+                  <div style="font-weight:600; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ e.name }}</div>
+                  <div style="font-size:11px; color:var(--fb-tx3,#a8978c); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ e.machine }}</div>
                 </div>
-              </sc-for>
-            </div>
-          </sc-if>
-
-          <sc-if value="{{ isEditing }}" hint-placeholder-val="{{ false }}">
-            <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap:10px;">
-              <sc-for list="{{ prog.exercises }}" as="e" hint-placeholder-count="5">
-                <div style="display:flex; flex-direction:column; gap:10px; padding:14px; border-radius:20px; background:linear-gradient(160deg, rgba(var(--fb-s1,58,22,32),.45), rgba(var(--fb-card,22,16,14),.75)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.14)); box-shadow:var(--fb-cardsh,none);">
-                  <div style="display:flex; gap:8px; align-items:center;">
-                    <div style="width:38px; height:38px; flex-shrink:0; border-radius:12px; display:grid; place-items:center; background:rgba(var(--fb-a,236,40,78),.14); color:rgb(var(--fb-a4,255,130,154));"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 1;">{{ e.icon }}</span></div>
-                    <input value="{{ e.name }}" onChange="{{ e.onName }}" placeholder="Nom de l'exercice" style="flex:1; min-width:0; height:38px; padding:0 10px; border-radius:10px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font:700 14px Manrope; outline:none;">
-                    <button onClick="{{ e.onDelete }}" aria-label="Supprimer" style="width:38px; height:38px; flex-shrink:0; border-radius:10px; cursor:pointer; display:grid; place-items:center; background:rgba(255,90,70,.1); border:1px solid rgba(255,90,70,.25); color:#ff8a73;"><span style="font-family:'Material Symbols Rounded'; font-size:19px;">delete</span></button>
-                  </div>
-                  <div style="display:grid; grid-template-columns:1fr 120px; gap:8px;">
-                    <input value="{{ e.machine }}" onChange="{{ e.onMachine }}" placeholder="Machine / emplacement" style="min-width:0; height:36px; padding:0 10px; border-radius:10px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font-size:13px; outline:none;">
-                    <select value="{{ e.group }}" onChange="{{ e.onGroup }}" style="height:36px; padding:0 8px; border-radius:10px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font-size:13px; outline:none;">
-                      <option value="pecs">Pecs</option><option value="dos">Dos</option><option value="epaules">Épaules</option><option value="bras">Bras</option><option value="jambes">Jambes</option><option value="abdos">Abdos</option><option value="cardio">Cardio</option>
-                    </select>
-                  </div>
-                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px;">
-                    <label style="display:flex; flex-direction:column; gap:4px; font-size:11px; color:var(--fb-tx3,#a8978c);">Séries<input type="number" value="{{ e.sets }}" onChange="{{ e.onSets }}" style="height:36px; padding:0 10px; border-radius:10px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font:600 14px Sora; outline:none; width:100%;"></label>
-                    <label style="display:flex; flex-direction:column; gap:4px; font-size:11px; color:var(--fb-tx3,#a8978c);">Reps<input type="number" value="{{ e.reps }}" onChange="{{ e.onReps }}" style="height:36px; padding:0 10px; border-radius:10px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font:600 14px Sora; outline:none; width:100%;"></label>
-                    <label style="display:flex; flex-direction:column; gap:4px; font-size:11px; color:var(--fb-tx3,#a8978c);">Poids (kg)<input type="number" value="{{ e.weight }}" onChange="{{ e.onWeight }}" style="height:36px; padding:0 10px; border-radius:10px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font:600 14px Sora; outline:none; width:100%;"></label>
-                  </div>
-                </div>
-              </sc-for>
-              <button onClick="{{ addExercise }}" style="min-height:120px; border-radius:20px; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; background:transparent; border:1.5px dashed rgba(var(--fb-a3,255,92,124),.4); color:rgb(var(--fb-a4,255,130,154)); font:600 14px Manrope;"><span style="font-family:'Material Symbols Rounded'; font-size:28px;">add_circle</span>Ajouter un exercice</button>
-            </div>
-          </sc-if>
+                <span style="flex-shrink:0; font:600 12px Sora; color:var(--fb-tx2,#d4c2b6);">{{ e.sets }}×{{ e.reps }}</span>
+              </div>
+            </sc-for>
+          </section>
         </sc-if>
       </div>
     </sc-if>
@@ -369,6 +301,7 @@ input:focus,select:focus{border-color:rgba(var(--fb-a3,255,92,124),.6)!important
               <div style="display:flex; gap:8px; flex-wrap:wrap;">
                 <span style="white-space:nowrap; display:flex; align-items:center; gap:5px; font-size:12px; font-weight:600; padding:6px 11px; border-radius:99px; background:rgba(var(--fb-fg,255,255,255),.06);"><span style="font-family:'Material Symbols Rounded'; font-size:15px; font-variation-settings:'FILL' 0; color:rgb(var(--fb-a4,255,130,154));">repeat</span>{{ sess.c.target }}</span>
                 <span style="white-space:nowrap; display:flex; align-items:center; gap:5px; font-size:12px; font-weight:600; padding:6px 11px; border-radius:99px; background:rgba(var(--fb-fg,255,255,255),.06);"><span style="font-family:'Material Symbols Rounded'; font-size:15px; font-variation-settings:'FILL' 1; color:rgb(var(--fb-a4,255,130,154));">emoji_events</span>Record {{ sess.c.best }}</span>
+                <sc-if value="{{ sess.c.hasNote }}" hint-placeholder-val="{{ false }}"><span style="display:flex; align-items:center; gap:5px; font-size:12px; font-weight:600; padding:6px 11px; border-radius:99px; background:rgba(var(--fb-a,236,40,78),.12); color:var(--fb-tx,#f5efe9);"><span style="font-family:'Material Symbols Rounded'; font-size:15px; font-variation-settings:'FILL' 1; color:rgb(var(--fb-a4,255,130,154));">sticky_note_2</span>{{ sess.c.note }}</span></sc-if>
               </div>
               <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
               <div style="display:flex; flex-direction:column; gap:8px; padding:12px; border-radius:20px; background:rgba(var(--fb-ink,0,0,0),.32); border:1px solid rgba(var(--fb-fg,255,255,255),.06);">
@@ -657,7 +590,7 @@ input:focus,select:focus{border-color:rgba(var(--fb-a3,255,92,124),.6)!important
       <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
         <div style="flex:1 1 50%; position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; padding:40px; background:radial-gradient(700px 520px at 30% 20%, rgba(var(--fb-a,236,40,78),calc(.35 * var(--fb-gk,1))), transparent 70%), rgb(var(--fb-s2,36,12,20)); border-right:1px solid rgba(var(--fb-fg,255,255,255),.06);">
           <div style="display:flex; align-items:center; gap:10px;">
-            <div style="width:32px; height:32px; border-radius:10px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(255,92,124),rgb(236,40,78)); box-shadow:0 0 18px rgba(236,40,78,.55); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 1;">fitness_center</span></div>
+            <div style="width:32px; height:32px; border-radius:10px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a,236,40,78))); box-shadow:0 0 18px rgba(var(--fb-a,236,40,78),.55); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 1;">fitness_center</span></div>
             <div style="font-family:Sora; font-weight:700; font-size:19px; letter-spacing:-.02em;">FitnessBoii</div>
           </div>
           <div style="display:flex; flex-direction:column; gap:7px; max-width:440px;">
@@ -678,7 +611,7 @@ input:focus,select:focus{border-color:rgba(var(--fb-a3,255,92,124),.6)!important
       <div style="flex:1 1 50%; min-height:100%; display:flex; padding:clamp(24px,5vh,48px) 20px;">
         <div ref="{{ authFormRef }}" style="margin:auto; width:100%; max-width:400px; display:flex; flex-direction:column; gap:22px;">
           <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
-            <div style="width:56px; height:56px; border-radius:18px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(255,92,124),rgb(236,40,78)); box-shadow:0 0 36px rgba(236,40,78,.55); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:30px; font-variation-settings:'FILL' 1;">fitness_center</span></div>
+            <div style="width:56px; height:56px; border-radius:18px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a,236,40,78))); box-shadow:0 0 36px rgba(var(--fb-a,236,40,78),.55); color:#fff;"><span style="font-family:'Material Symbols Rounded'; font-size:30px; font-variation-settings:'FILL' 1;">fitness_center</span></div>
           </sc-if>
           <div style="display:flex; flex-direction:column; gap:6px;">
             <h1 style="margin:0; font-family:Sora; font-weight:700; font-size:30px; letter-spacing:-.03em;">{{ authTitle }}</h1>
@@ -723,7 +656,7 @@ input:focus,select:focus{border-color:rgba(var(--fb-a3,255,92,124),.6)!important
         <div style="display:flex; align-items:center; gap:12px; min-height:40px;">
           <button onClick="{{ obBack }}" aria-label="Retour" style="width:40px; height:40px; flex-shrink:0; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.05); border:1px solid rgba(var(--fb-fg,255,255,255),.08); color:var(--fb-tx,#f5efe9); visibility:{{ obBackVis }};"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0;">arrow_back</span></button>
           <div style="flex:1; display:flex; gap:5px; visibility:{{ obBarVis }};">
-            <sc-for list="{{ obBar }}" as="s" hint-placeholder-count="5">
+            <sc-for list="{{ obBar }}" as="s" hint-placeholder-count="6">
               <div style="flex:1; height:5px; border-radius:99px; background:{{ s.bg }}; box-shadow:{{ s.glow }}; transition:background .4s, box-shadow .4s;"></div>
             </sc-for>
           </div>
@@ -733,13 +666,13 @@ input:focus,select:focus{border-color:rgba(var(--fb-a3,255,92,124),.6)!important
         <div ref="{{ obRef }}" style="flex:1; display:flex; flex-direction:column; gap:22px;">
           <sc-if value="{{ ob0 }}" hint-placeholder-val="{{ true }}">
             <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:22px; padding-top:6vh;">
-              <div style="width:76px; height:76px; border-radius:24px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(255,92,124),rgb(236,40,78)); box-shadow:0 0 50px rgba(236,40,78,.55); color:var(--fb-on,#fff);"><span style="font-family:'Material Symbols Rounded'; font-size:42px; font-variation-settings:'FILL' 1;">fitness_center</span></div>
+              <div style="width:76px; height:76px; border-radius:24px; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a,236,40,78))); box-shadow:0 0 50px rgba(var(--fb-a,236,40,78),.55); color:var(--fb-on,#fff);"><span style="font-family:'Material Symbols Rounded'; font-size:42px; font-variation-settings:'FILL' 1;">fitness_center</span></div>
               <div style="display:flex; flex-direction:column; gap:8px;"><h2 style="margin:0; font-family:Sora; font-weight:700; font-size:clamp(26px,5vw,32px); letter-spacing:-.03em; line-height:1.15; text-wrap:balance;">Bienvenue sur FitnessBoii</h2><p style="margin:0; font-size:14px; color:var(--fb-tx3,#a8978c); text-wrap:pretty;">Quelques questions pour créer ton profil et caler tes programmes. Ça prend une minute.</p></div>
             </div>
           </sc-if>
           <sc-if value="{{ ob1 }}" hint-placeholder-val="{{ false }}">
             <div style="display:flex; flex-direction:column; gap:8px;"><h2 style="margin:0; font-family:Sora; font-weight:700; font-size:clamp(26px,5vw,32px); letter-spacing:-.03em; line-height:1.15; text-wrap:balance;">Comment tu t’appelles ?</h2></div>
-            <input value="{{ obd.name }}" onChange="{{ obName }}" onKeyDown="{{ obKey }}" autoFocus placeholder="Ton prénom" style="height:62px; padding:0 20px; border-radius:20px; border:1.5px solid rgba(var(--fb-a,236,40,78),.35); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font:600 22px Sora; outline:none;">
+            <input value="{{ obd.name }}" onChange="{{ obName }}" onKeyDown="{{ obKey }}" autofocus="" placeholder="Ton prénom" style="height:62px; padding:0 20px; border-radius:20px; border:1.5px solid rgba(var(--fb-a,236,40,78),.35); background:rgba(var(--fb-ink,0,0,0),.35); color:var(--fb-tx,#f5efe9); font:600 22px Sora; outline:none;">
           </sc-if>
           <sc-if value="{{ ob2 }}" hint-placeholder-val="{{ false }}">
             <div style="display:flex; flex-direction:column; gap:8px;"><h2 style="margin:0; font-family:Sora; font-weight:700; font-size:clamp(26px,5vw,32px); letter-spacing:-.03em; line-height:1.15; text-wrap:balance;">Ton objectif principal ?</h2><p style="margin:0; font-size:14px; color:var(--fb-tx3,#a8978c); text-wrap:pretty;">On adapte les conseils et les comparatifs en fonction.</p></div>
@@ -785,6 +718,18 @@ input:focus,select:focus{border-color:rgba(var(--fb-a3,255,92,124),.6)!important
             </div>
           </sc-if>
           <sc-if value="{{ ob5 }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; flex-direction:column; gap:8px;"><h2 style="margin:0; font-family:Sora; font-weight:700; font-size:clamp(26px,5vw,32px); letter-spacing:-.03em; line-height:1.15; text-wrap:balance;">Quel type de programme ?</h2><p style="margin:0; font-size:14px; color:var(--fb-tx3,#a8978c); text-wrap:pretty;">On crée tes séances avec des exercices sur machines. Tu pourras tout modifier ensuite.</p></div>
+            <div style="display:grid; grid-template-columns:1fr; gap:10px;">
+            <sc-for list="{{ obSplits }}" as="o" hint-placeholder-count="3">
+              <button onClick="{{ o.onClick }}" style="cursor:pointer; padding:16px; border-radius:20px; display:flex; align-items:center; gap:14px; text-align:left; background:{{ o.bg }}; border:{{ o.border }}; color:var(--fb-tx,#f5efe9); font-family:Manrope; box-shadow:{{ o.shadow }};">
+                <div style="width:44px; height:44px; flex-shrink:0; border-radius:14px; display:grid; place-items:center; background:{{ o.iconBg }}; color:{{ o.iconColor }};"><span style="font-family:'Material Symbols Rounded'; font-size:24px; font-variation-settings:'FILL' 1;">{{ o.icon }}</span></div>
+                <div style="flex:1; min-width:0;"><div style="font-weight:700; font-size:15px;">{{ o.label }}</div><div style="font-size:12px; color:var(--fb-tx3,#a8978c); margin-top:2px;">{{ o.desc }}</div></div>
+                <span style="font-family:'Material Symbols Rounded'; font-size:22px; font-variation-settings:'FILL' 1; color:rgb(var(--fb-a,236,40,78)); opacity:{{ o.checkOp }};">check_circle</span>
+              </button>
+            </sc-for>
+          </div>
+          </sc-if>
+          <sc-if value="{{ ob6 }}" hint-placeholder-val="{{ false }}">
             <div style="display:flex; flex-direction:column; gap:8px;"><h2 style="margin:0; font-family:Sora; font-weight:700; font-size:clamp(26px,5vw,32px); letter-spacing:-.03em; line-height:1.15; text-wrap:balance;">Quels jours tu t’entraînes ?</h2><p style="margin:0; font-size:14px; color:var(--fb-tx3,#a8978c); text-wrap:pretty;">Tes programmes seront répartis sur ces jours.</p></div>
             <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:6px;">
               <sc-for list="{{ obDays }}" as="d" hint-placeholder-count="7">
@@ -793,7 +738,7 @@ input:focus,select:focus{border-color:rgba(var(--fb-a3,255,92,124),.6)!important
             </div>
             <div style="display:flex; align-items:center; gap:8px; padding:14px 16px; border-radius:18px; background:rgba(var(--fb-fg,255,255,255),.04); font-size:14px; color:var(--fb-tx2,#d4c2b6);"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0; color:rgb(var(--fb-a4,255,130,154));">event_repeat</span>{{ obDaysLabel }}</div>
           </sc-if>
-          <sc-if value="{{ ob6 }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ ob7 }}" hint-placeholder-val="{{ false }}">
             <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:20px; padding-top:4vh;">
               <div style="width:76px; height:76px; border-radius:50%; display:grid; place-items:center; background:linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a6,150,14,48))); box-shadow:0 0 50px rgba(var(--fb-a,236,40,78),.55); color:var(--fb-on,#fff);"><span style="font-family:'Material Symbols Rounded'; font-size:42px; font-variation-settings:'FILL' 0;">check</span></div>
               <div style="display:flex; flex-direction:column; gap:8px;"><h2 style="margin:0; font-family:Sora; font-weight:700; font-size:clamp(26px,5vw,32px); letter-spacing:-.03em; line-height:1.15; text-wrap:balance;">C’est parti, {{ obd.name }} !</h2><p style="margin:0; font-size:14px; color:var(--fb-tx3,#a8978c); text-wrap:pretty;">Ton profil est prêt et tes programmes sont calés sur tes jours.</p></div>
@@ -811,12 +756,131 @@ input:focus,select:focus{border-color:rgba(var(--fb-a3,255,92,124),.6)!important
     </div>
   </sc-if>
 
+  <sc-if value="{{ bOpen }}" hint-placeholder-val="{{ false }}">
+    <div ref="{{ fadeRef }}" onClick="{{ bClose }}" style="position:fixed; inset:0; z-index:50; display:flex; align-items:{{ sheetAlign }}; justify-content:center; padding:{{ sheetPad }}; background:rgba(5,3,2,.6); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);">
+      <div ref="{{ bPanelRef }}" onClick="{{ stop }}" style="width:100%; max-width:640px; height:{{ bH }}; display:flex; flex-direction:column; overflow:hidden; border-radius:{{ sheetRadius }}; background:rgb(var(--fb-bg2,20,11,15)); border:1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.16)); box-shadow:var(--fb-popsh,0 30px 80px rgba(0,0,0,.6));">
+        <div style="display:flex; align-items:center; gap:10px; padding:12px 14px; border-bottom:1px solid rgba(var(--fb-fg,255,255,255),.06);">
+          <button onClick="{{ bClose }}" aria-label="Fermer" style="width:40px; height:40px; flex-shrink:0; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.06); border:none; color:var(--fb-tx2,#d4c2b6);"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0;">close</span></button>
+          <div style="flex:1; text-align:center; font:700 16px Sora;">{{ bld.title }}</div>
+          <div style="width:40px;"></div>
+        </div>
+
+        <div style="flex:1; overflow-y:auto; padding:18px 16px 24px; display:flex; flex-direction:column; gap:24px;">
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="display:flex; align-items:center; gap:8px;"><span style="width:22px; height:22px; border-radius:50%; display:grid; place-items:center; background:rgba(var(--fb-a,236,40,78),.16); color:rgb(var(--fb-a4,255,130,154)); font:700 11px Sora;">1</span><span style="font-weight:700; font-size:14px;">Nom</span></div>
+            <input value="{{ bld.name }}" onChange="{{ bld.onName }}" placeholder="ex. Push, Haut du corps…" style="height:54px; padding:0 16px; border-radius:16px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.3); color:var(--fb-tx,#f5efe9); font:600 18px Sora; outline:none;">
+            <sc-if value="{{ bld.showTpl }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <div style="font-size:12px; color:var(--fb-tx3,#a8978c);">Ou pars d’un modèle (exercices déjà remplis) :</div>
+                <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                  <sc-for list="{{ bld.templates }}" as="t" hint-placeholder-count="6">
+                    <button onClick="{{ t.onClick }}" style="white-space:nowrap; display:flex; align-items:center; gap:6px; padding:9px 13px; border-radius:99px; cursor:pointer; font:600 13px Manrope; background:rgba(var(--fb-fg,255,255,255),.05); color:var(--fb-tx,#f5efe9); border:1px solid rgba(var(--fb-fg,255,255,255),.1);"><span style="font-family:'Material Symbols Rounded'; font-size:17px; font-variation-settings:'FILL' 1; color:rgb(var(--fb-a4,255,130,154));">{{ t.icon }}</span>{{ t.name }}</button>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="display:flex; align-items:center; gap:8px;"><span style="width:22px; height:22px; border-radius:50%; display:grid; place-items:center; background:rgba(var(--fb-a,236,40,78),.16); color:rgb(var(--fb-a4,255,130,154)); font:700 11px Sora;">2</span><span style="font-weight:700; font-size:14px;">Exercices</span><span style="margin-left:auto; font-size:12px; color:var(--fb-tx3,#a8978c);">{{ bld.count }}</span></div>
+            <sc-if value="{{ bld.empty }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:14px; border-radius:16px; border:1.5px dashed rgba(var(--fb-fg,255,255,255),.1); font-size:13px; color:var(--fb-tx3,#a8978c); text-align:center;">Touche un exercice ci-dessous pour l’ajouter.</div>
+            </sc-if>
+            <sc-for list="{{ bld.rows }}" as="r" hint-placeholder-count="0">
+              <div style="display:flex; gap:10px; padding:12px; border-radius:18px; background:rgba(var(--fb-fg,255,255,255),.04); border:1px solid rgba(var(--fb-fg,255,255,255),.06);">
+                <div style="width:38px; height:38px; flex-shrink:0; border-radius:12px; display:grid; place-items:center; background:rgba(var(--fb-a,236,40,78),.14); color:rgb(var(--fb-a4,255,130,154));"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 1;">{{ r.icon }}</span></div>
+                <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:8px;">
+                  <div style="display:flex; align-items:flex-start; gap:6px;">
+                    <div style="flex:1; min-width:0;">
+                      <div style="font-weight:700; font-size:14px;">{{ r.name }}</div>
+                      <div style="display:flex; align-items:center; gap:4px; color:var(--fb-tx3,#a8978c);"><span style="font-family:'Material Symbols Rounded'; font-size:14px; font-variation-settings:'FILL' 0;">location_on</span><input value="{{ r.machine }}" onChange="{{ r.onMachine }}" placeholder="Machine (optionnel)" style="flex:1; min-width:0; border:none; background:transparent; color:var(--fb-tx3,#a8978c); font:500 12px Manrope; outline:none; padding:2px 0;"></div>
+                    </div>
+                    <button onClick="{{ r.onUp }}" aria-label="Monter" style="width:32px; height:32px; flex-shrink:0; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:transparent; border:none; color:var(--fb-tx3,#a8978c); visibility:{{ r.upVis }};"><span style="font-family:'Material Symbols Rounded'; font-size:18px; font-variation-settings:'FILL' 0;">arrow_upward</span></button>
+                    <button onClick="{{ r.onRemove }}" aria-label="Retirer" style="width:32px; height:32px; flex-shrink:0; border-radius:50%; cursor:pointer; display:grid; place-items:center; background:transparent; border:none; color:var(--fb-tx3,#a8978c);"><span style="font-family:'Material Symbols Rounded'; font-size:18px; font-variation-settings:'FILL' 0;">close</span></button>
+                  </div>
+                  <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                    <div style="display:flex; align-items:center; gap:2px; padding:3px; border-radius:99px; background:rgba(var(--fb-ink,0,0,0),.3);">
+                        <button onClick="{{ r.setsM }}" aria-label="Moins" style="width:34px; height:34px; border-radius:50%; border:none; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.06); color:var(--fb-tx,#f5efe9);"><span style="font-family:'Material Symbols Rounded'; font-size:17px; font-variation-settings:'FILL' 0;">remove</span></button>
+                        <span style="min-width:64px; text-align:center; font:600 12px Manrope; color:var(--fb-tx3,#a8978c);"><span style="font:700 15px Sora; color:var(--fb-tx,#f5efe9);">{{ r.sets }}</span> séries</span>
+                        <button onClick="{{ r.setsP }}" aria-label="Plus" style="width:34px; height:34px; border-radius:50%; border:none; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.06); color:var(--fb-tx,#f5efe9);"><span style="font-family:'Material Symbols Rounded'; font-size:17px; font-variation-settings:'FILL' 0;">add</span></button>
+                      </div>
+                    <div style="display:flex; align-items:center; gap:2px; padding:3px; border-radius:99px; background:rgba(var(--fb-ink,0,0,0),.3);">
+                        <button onClick="{{ r.repsM }}" aria-label="Moins" style="width:34px; height:34px; border-radius:50%; border:none; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.06); color:var(--fb-tx,#f5efe9);"><span style="font-family:'Material Symbols Rounded'; font-size:17px; font-variation-settings:'FILL' 0;">remove</span></button>
+                        <span style="min-width:64px; text-align:center; font:600 12px Manrope; color:var(--fb-tx3,#a8978c);"><span style="font:700 15px Sora; color:var(--fb-tx,#f5efe9);">{{ r.reps }}</span> reps</span>
+                        <button onClick="{{ r.repsP }}" aria-label="Plus" style="width:34px; height:34px; border-radius:50%; border:none; cursor:pointer; display:grid; place-items:center; background:rgba(var(--fb-fg,255,255,255),.06); color:var(--fb-tx,#f5efe9);"><span style="font-family:'Material Symbols Rounded'; font-size:17px; font-variation-settings:'FILL' 0;">add</span></button>
+                      </div>
+                    <button onClick="{{ r.onInfo }}" style="white-space:nowrap; height:40px; display:flex; align-items:center; gap:5px; padding:0 13px; border-radius:99px; cursor:pointer; font:600 12px Manrope; background:{{ r.infoBg }}; color:{{ r.infoColor }}; border:{{ r.infoBorder }};"><span style="font-family:'Material Symbols Rounded'; font-size:16px; font-variation-settings:'FILL' 0;">tune</span>{{ r.infoLabel }}</button>
+                  </div>
+                  <sc-if value="{{ r.isOpen }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex; flex-direction:column; gap:12px; padding-top:12px; border-top:1px solid rgba(var(--fb-fg,255,255,255),.06);">
+                      <label style="display:flex; flex-direction:column; gap:5px; font-size:12px; color:var(--fb-tx3,#a8978c);">Nom de l’exercice<input value="{{ r.name }}" onChange="{{ r.onName }}" style="height:42px; padding:0 12px; border-radius:12px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.3); color:var(--fb-tx,#f5efe9); font:500 14px Manrope; outline:none; width:100%; min-width:0; font-weight:700;"></label>
+                      <div style="display:flex; flex-direction:column; gap:5px; font-size:12px; color:var(--fb-tx3,#a8978c);">Muscle
+                        <div style="display:flex; gap:5px; flex-wrap:wrap;">
+                          <sc-for list="{{ r.groups }}" as="g" hint-placeholder-count="7">
+                            <button onClick="{{ g.onClick }}" style="white-space:nowrap; padding:6px 11px; border-radius:99px; cursor:pointer; font:600 12px Manrope; background:{{ g.bg }}; color:{{ g.color }}; border:{{ g.border }};">{{ g.label }}</button>
+                          </sc-for>
+                        </div>
+                      </div>
+                      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                        <label style="display:flex; flex-direction:column; gap:5px; font-size:12px; color:var(--fb-tx3,#a8978c);">Poids de départ (kg)<input type="number" inputmode="decimal" value="{{ r.weight }}" onChange="{{ r.onWeight }}" placeholder="auto" style="height:42px; padding:0 12px; border-radius:12px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.3); color:var(--fb-tx,#f5efe9); font:500 14px Manrope; outline:none; width:100%; min-width:0; font-family:Sora; font-weight:600;"></label>
+                        <label style="display:flex; flex-direction:column; gap:5px; font-size:12px; color:var(--fb-tx3,#a8978c);">Repos (secondes)<input type="number" inputmode="numeric" value="{{ r.rest }}" onChange="{{ r.onRest }}" placeholder="{{ r.restPh }}" style="height:42px; padding:0 12px; border-radius:12px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.3); color:var(--fb-tx,#f5efe9); font:500 14px Manrope; outline:none; width:100%; min-width:0; font-family:Sora; font-weight:600;"></label>
+                      </div>
+                      <label style="display:flex; flex-direction:column; gap:5px; font-size:12px; color:var(--fb-tx3,#a8978c);">Notes / réglage machine<input value="{{ r.note }}" onChange="{{ r.onNote }}" placeholder="ex. siège cran 4, prise serrée, tempo lent" style="height:42px; padding:0 12px; border-radius:12px; border:1px solid rgba(var(--fb-fg,255,255,255),.1); background:rgba(var(--fb-ink,0,0,0),.3); color:var(--fb-tx,#f5efe9); font:500 14px Manrope; outline:none; width:100%; min-width:0;"></label>
+                    </div>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-for>
+
+            <div style="display:flex; flex-direction:column; gap:10px; padding:14px; border-radius:20px; background:rgba(var(--fb-ink,0,0,0),.2); border:1px solid rgba(var(--fb-fg,255,255,255),.06);">
+              <div style="display:flex; align-items:center; gap:10px; height:46px; padding:0 14px; border-radius:14px; background:rgba(var(--fb-ink,0,0,0),.3); border:1px solid rgba(var(--fb-fg,255,255,255),.1);">
+                <span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0; color:var(--fb-tx3,#a8978c);">search</span>
+                <input value="{{ bld.q }}" onChange="{{ bld.onQ }}" onKeyDown="{{ bld.onQKey }}" placeholder="Chercher ou créer un exercice" style="flex:1; min-width:0; height:100%; border:none; background:transparent; color:var(--fb-tx,#f5efe9); font:500 14px Manrope; outline:none;">
+              </div>
+              <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:2px;">
+                <sc-for list="{{ bld.groups }}" as="g" hint-placeholder-count="8">
+                  <button onClick="{{ g.onClick }}" style="white-space:nowrap; flex-shrink:0; padding:7px 12px; border-radius:99px; cursor:pointer; font:600 12px Manrope; background:{{ g.bg }}; color:{{ g.color }}; border:{{ g.border }};">{{ g.label }}</button>
+                </sc-for>
+              </div>
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <sc-if value="{{ bld.canCreate }}" hint-placeholder-val="{{ false }}">
+                  <button onClick="{{ bld.create }}" style="white-space:nowrap; display:flex; align-items:center; gap:6px; padding:9px 13px 9px 10px; border-radius:99px; cursor:pointer; font:700 13px Manrope; background:rgb(var(--fb-a,236,40,78)); color:var(--fb-on,#fff); border:none;"><span style="font-family:'Material Symbols Rounded'; font-size:17px; font-variation-settings:'FILL' 0;">add</span>{{ bld.createLabel }}</button>
+                </sc-if>
+                <sc-for list="{{ bld.lib }}" as="l" hint-placeholder-count="12">
+                  <button onClick="{{ l.onClick }}" style="white-space:nowrap; display:flex; align-items:center; gap:6px; padding:9px 13px 9px 10px; border-radius:99px; cursor:pointer; font:600 13px Manrope; background:{{ l.bg }}; color:{{ l.color }}; border:{{ l.border }};"><span style="font-family:'Material Symbols Rounded'; font-size:17px; font-variation-settings:'FILL' 0;">{{ l.icon }}</span>{{ l.name }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="display:flex; align-items:center; gap:8px;"><span style="width:22px; height:22px; border-radius:50%; display:grid; place-items:center; background:rgba(var(--fb-a,236,40,78),.16); color:rgb(var(--fb-a4,255,130,154)); font:700 11px Sora;">3</span><span style="font-weight:700; font-size:14px;">Jours</span><span style="margin-left:auto; font-size:12px; color:var(--fb-tx3,#a8978c);">optionnel</span></div>
+            <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:6px;">
+              <sc-for list="{{ bld.days }}" as="d" hint-placeholder-count="7">
+                <button onClick="{{ d.onClick }}" title="{{ d.title }}" style="aspect-ratio:1; max-height:48px; border-radius:50%; cursor:pointer; display:grid; place-items:center; font:700 14px Sora; background:{{ d.bg }}; border:{{ d.border }}; color:{{ d.color }}; box-shadow:{{ d.shadow }};">{{ d.label }}</button>
+              </sc-for>
+            </div>
+            <div style="font-size:12px; color:var(--fb-tx3,#a8978c);">{{ bld.daysHint }}</div>
+          </div>
+
+          <sc-if value="{{ bld.isEdit }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ bld.del }}" style="align-self:center; white-space:nowrap; display:flex; align-items:center; gap:6px; padding:10px 16px; border-radius:99px; border:1px solid rgba(255,90,70,.35); background:{{ bld.delBg }}; color:#ff8a73; font:600 13px Manrope; cursor:pointer;"><span style="font-family:'Material Symbols Rounded'; font-size:17px; font-variation-settings:'FILL' 0;">delete</span>{{ bld.delLabel }}</button>
+          </sc-if>
+        </div>
+
+        <div style="padding:12px 16px 16px; border-top:1px solid rgba(var(--fb-fg,255,255,255),.06);">
+          <button onClick="{{ bld.save }}" style="width:100%; height:54px; border-radius:99px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; background:rgb(var(--fb-a,236,40,78)); color:var(--fb-on,#fff); font:700 15px Manrope; box-shadow:0 10px 28px rgba(var(--fb-a,236,40,78),.4); opacity:{{ bld.saveOp }};"><span style="font-family:'Material Symbols Rounded'; font-size:20px; font-variation-settings:'FILL' 0;">check</span>{{ bld.saveLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
     <div ref="{{ toastRef }}" style="position:fixed; top:20px; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:8px; padding:12px 20px; border-radius:99px; background:rgb(var(--fb-a,236,40,78)); color:var(--fb-on,#fff); font-weight:700; font-size:13px; box-shadow:0 12px 36px rgba(var(--fb-a,236,40,78),.5); z-index:30; white-space:nowrap;"><span style="font-family:'Material Symbols Rounded'; font-size:18px; font-variation-settings:'FILL' 1;">check_circle</span>{{ toast }}</div>
   </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script>
+<script type="text/x-dc" data-dc-script="">
 const GROUPS = { pecs:'fitness_center', dos:'rowing', epaules:'accessibility_new', bras:'sports_martial_arts', jambes:'directions_run', abdos:'self_improvement', cardio:'monitor_heart' };
 const PROG_ICONS = ['fitness_center','rowing','directions_run','sports_gymnastics','local_fire_department','bolt','self_improvement','sprint'];
 const DEFAULT_PROGRAMS = [
@@ -865,6 +929,39 @@ function applyTheme(id, mode){ const light = mode === 'light'; const r = documen
   Object.entries(vars).forEach(([k,v]) => r.setProperty('--fb-'+k, v)); applyTheme.cur = id + '|' + (light ? 'light' : 'dark'); r.colorScheme = light ? 'light' : 'dark'; }
 const OB_GOALS = [['masse','Prise de masse','Gagner du muscle','fitness_center'],['seche','Perte de poids','Sécher, perdre du gras','local_fire_department'],['force','Force','Soulever plus lourd','bolt'],['forme','Remise en forme','Bouger, être en forme','favorite']];
 const OB_LEVELS = [['debutant','Débutant','Moins de 6 mois de salle','eco'],['inter','Intermédiaire','6 mois à 2 ans','trending_up'],['avance','Avancé','Plus de 2 ans','military_tech']];
+const LIB = [
+  ['l-pf','Pec fly','Machine pec fly / butterfly','pecs',3,12],['l-cpm','Chest press','Machine chest press','pecs',4,10],['l-cpi','Chest press incliné','Machine incliné convergente','pecs',3,10],
+  ['ec','Écarté poulie','Poulie vis-à-vis','pecs',3,12],['dc','Développé couché','Banc plat — barre','pecs',4,8],['di','Développé incliné','Smith machine','pecs',3,10],
+  ['l-dh','Développé haltères','Banc plat — haltères','pecs',3,10],['l-dpm','Dips assistés','Machine dips assistée','pecs',3,10],
+  ['tv','Tirage vertical','Lat pulldown','dos',4,10],['ro','Rowing assis','Machine rowing','dos',4,10],['l-rp','Tirage horizontal poulie','Poulie basse — triangle','dos',3,12],
+  ['l-tb','Rowing T-bar','Machine T-bar','dos',4,10],['l-tc','Tirage convergent','Machine tirage haut convergent','dos',3,10],['l-ta','Tractions assistées','Machine tractions assistées','dos',3,8],
+  ['tr','Tractions','Barre fixe','dos',3,8],['l-pov','Pull-over poulie','Poulie haute — barre droite','dos',3,12],['l-lom','Extension lombaire','Banc à lombaires','dos',3,15],
+  ['dm','Shoulder press','Machine épaules','epaules',3,10],['l-elm','Élévations latérales machine','Machine élévations latérales','epaules',3,12],
+  ['l-el','Élévations latérales','Haltères','epaules',4,12],['l-rf','Reverse fly','Machine pec fly (sens inverse)','epaules',3,12],['fp','Face pull','Poulie haute — corde','epaules',3,15],
+  ['l-elp','Élévations latérales poulie','Poulie basse — poignée','epaules',3,12],
+  ['l-cum','Curl biceps machine','Machine curl biceps','bras',3,12],['cu','Curl pupitre','Banc Larry Scott','bras',3,10],['l-cpo','Curl poulie','Poulie basse — barre','bras',3,12],
+  ['l-cm','Curl marteau','Haltères','bras',3,12],['tri','Extension triceps','Poulie haute — corde','bras',3,12],['l-trm','Triceps machine','Machine dips / triceps','bras',3,12],
+  ['l-bf','Barre au front','Banc + barre EZ','bras',3,10],
+  ['pr','Presse à cuisses','Presse 45°','jambes',4,10],['l-hs','Hack squat','Machine hack squat','jambes',4,10],['le','Leg extension','Machine leg extension','jambes',3,12],
+  ['lc','Leg curl allongé','Machine ischios allongé','jambes',3,12],['l-lca','Leg curl assis','Machine ischios assis','jambes',3,12],['l-add','Adducteurs','Machine adducteurs','jambes',3,15],
+  ['l-abd','Abducteurs','Machine abducteurs','jambes',3,15],['l-glu','Kickback fessiers','Machine fessiers','jambes',3,12],['l-ht','Hip thrust','Machine hip thrust','jambes',4,10],
+  ['sq','Squat','Rack à squat','jambes',4,6],['l-ss','Squat Smith','Smith machine','jambes',4,8],['mo','Mollets debout','Machine mollets debout','jambes',4,15],
+  ['l-mas','Mollets assis','Machine mollets assis','jambes',4,15],
+  ['l-abm','Crunch machine','Machine abdos','abdos',3,15],['l-cp','Crunch poulie','Poulie haute — corde','abdos',3,15],['l-rj','Relevés de jambes','Chaise romaine','abdos',3,12],
+  ['l-rot','Rotation buste','Machine rotation','abdos',3,15],
+  ['l-tdc','Tapis de course','Tapis','cardio',1,15],['l-ve','Vélo','Vélo assis','cardio',1,20],['l-ell','Vélo elliptique','Elliptique','cardio',1,20],
+  ['l-ra','Rameur','Rameur','cardio',1,10],['l-esc','Escalier','Stairmaster','cardio',1,10]
+];
+const GROUP_LABELS = { pecs:'Pecs', dos:'Dos', epaules:'Épaules', bras:'Bras', jambes:'Jambes', abdos:'Abdos', cardio:'Cardio' };
+const GROUP_PROG_ICON = { pecs:'fitness_center', dos:'rowing', epaules:'sports_gymnastics', bras:'sports_martial_arts', jambes:'directions_run', abdos:'self_improvement', cardio:'sprint' };
+const TEMPLATES = [['Push','fitness_center',['l-cpm','l-cpi','l-pf','dm','l-elm','tri']],['Pull','rowing',['tv','ro','l-tb','l-rf','l-cum','l-cm']],['Legs','directions_run',['pr','l-hs','le','l-lca','l-add','mo']],
+  ['Haut du corps','sports_gymnastics',['l-cpm','tv','dm','ro','l-cum','tri']],['Bas du corps','directions_run',['pr','le','lc','l-ht','l-abd','mo']],['Full body','bolt',['pr','l-cpm','ro','dm','l-abm']]];
+const norm = s => (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const libEx = l => ({ id:l[0], name:l[1], machine:l[2], group:l[3], sets:l[4], reps:l[5], weight:0 });
+const OB_SPLITS = [['ppl','Push / Pull / Legs','3 séances qui tournent : poussée, tirage, jambes','splitscreen',['Push','Pull','Legs']],
+  ['ul','Haut / Bas du corps','2 séances : haut du corps et bas du corps','swap_vert',['Haut du corps','Bas du corps']],
+  ['fb','Full body','1 séance complète, tout le corps à chaque fois','accessibility_new',['Full body']],
+  ['custom','Je crée les miens','On part de zéro, tu ajoutes tes programmes','edit_note',[]]];
 const DAYS = ['L','M','M','J','V','S','D'];
 const DAY_SHORT = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
 const DAY_NAMES = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
@@ -897,7 +994,7 @@ class Component extends DCLogic {
   state = (() => {
     let saved = {}; try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) {}
     const d = defaults();
-    return { tab: (saved.tab && saved.tab !== 'profile') ? saved.tab : 'home', profileOpen:false, ob:0, obd:null, auth:{ mode:'signup', email:'', pw:'', show:false, err:'', loading:false }, photoPrompt:false, cmpMode:'start', confirmPhoto:null, photos:(() => { try { return JSON.parse(localStorage.getItem('fitnessboii-photos')) || []; } catch(e) { return []; } })(), progId:'push', exId:'dc', editing:false, confirmDel:false, confirmReset:false, planDay:null,
+    return { tab: (saved.tab && saved.tab !== 'profile') ? saved.tab : 'home', profileOpen:false, builder:null, ob:0, obd:null, auth:{ mode:'signup', email:'', pw:'', show:false, err:'', loading:false }, photoPrompt:false, cmpMode:'start', confirmPhoto:null, photos:(() => { try { return JSON.parse(localStorage.getItem('fitnessboii-photos')) || []; } catch(e) { return []; } })(), progId:'push', exId:'dc', editing:false, confirmDel:false, confirmReset:false, planDay:null,
       programs: saved.programs || d.programs, settings: (() => { const s = { ...d.settings, ...(saved.settings||{}) }; if (saved.settings && !saved.settings.themeV2) { s.theme = 'rubis'; s.themeV2 = true; } return s; })(), session: (saved.session && saved.session.ex) ? saved.session : null,
       logs: saved.logs || [], perf: saved.perf || {}, w: window.innerWidth, toast:null, restEnd:null, now:Date.now() };
   })();
@@ -913,6 +1010,66 @@ class Component extends DCLogic {
   mainRef = el => { this.mainEl = el; };
   curRef = el => { this.curEl = el; };
   obRef = el => { this.obEl = el; };
+  bPanelRef = el => { if (el && !el._in){ el._in = 1; const mob = this.state.w < 860;
+    this.anim(el, mob ? [{ transform:'translateY(100%)' }, { transform:'none' }] : [{ opacity:0, transform:'translateY(16px) scale(.96)' }, { opacity:1, transform:'none' }], { duration: mob ? 420 : 340, easing:'cubic-bezier(.2,.9,.25,1)' }); } };
+  openBuilder(p){ this.setState({ builder: p ? { id:p.id, name:p.name, icon:p.icon, days:[...p.days], exercises:clone(p.exercises), q:'', grp:'all', confirmDel:false }
+    : { id:null, name:'', icon:null, days:[], exercises:[], q:'', grp:'all', confirmDel:false } }); }
+  setB(patch){ this.setState(s => ({ builder:{ ...s.builder, ...patch } })); }
+  bEx(fn){ this.setState(s => ({ builder:{ ...s.builder, exercises:fn(s.builder.exercises) } })); }
+  bAddCustom(){ const b = this.state.builder; const name = b.q.trim(); if (!name) return; const g = b.grp === 'all' ? 'pecs' : b.grp;
+    const id = uid('e'); this.setState(s => ({ builder:{ ...s.builder, q:'', openId:id, exercises:[...s.builder.exercises, { id, name, machine:'', group:g, sets:3, reps:10, weight:0 }] } })); }
+  bSave(){ const b = this.state.builder; if (!b.exercises.length) return this.flash('Ajoute au moins un exercice');
+    const counts = {}; b.exercises.forEach(e => { counts[e.group] = (counts[e.group]||0) + 1; });
+    const groups = Object.keys(counts).sort((x,y) => counts[y] - counts[x]);
+    const id = b.id || uid('p');
+    const prog = { id, name:b.name.trim() || 'Mon programme', subtitle:groups.slice(0,3).map(g => GROUP_LABELS[g]).join(' · '), icon:b.icon || GROUP_PROG_ICON[groups[0]] || 'bolt',
+      days:[...b.days].sort(), exercises:b.exercises.map(e => ({ ...e, name:(e.name||'').trim() || 'Exercice', sets:Math.max(1, +e.sets||1), reps:Math.max(1, +e.reps||1), weight:+e.weight||0, rest:+e.rest||0, note:(e.note||'').trim() })) };
+    let ps = this.state.programs.map(p => p.id === id ? prog : { ...p, days:p.days.filter(d => !b.days.includes(d)) });
+    if (!b.id) ps = [...ps, prog];
+    this.persist({ programs:ps, progId:id, builder:null }); this.flash(b.id ? 'Programme mis à jour' : 'Programme créé'); }
+  bVals(){ const b = this.state.builder; if (!b) return { bOpen:false };
+    const ids = new Set(b.exercises.map(e => e.id)); const q = norm(b.q.trim()); const progs = this.state.programs;
+    const lib = LIB.filter(l => (b.grp === 'all' || l[3] === b.grp) && (!q || norm(l[1]).includes(q)));
+    const exact = q && (LIB.some(l => norm(l[1]) === q) || b.exercises.some(e => norm(e.name) === q));
+    const n = b.exercises.length;
+    const toggle = l => this.bEx(xs => xs.some(x => x.id === l[0]) ? xs.filter(x => x.id !== l[0]) : [...xs, libEx(l)]);
+    const upd = (i, patch) => this.bEx(xs => xs.map((x,j) => j === i ? { ...x, ...patch } : x));
+    const taken = d => progs.find(p => p.id !== b.id && p.days.includes(d));
+    const moved = b.days.map(d => taken(d) ? DAY_SHORT[d] + ' (' + taken(d).name + ')' : null).filter(Boolean);
+    return { bOpen:true, bH: this.state.w < 860 ? '94vh' : 'min(860px, 90vh)', bClose:() => this.setState({ builder:null }), bld:{
+      title: b.id ? 'Modifier le programme' : 'Nouveau programme', name:b.name, onName: ev => this.setB({ name:ev.target.value }), isEdit:!!b.id,
+      showTpl: !b.id && !n, templates: TEMPLATES.map(([name, icon, list]) => ({ name, icon, onClick:() => this.setB({ name, icon,
+        exercises: list.map(id => LIB.find(l => l[0] === id)).filter(Boolean).map(libEx) }) })),
+      count: n ? n + ' exercice' + (n > 1 ? 's' : '') : '', empty: !n,
+      rows: b.exercises.map((e,i) => ({ name:e.name, machine:e.machine, icon:GROUPS[e.group]||'fitness_center', sets:e.sets, reps:e.reps,
+        onMachine: ev => upd(i, { machine:ev.target.value }),
+        setsM:() => upd(i, { sets:Math.max(1, (+e.sets||1) - 1) }), setsP:() => upd(i, { sets:Math.min(10, (+e.sets||0) + 1) }),
+        repsM:() => upd(i, { reps:Math.max(1, (+e.reps||1) - 1) }), repsP:() => upd(i, { reps:(+e.reps||0) + 1 }),
+        upVis: i ? 'visible' : 'hidden', onUp:() => i && this.bEx(xs => { const c = [...xs]; [c[i-1], c[i]] = [c[i], c[i-1]]; return c; }),
+        onRemove:() => this.bEx(xs => xs.filter((_,j) => j !== i)),
+        isOpen: b.openId === e.id, onInfo:() => this.setB({ openId: b.openId === e.id ? null : e.id }),
+        infoLabel: b.openId === e.id ? 'Fermer' : (e.note || +e.weight || +e.rest ? 'Infos ✓' : 'Plus d’infos'),
+        infoBg: b.openId === e.id ? 'rgba(var(--fb-a,236,40,78),.16)' : 'rgba(var(--fb-fg,255,255,255),.05)', infoColor: b.openId === e.id ? 'rgb(var(--fb-a4,255,130,154))' : 'var(--fb-tx2,#d4c2b6)', infoBorder: b.openId === e.id ? '1px solid rgba(var(--fb-a,236,40,78),.4)' : '1px solid rgba(var(--fb-fg,255,255,255),.08)',
+        weight: +e.weight ? e.weight : '', rest: +e.rest ? e.rest : '', restPh: String(this.state.settings.rest || 90), note: e.note || '',
+        onName: ev => upd(i, { name:ev.target.value }), onWeight: ev => upd(i, { weight:ev.target.value }), onRest: ev => upd(i, { rest:ev.target.value }), onNote: ev => upd(i, { note:ev.target.value }),
+        groups: Object.entries(GROUP_LABELS).map(([gid, label]) => { const on = e.group === gid; return { label, onClick:() => upd(i, { group:gid }),
+          bg: on ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-fg,255,255,255),.05)', color: on ? 'var(--fb-on,#fff)' : 'var(--fb-tx2,#d4c2b6)', border: on ? 'none' : '1px solid rgba(var(--fb-fg,255,255,255),.08)' }; }) })),
+      q:b.q, onQ: ev => this.setB({ q:ev.target.value }),
+      onQKey: ev => { if (ev.key !== 'Enter') return; if (lib.length === 1 && !ids.has(lib[0][0])) { toggle(lib[0]); this.setB({ q:'' }); } else if (q && !exact) this.bAddCustom(); },
+      canCreate: !!q && !exact, createLabel: 'Créer « ' + b.q.trim() + ' »', create:() => this.bAddCustom(),
+      groups: [['all','Tous'], ...Object.entries(GROUP_LABELS)].map(([id, label]) => { const on = b.grp === id;
+        return { label, onClick:() => this.setB({ grp:id }), bg: on ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-fg,255,255,255),.05)', color: on ? 'var(--fb-on,#fff)' : 'var(--fb-tx2,#d4c2b6)', border: on ? 'none' : '1px solid rgba(var(--fb-fg,255,255,255),.08)' }; }),
+      lib: lib.map(l => { const on = ids.has(l[0]); return { name:l[1], icon: on ? 'check' : 'add', onClick:() => toggle(l),
+        bg: on ? 'rgba(var(--fb-a,236,40,78),.16)' : 'rgba(var(--fb-fg,255,255,255),.04)', color: on ? 'rgb(var(--fb-a4,255,130,154))' : 'var(--fb-tx,#f5efe9)', border: on ? '1px solid rgba(var(--fb-a,236,40,78),.45)' : '1px solid rgba(var(--fb-fg,255,255,255),.08)' }; }),
+      days: DAYS.map((label, d) => { const on = b.days.includes(d); const t = taken(d);
+        return { label, title: t ? 'Actuellement : ' + t.name : '', onClick:() => this.setB({ days: on ? b.days.filter(x => x !== d) : [...b.days, d] }),
+          bg: on ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-fg,255,255,255),.05)', color: on ? 'var(--fb-on,#fff)' : t ? 'var(--fb-tx3,#a8978c)' : 'var(--fb-tx2,#d4c2b6)',
+          border: on ? 'none' : t ? '1px dashed rgba(var(--fb-fg,255,255,255),.2)' : '1px solid rgba(var(--fb-fg,255,255,255),.1)', shadow: on ? '0 0 14px rgba(var(--fb-a,236,40,78),.45)' : 'none' }; }),
+      daysHint: moved.length ? 'Remplacera : ' + moved.join(', ') : b.days.length ? b.days.length + ' jour' + (b.days.length > 1 ? 's' : '') + ' par semaine' : 'Les jours en pointillés sont déjà pris par un autre programme.',
+      saveLabel: n ? 'Enregistrer · ' + n + ' exo' + (n > 1 ? 's' : '') : 'Ajoute un exercice', saveOp: n ? 1 : .45, save:() => this.bSave(),
+      delLabel: b.confirmDel ? 'Confirmer la suppression' : 'Supprimer le programme', delBg: b.confirmDel ? 'rgba(255,90,70,.15)' : 'transparent',
+      del:() => { if (!b.confirmDel) return this.setB({ confirmDel:true }); const rest = progs.filter(p => p.id !== b.id);
+        this.persist({ programs:rest, progId:rest[0] && rest[0].id, builder:null }); this.flash('Programme supprimé'); } } }; }
   authFormRef = el => { this.authEl = el; };
   spinRef = el => { if (el && el.animate && !el._s){ el._s = 1; el.animate([{ transform:'rotate(0)' }, { transform:'rotate(360deg)' }], { duration:700, iterations:Infinity }); } };
   setA(p){ this.setState(s => ({ auth:{ ...s.auth, ...p } })); }
@@ -924,14 +1081,18 @@ class Component extends DCLogic {
       if (patch.onboarded) { this.flash(how === 'email' ? 'Connecté' : `Connecté avec ${how}`); setTimeout(() => this.enter(true), 30); } }, 900); }
   obWrapRef = el => { if (el && !el._in){ el._in = 1; this.anim(el, [{ opacity:0 }, { opacity:1 }], { duration:300 }); } };
   draft(){ const S = this.state.settings; return this.state.obd || { name: S.onboarded ? S.name : '', goalType:S.goalType || null, level:S.level || null, bodyWeight:+S.bodyWeight || 75, height:+S.height || 175,
-    days: S.onboarded ? [...new Set(this.state.programs.flatMap(p => p.days))].sort() : [0,2,4], theme:(THEMES.some(t => t.id === S.theme) ? S.theme : 'rubis'), mode:S.mode || 'dark' }; }
+    split:S.split || null, days: S.onboarded ? [...new Set(this.state.programs.flatMap(p => p.days))].sort() : [0,2,4], theme:(THEMES.some(t => t.id === S.theme) ? S.theme : 'rubis'), mode:S.mode || 'dark' }; }
   setD(patch){ this.setState({ obd:{ ...this.draft(), ...patch } }); }
-  obValid(step, d){ return step === 1 ? !!(d.name||'').trim() : step === 2 ? !!d.goalType : step === 3 ? !!d.level : step === 5 ? d.days.length > 0 : true; }
+  obValid(step, d){ return step === 1 ? !!(d.name||'').trim() : step === 2 ? !!d.goalType : step === 3 ? !!d.level : step === 5 ? !!d.split : step === 6 ? d.days.length > 0 : true; }
   obGo(n){ this._obDir = n > this.state.ob ? 1 : -1; this.setState({ ob:n }); }
-  obFinish(){ const d = this.draft(); const days = [...d.days].sort(); const ps = this.state.programs;
+  obFinish(){ const d = this.draft(); const days = [...d.days].sort();
+    const sp = OB_SPLITS.find(s => s[0] === d.split); const ps = sp ? sp[4].map(name => { const t = TEMPLATES.find(x => x[0] === name);
+      const exercises = t[2].map(id => LIB.find(l => l[0] === id)).filter(Boolean).map(libEx); const counts = {}; exercises.forEach(e => { counts[e.group] = (counts[e.group]||0) + 1; });
+      const groups = Object.keys(counts).sort((x,y) => counts[y] - counts[x]);
+      return { id:uid('p'), name, icon:t[1], subtitle:groups.slice(0,3).map(g => GROUP_LABELS[g]).join(' · '), days:[], exercises }; }) : this.state.programs;
     const programs = ps.map(p => ({ ...p, days:[] })); if (programs.length) days.forEach((dy,i) => programs[i % programs.length].days.push(dy));
     applyTheme(d.theme, d.mode);
-    this.persist({ programs, settings:{ ...this.state.settings, name:d.name.trim(), goalType:d.goalType, level:d.level, bodyWeight:d.bodyWeight, height:d.height, goal:days.length, theme:d.theme, mode:d.mode, onboarded:true }, obd:null, ob:0, tab:'home' });
+    this.persist({ programs, settings:{ ...this.state.settings, name:d.name.trim(), goalType:d.goalType, level:d.level, bodyWeight:d.bodyWeight, height:d.height, goal:days.length, theme:d.theme, mode:d.mode, split:d.split, onboarded:true }, progId: programs[0] && programs[0].id, obd:null, ob:0, tab:'home' });
     this.flash(`Bienvenue ${d.name.trim()}`); setTimeout(() => this.enter(true), 30); }
   fileRef = el => { this.fileEl = el; };
   fadeRef = el => { if (el && !el._in){ el._in = 1; this.anim(el, [{ opacity:0 }, { opacity:1 }], { duration:260 }); } };
@@ -1037,13 +1198,13 @@ class Component extends DCLogic {
       shadow: on ? '0 0 24px rgba(var(--fb-a,236,40,78),.25)' : 'none', iconBg: on ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-fg,255,255,255),.06)', iconColor: on ? 'var(--fb-on,#fff)' : 'rgb(var(--fb-a4,255,130,154))', checkOp: on ? 1 : 0 });
     const mk = (arr, key) => arr.map(([id,label,desc,icon]) => ({ label, desc, icon, ...sel(d[key] === id), onClick:() => this.setD({ [key]:id }) }));
     const valid = this.obValid(step, d); const n = d.days.length;
-    const next = () => { if (!valid) return; if (step >= 6) return this.obFinish(); this.obGo(step+1); };
+    const next = () => { if (!valid) return; if (step >= 7) return this.obFinish(); this.obGo(step+1); };
     const modes = this.modeList(d.mode, m => { this.vt(() => applyTheme(d.theme, m)); this.setD({ mode:m }); });
-    const vals = { showOb:true, obd:d, obModes:modes, obBar: Array.from({ length:5 }, (_,i) => ({ bg: i < step ? 'rgb(var(--fb-a,236,40,78))' : i === step - 1 ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-fg,255,255,255),.1)', glow: i < step ? '0 0 8px rgba(var(--fb-a,236,40,78),.5)' : 'none' })),
-      obBarVis: step > 0 && step < 6 ? 'visible' : 'hidden', obBackVis: step > 0 && step < 6 ? 'visible' : 'hidden', obCount: `${Math.min(step,5)}/5`,
+    const vals = { showOb:true, obd:d, obModes:modes, obBar: Array.from({ length:6 }, (_,i) => ({ bg: i < step ? 'rgb(var(--fb-a,236,40,78))' : i === step - 1 ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-fg,255,255,255),.1)', glow: i < step ? '0 0 8px rgba(var(--fb-a,236,40,78),.5)' : 'none' })),
+      obBarVis: step > 0 && step < 7 ? 'visible' : 'hidden', obBackVis: step > 0 && step < 7 ? 'visible' : 'hidden', obCount: `${Math.min(step,6)}/6`,
       obBack:() => step > 0 && this.obGo(step-1), obNext:next, obKey: ev => { if (ev.key === 'Enter') next(); },
-      obCta: step === 0 ? 'Commencer' : step === 6 ? 'Démarrer' : 'Continuer', obCtaOp: valid ? 1 : .4,
-      obName: ev => this.setD({ name:ev.target.value }), obGoals: mk(OB_GOALS,'goalType'), obLevels: mk(OB_LEVELS,'level'),
+      obCta: step === 0 ? 'Commencer' : step === 7 ? 'Démarrer' : 'Continuer', obCtaOp: valid ? 1 : .4,
+      obName: ev => this.setD({ name:ev.target.value }), obGoals: mk(OB_GOALS,'goalType'), obSplits: mk(OB_SPLITS.map(s => s.slice(0,4)),'split'), obLevels: mk(OB_LEVELS,'level'),
       obBw: ev => this.setD({ bodyWeight:ev.target.value }), obHt: ev => this.setD({ height:ev.target.value }),
       obBwM:() => this.setD({ bodyWeight:Math.max(30, (+d.bodyWeight||0)-1) }), obBwP:() => this.setD({ bodyWeight:(+d.bodyWeight||0)+1 }),
       obHtM:() => this.setD({ height:Math.max(120, (+d.height||0)-1) }), obHtP:() => this.setD({ height:(+d.height||0)+1 }),
@@ -1055,8 +1216,9 @@ class Component extends DCLogic {
         iconColor:`rgb(${v.a3})`, glow:`0 0 18px rgba(${v.a},.7)`, border: on ? `1.5px solid rgb(${v.a})` : '1px solid rgba(var(--fb-fg,255,255,255),.08)' }; }),
       obSummary: [ { icon:(OB_GOALS.find(g => g[0] === d.goalType)||[])[3] || 'flag', label:(OB_GOALS.find(g => g[0] === d.goalType)||[])[1] || '—' },
         { icon:(OB_LEVELS.find(g => g[0] === d.level)||[])[3] || 'star', label:(OB_LEVELS.find(g => g[0] === d.level)||[])[1] || '—' },
+        { icon:(OB_SPLITS.find(s => s[0] === d.split)||[])[3] || 'list', label:(OB_SPLITS.find(s => s[0] === d.split)||[])[1] || '—' },
         { icon:'event_repeat', label:`${n} séance${n > 1 ? 's' : ''} / sem.` } ] };
-    for (let i = 0; i <= 6; i++) vals['ob'+i] = step === i; return vals; }
+    for (let i = 0; i <= 7; i++) vals['ob'+i] = step === i; return vals; }
   renderVals(){
     const st = this.state, S = st.settings; const isMobile = st.w < 860; const today = new Date(); const tk = dk(today); const wd = (today.getDay()+6)%7;
     const attended = new Set([...MOCK.days, ...st.logs.map(l => l.date)]);
@@ -1102,7 +1264,7 @@ class Component extends DCLogic {
     let prog = null;
     if (selP){ prog = info(selP); const pid = selP.id;
       prog.dayTags = selP.days.map(d => DAY_NAMES[d]); prog.noDays = !selP.days.length;
-      prog.exercises = selP.exercises.map((e,i) => ({ ...e, num:i+1, icon:GROUPS[e.group]||'fitness_center', weightLabel: +e.weight ? `${e.weight} kg` : 'Poids du corps',
+      prog.exercises = selP.exercises.map((e,i) => ({ ...e, num:i+1, hasNote: !!e.note, note: e.note || '', icon:GROUPS[e.group]||'fitness_center', weightLabel: (() => { const l = this.history(e.id).slice(-1)[0]; return l && +l.w ? 'Dernier : ' + l.w + ' kg' : ''; })(),
         onName: ev => this.updEx(pid, e.id, { name:ev.target.value }), onMachine: ev => this.updEx(pid, e.id, { machine:ev.target.value }),
         onGroup: ev => this.updEx(pid, e.id, { group:ev.target.value }), onSets: ev => this.updEx(pid, e.id, { sets:ev.target.value }),
         onReps: ev => this.updEx(pid, e.id, { reps:ev.target.value }), onWeight: ev => this.updEx(pid, e.id, { weight:ev.target.value }),
@@ -1138,13 +1300,13 @@ class Component extends DCLogic {
       let c = { num:0, name:'Aucun exercice', machine:'', icon:'fitness_center', target:'', best:'—', w:0, r:0 };
       if (ce){ const x = se.ex[ce.id]; const b = best(ce.id); const isLastTodo = order.every((e,i) => i === ci || se.ex[e.id].done);
         c = { num:ci+1, name:ce.name, machine:ce.machine || '—', icon:GROUPS[ce.group]||'fitness_center', target:`${ce.sets} × ${ce.reps}${+ce.weight ? ' · ' + ce.weight + ' kg' : ''}`,
-          best: b ? `${b.w} kg × ${b.r}` : '—', w:x.w, r:x.r,
+          best: b ? `${b.w} kg × ${b.r}` : '—', w:x.w, r:x.r, hasNote: !!ce.note, note: ce.note || '',
           onW: ev => this.updSx(ce.id, { w:ev.target.value }), onR: ev => this.updSx(ce.id, { r:ev.target.value }),
           wMinus:() => this.updSx(ce.id, { w:Math.max(0, r25((+x.w||0) - 2.5)) }), wPlus:() => this.updSx(ce.id, { w:r25((+x.w||0) + 2.5) }),
           rMinus:() => this.updSx(ce.id, { r:Math.max(0, (+x.r||0) - 1) }), rPlus:() => this.updSx(ce.id, { r:(+x.r||0) + 1 }),
           validate:() => { const exs = { ...se.ex, [ce.id]:{ ...x, done:true } }; let nx = ci;
             for (let k = 1; k <= order.length; k++){ const j = (ci+k) % order.length; if (!exs[order[j].id].done){ nx = j; break; } }
-            this.persist({ session:{ ...se, ex:exs, cur:nx } }); if (!x.done && S.autoTimer && nx !== ci) this.setState({ restEnd:Date.now()+S.rest*1000, now:Date.now() }); },
+            this.persist({ session:{ ...se, ex:exs, cur:nx } }); if (!x.done && S.autoTimer && nx !== ci) this.setState({ restEnd:Date.now()+(+ce.rest||S.rest)*1000, now:Date.now() }); },
           validateLabel: x.done ? 'Mettre à jour' : isLastTodo ? 'Valider le dernier exo' : 'Valider · exo suivant', btnIcon: x.done ? 'edit' : 'check',
           btnBg: x.done ? 'rgba(var(--fb-fg,255,255,255),.06)' : 'rgb(var(--fb-a,236,40,78))', btnColor: 'var(--fb-on,#fff)', btnBorder: x.done ? '1px solid rgba(var(--fb-fg,255,255,255),.14)' : 'none',
           btnShadow: x.done ? 'none' : '0 10px 28px rgba(var(--fb-a,236,40,78),.45)' }; }
@@ -1220,9 +1382,10 @@ class Component extends DCLogic {
         check: a ? 'grid' : 'none', border: a ? `1.5px solid rgb(${v.a})` : '1px solid rgba(var(--fb-fg,255,255,255),.08)' }; }),
       heatRows, heatCols, heatTotal, heatRange: `${fmtM(start)} → ${fmtM(today)}`,
       hero, prog, progTabs, prs, sess,
+      ...this.bVals(), bPanelRef:this.bPanelRef, newProgram:() => this.openBuilder(null), editProgram:() => selP && this.openBuilder(selP),
       ...this.obVals(S), ...this.authVals(S), authFormRef:this.authFormRef, spinRef:this.spinRef,
       logout:() => { this.setState({ profileOpen:false }); this.persist({ settings:{ ...S, loggedIn:false }, auth:{ mode:'login', email:'', pw:'', show:false, err:'', loading:false } }); },
-      redoOb:() => this.setState({ profileOpen:false, ob:0, obd:null, auth:{ mode:'signup', email:'', pw:'', show:false, err:'', loading:false }, settings:{ ...S, onboarded:false } }),
+      redoOb:() => this.setState({ profileOpen:false, builder:null, ob:0, obd:null, auth:{ mode:'signup', email:'', pw:'', show:false, err:'', loading:false }, settings:{ ...S, onboarded:false } }),
       bars, barAvg, goalPct, changes, changeStats, noChanges: !changes.length, cmp, cmpGap, cmpEmpty, canCompare: cmp.length === 2, noCompare: cmp.length !== 2, cmpModes, photoList,
       addIcon: hasWeek ? 'cached' : 'add_a_photo', addLabel: hasWeek ? 'Remplacer' : 'Cette sem.', addBg: hasWeek ? 'transparent' : 'rgba(var(--fb-a,236,40,78),.08)',
       photoPrompt: st.photoPrompt, photoLater:() => this.setState({ photoPrompt:false }), pickPhoto:this.pickPhoto, onFile:this.onFile, fileRef:this.fileRef, obRef:this.obRef, obWrapRef:this.obWrapRef, fadeRef:this.fadeRef, cmpRef:this.cmpRef, noSession: !sess, hasSession: !!sess,
@@ -1256,5 +1419,6 @@ class Component extends DCLogic {
   }
 }
 </script>
-</body>
-</html>
+
+
+</body></html>

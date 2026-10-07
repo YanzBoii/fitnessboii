@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { DEFAULT_PROGRAMS } from '../../src/domain/constants';
 import { fitSize } from '../../src/domain/image';
 import { normalizeExercise, normalizeProfile, normalizeProgram } from '../../src/domain/normalize';
-import { distributeDays } from '../../src/domain/onboarding';
+import { distributeDays, planPrograms } from '../../src/domain/onboarding';
 import { buildLog, mergeLog, nextTodo, startSession } from '../../src/domain/session';
 import type { Program, SessionLog } from '../../src/domain/types';
 
@@ -33,6 +33,25 @@ describe('onboarding', () => {
   it('répartit les jours cycliquement sur les programmes', () => {
     const r = distributeDays(DEFAULT_PROGRAMS, [5, 0, 2, 4]);
     expect(r.map(p => p.days)).toEqual([[0, 5], [2], [4]]);
+  });
+  let n = 0;
+  const id = () => 'p' + n++;
+  it('nouveau compte : crée les programmes du split', () => {
+    const r = planPrograms('ul', null, [], id);
+    expect(r.programs.map(p => p.name)).toEqual(['Haut du corps', 'Bas du corps']);
+    expect(r.removeIds).toEqual([]);
+  });
+  it('« Je crée les miens » : aucun programme créé, rien supprimé', () => {
+    expect(planPrograms('custom', null, [], id).programs).toEqual([]);
+    expect(planPrograms('custom', 'ppl', DEFAULT_PROGRAMS, id)).toEqual({ programs: DEFAULT_PROGRAMS, removeIds: [] });
+  });
+  it('questionnaire refait avec le même split : programmes conservés', () => {
+    expect(planPrograms('ppl', 'ppl', DEFAULT_PROGRAMS, id).programs).toBe(DEFAULT_PROGRAMS);
+  });
+  it('split différent : remplace les anciens programmes', () => {
+    const r = planPrograms('fb', 'ppl', DEFAULT_PROGRAMS, id);
+    expect(r.programs.map(p => p.name)).toEqual(['Full body']);
+    expect(r.removeIds).toEqual(['push', 'pull', 'legs']);
   });
 });
 

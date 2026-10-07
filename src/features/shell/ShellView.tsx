@@ -8,7 +8,7 @@ export function ShellView({ v, children, overlays }: { v: ShellVals; children: R
       {v.isDesktop && (<>
         <aside style={{ position: "fixed", left: "0", top: "0", bottom: "0", width: "224px", padding: "24px 14px", display: "flex", flexDirection: "column", gap: "24px", borderRight: "1px solid var(--fb-line,rgba(var(--fb-a3,255,92,124),.08))", background: "rgba(var(--fb-bg,12,8,10),.7)", backdropFilter: "blur(20px)", zIndex: "10" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "0 10px" }}>
-            <div style={{ width: "28px", height: "28px", borderRadius: "9px", display: "grid", placeItems: "center", background: "linear-gradient(135deg,rgb(255,92,124),rgb(var(--fb-a2,220,30,96)))", boxShadow: "0 0 16px rgba(236,40,78,.55)", color: "#fff" }}>
+            <div style={{ width: "28px", height: "28px", borderRadius: "9px", display: "grid", placeItems: "center", background: "linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a,236,40,78)))", boxShadow: "0 0 16px rgba(var(--fb-a,236,40,78),.55)", color: "#fff" }}>
               <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "18px", fontVariationSettings: "'FILL' 1", color: "var(--fb-on,#fff)" }}>
                 fitness_center
               </span>
@@ -51,7 +51,7 @@ export function ShellView({ v, children, overlays }: { v: ShellVals; children: R
           <div style={{ display: "flex", flexDirection: "column", gap: "3px", minWidth: "0" }}>
             {v.isMobile && (<>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
-                <div style={{ width: "24px", height: "24px", borderRadius: "8px", display: "grid", placeItems: "center", background: "linear-gradient(135deg,rgb(255,92,124),rgb(var(--fb-a2,220,30,96)))", boxShadow: "0 0 12px rgba(236,40,78,.55)", color: "#fff" }}>
+                <div style={{ width: "24px", height: "24px", borderRadius: "8px", display: "grid", placeItems: "center", background: "linear-gradient(135deg,rgb(var(--fb-a3,255,92,124)),rgb(var(--fb-a,236,40,78)))", boxShadow: "0 0 12px rgba(var(--fb-a,236,40,78),.55)", color: "#fff" }}>
                   <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "15px", fontVariationSettings: "'FILL' 1", color: "var(--fb-on,#fff)" }}>
                     fitness_center
                   </span>

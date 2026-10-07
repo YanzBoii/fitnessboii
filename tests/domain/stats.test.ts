@@ -83,6 +83,11 @@ describe('perfs', () => {
     expect(c[0].id).toBe('tr');
     expect(c[0].spark.length).toBeGreaterThan(0);
   });
+  it('charge cible à 0 (« auto ») : comparé en kg si des charges ont été notées', () => {
+    const auto = { ...dc, weight: 0 };
+    expect(changes30d(perfHistory(logs), [auto], today)[0]).toMatchObject({ unit: 'kg', delta: 5 });
+    expect(recentRecords(perfHistory(logs), [auto]).map(x => x.id)).toEqual(['dc']);
+  });
   it('recentRecords : top 3 progressions, ignore les exos sans historique', () => {
     const r = recentRecords(perfHistory(logs), [dc, tr, { ...dc, id: 'zz' }]);
     expect(r.map(x => x.id)).toEqual(['dc']);

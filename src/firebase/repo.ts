@@ -26,9 +26,11 @@ export function subscribeProfile(uid: string, cb: (p: Profile | null) => void, o
 export const saveProfile = (uid: string, patch: Partial<Profile>) =>
   setDoc(userDoc(uid), { ...normalizeProfile(patch), updatedAt: serverTimestamp() }, { merge: true });
 
-/** Fin du questionnaire : profil + programmes en une seule écriture atomique. */
-export async function completeOnboarding(uid: string, profile: Partial<Profile>, programs: Program[], isNew: boolean) {
+/** Fin du questionnaire : profil + programmes (et retrait des programmes remplacés) en une écriture atomique. */
+export async function completeOnboarding(uid: string, profile: Partial<Profile>, programs: Program[], isNew: boolean, removeIds: string[] = []) {
   const b = writeBatch(db);
+  const keep = new Set(programs.map(p => p.id));
+  removeIds.filter(id => !keep.has(id)).forEach(id => b.delete(doc(sub(uid, 'programs'), id)));
   b.set(userDoc(uid), {
     ...normalizeProfile({ ...profile, onboarded: true }),
     updatedAt: serverTimestamp(),

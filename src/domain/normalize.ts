@@ -1,7 +1,9 @@
 // Normalisation des données avant écriture : mêmes bornes que firestore.rules,
 // et validation de ce que les règles ne peuvent pas vérifier (éléments de listes/maps).
 import { GROUP_IDS, LIMITS, PROG_ICONS, REST_OPTIONS, THEME_IDS } from './constants';
-import type { ActiveSession, Exercise, Group, Profile, Program, RestSeconds, SessionLog } from './types';
+import type { ActiveSession, Exercise, Group, Profile, Program, RestSeconds, SessionLog, Split } from './types';
+
+const SPLITS: Split[] = ['ppl', 'ul', 'fb', 'custom'];
 
 const clamp = (v: unknown, min: number, max: number, fallback = min) => {
   const n = Number(v);
@@ -17,6 +19,7 @@ export const safeId = (id: string) => /^[A-Za-z0-9_-]{1,40}$/.test(id);
 const group = (g: unknown): Group => (GROUP_IDS.includes(g as Group) ? (g as Group) : 'pecs');
 
 export function normalizeExercise(e: Exercise): Exercise {
+  const rest = int(e.rest, 0, 600, 0), note = str(e.note, 120);
   return {
     id: safeId(e.id) ? e.id : 'e' + Math.random().toString(36).slice(2, 10),
     name: str(e.name, 60, 'Exercice'),
@@ -24,7 +27,9 @@ export function normalizeExercise(e: Exercise): Exercise {
     group: group(e.group),
     sets: int(e.sets, 1, 20, 3),
     reps: int(e.reps, 0, 500, 10),
-    weight: half(clamp(e.weight, 0, 1000, 0))
+    weight: half(clamp(e.weight, 0, 1000, 0)),
+    ...(rest ? { rest } : {}),
+    ...(note ? { note } : {})
   };
 }
 
@@ -46,6 +51,7 @@ export function normalizeProfile(p: Partial<Profile>): Partial<Profile> {
   if (p.name !== undefined) o.name = str(p.name, 40);
   if (p.goalType) o.goalType = p.goalType;
   if (p.level) o.level = p.level;
+  if (p.split && SPLITS.includes(p.split)) o.split = p.split;
   if (p.bodyWeight !== undefined) o.bodyWeight = half(clamp(p.bodyWeight, 20, 400, 75));
   if (p.height !== undefined) o.height = int(p.height, 100, 250, 175);
   if (p.goal !== undefined) o.goal = int(p.goal, 1, 7, 3);
