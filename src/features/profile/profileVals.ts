@@ -59,7 +59,7 @@ export function useProfileVals() {
     initial: (S.name || '?').trim().charAt(0).toUpperCase(),
     settings: {
       name: S.name, email: a.email, goal: S.goal,
-      bodyWeight: drafts.bodyWeight ?? String(S.bodyWeight), height: drafts.height ?? String(S.height)
+      bodyWeight: drafts.bodyWeight ?? String(S.bodyWeight).replace('.', ','), height: drafts.height ?? String(S.height)
     },
     onName: (ev: Ev) => a.setting('name', ev.target.value.slice(0, 40)),
     onEmail: () => {},

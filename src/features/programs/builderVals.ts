@@ -139,7 +139,7 @@ export function useBuilderVals(initial: Program | null, onClose: () => void) {
           infoBg: open ? 'rgba(var(--fb-a,236,40,78),.16)' : 'rgba(var(--fb-fg,255,255,255),.05)',
           infoColor: open ? 'rgb(var(--fb-a4,255,130,154))' : 'var(--fb-tx2,#d4c2b6)',
           infoBorder: open ? '1px solid rgba(var(--fb-a,236,40,78),.4)' : '1px solid rgba(var(--fb-fg,255,255,255),.08)',
-          weight: toNum(e.weight) || typeof e.weight === 'string' ? String(e.weight) : '',
+          weight: typeof e.weight === 'string' ? e.weight : e.weight ? String(e.weight).replace('.', ',') : '',
           rest: toNum(e.rest) || typeof e.rest === 'string' ? String(e.rest) : '',
           restPh: String(a.profile.rest || 90), note: e.note || '',
           onName: (ev: Ev) => upd(i, { name: ev.target.value.slice(0, 60) }),

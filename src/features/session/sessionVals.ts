@@ -83,7 +83,7 @@ export function useSessionVals() {
       const b = best(a.history[ce.id] || []);
       const isLastTodo = order.every((e, i) => i === ci || se.ex[e.id].done);
       const field = (k: 'w' | 'r') => ({
-        value: drafts[`${ce.id}.${k}`] ?? String(x[k]),
+        value: drafts[`${ce.id}.${k}`] ?? fmtKg(x[k]),
         onChange: (ev: ChangeEvent<HTMLInputElement>) => {
           const raw = ev.target.value;
           setDrafts(d => ({ ...d, [`${ce.id}.${k}`]: raw }));

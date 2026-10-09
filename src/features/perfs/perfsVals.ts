@@ -90,7 +90,9 @@ export function usePerfsVals() {
     bars: wkCounts.map((w, i) => ({
       h: `${(w.n / bMax) * 100}%`,
       title: `Semaine du ${short(w.monday)} · ${w.n} séance${w.n > 1 ? 's' : ''}`,
-      label: w.current ? 'Cette sem.' : i % 3 === 0 ? short(w.monday).replace('.', '') : '',
+      // Un libellé toutes les 3 semaines, aligné sur « Cette sem. » (sinon les deux derniers se chevauchent).
+      label: w.current ? 'Cette sem.' : i % 3 === 2 ? short(w.monday).replace('.', '') : '',
+      labelJustify: w.current ? 'flex-end' : 'center',
       labelColor: w.current ? 'rgb(var(--fb-a4,255,130,154))' : 'var(--fb-tx4,#8e7d72)',
       bg: w.current ? 'linear-gradient(180deg, rgb(var(--fb-a3,255,92,124)), rgb(var(--fb-a,236,40,78)))' : w.hit ? 'rgba(var(--fb-a,236,40,78),.75)' : 'rgba(var(--fb-fg,255,255,255),.1)',
       shadow: w.current ? '0 0 16px rgba(var(--fb-a,236,40,78),.55)' : 'none'

@@ -68,7 +68,7 @@ export function HomeView({ v }: { v: HomeVals }) {
                 <span style={{ fontSize: "11px", color: "var(--fb-tx3,#a8978c)" }}>
                   {d.label}
                 </span>
-                <div style={{ width: "100%", maxWidth: "36px", aspectRatio: "1", borderRadius: "50%", display: "grid", placeItems: "center", background: d.bg, border: d.border, boxShadow: d.shadow, color: "var(--fb-on,#fff)", fontSize: "12px", fontWeight: "600" }}>
+                <div style={{ width: "100%", maxWidth: "36px", aspectRatio: "1", borderRadius: "50%", display: "grid", placeItems: "center", background: d.bg, border: d.border, boxShadow: d.shadow, color: d.color, fontSize: "12px", fontWeight: "600" }}>
                   <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "16px", display: d.checkDisplay }}>
                     check
                   </span>

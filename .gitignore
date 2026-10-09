@@ -13,3 +13,5 @@ dev-dist/
 
 # Local Netlify folder
 .netlify
+dist-emu/
+docs/screenshots/raw/

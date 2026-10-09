@@ -48,6 +48,7 @@ export function useHomeVals() {
     weekRow: weekRow(attended, today).map((d, i) => ({
       label: DAYS[i], num: d.date.getDate(),
       checkDisplay: d.done ? 'block' : 'none', numDisplay: d.done ? 'none' : 'block',
+      color: d.done ? 'var(--fb-on,#fff)' : 'var(--fb-tx2,#d4c2b6)',
       bg: d.done ? (d.isToday ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-a2,220,30,96),.85)') : 'rgba(var(--fb-fg,255,255,255),.04)',
       border: d.isToday && !d.done ? '1.5px solid rgb(var(--fb-a,236,40,78))' : d.done ? 'none' : '1px solid rgba(var(--fb-fg,255,255,255),.08)',
       shadow: d.done ? '0 0 14px rgba(var(--fb-a2,220,30,96),.5)' : 'none'

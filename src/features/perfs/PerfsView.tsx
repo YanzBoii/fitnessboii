@@ -134,7 +134,7 @@ export function PerfsView({ v }: { v: PerfsVals }) {
         <div style={{ display: "flex", gap: "6px", marginTop: "-6px" }}>
           {v.bars.map((b, b_i) => (
             <Fragment key={b_i}>
-              <span style={{ flex: "1", minWidth: "0", textAlign: "center", fontSize: "10px", color: b.labelColor, whiteSpace: "nowrap" }}>
+              <span style={{ flex: "1", minWidth: "0", display: "flex", justifyContent: b.labelJustify, fontSize: "10px", color: b.labelColor, whiteSpace: "nowrap" }}>
                 {b.label}
               </span>
           </Fragment>

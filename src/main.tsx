@@ -2,6 +2,9 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import './ui/global.css';
+import { initInstall } from './ui/install';
+
+initInstall();
 
 // Nouvelle version déployée : le nouveau service worker prend la main → on recharge
 // pour l'afficher tout de suite (sauf à la toute première installation).
