@@ -28,20 +28,20 @@ export function ProfileView({ v }: { v: ProfileVals }) {
         <div style={{ borderRadius: "20px", padding: "16px", display: "flex", flexDirection: "column", gap: "12px", background: "rgba(var(--fb-fg,255,255,255),.03)", border: "1px solid rgba(var(--fb-fg,255,255,255),.06)" }}>
           <label style={{ display: "flex", flexDirection: "column", gap: "5px", fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
             Prénom
-            <input value={v.settings.name} onChange={v.onName} style={{ height: "40px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", fontSize: "14px", outline: "none", width: "100%" }} />
+            <input value={v.settings.name} onChange={v.onName} style={{ height: "40px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", fontSize: "max(var(--fb-ifs, 0px), 14px)", outline: "none", width: "100%" }} />
           </label>
           <label style={{ display: "flex", flexDirection: "column", gap: "5px", fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
             Email
-            <input type="email" value={v.settings.email} readOnly title="Email du compte" style={{ opacity: ".7", height: "40px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", fontSize: "14px", outline: "none", width: "100%" }} />
+            <input type="email" value={v.settings.email} readOnly title="Email du compte" style={{ opacity: ".7", height: "40px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", fontSize: "max(var(--fb-ifs, 0px), 14px)", outline: "none", width: "100%" }} />
           </label>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
             <label style={{ display: "flex", flexDirection: "column", gap: "5px", fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
               Poids (kg)
-              <input type="text" inputMode="decimal" value={v.settings.bodyWeight} onChange={v.onBodyWeight} style={{ height: "40px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", fontSize: "14px", outline: "none", width: "100%", fontFamily: "Sora", fontWeight: "600" }} />
+              <input type="text" inputMode="decimal" value={v.settings.bodyWeight} onChange={v.onBodyWeight} style={{ height: "40px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", fontSize: "max(var(--fb-ifs, 0px), 14px)", outline: "none", width: "100%", fontFamily: "Sora", fontWeight: "600" }} />
             </label>
             <label style={{ display: "flex", flexDirection: "column", gap: "5px", fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
               Taille (cm)
-              <input type="number" value={v.settings.height} onChange={v.onHeight} style={{ height: "40px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", fontSize: "14px", outline: "none", width: "100%", fontFamily: "Sora", fontWeight: "600" }} />
+              <input type="number" value={v.settings.height} onChange={v.onHeight} style={{ height: "40px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", fontSize: "max(var(--fb-ifs, 0px), 14px)", outline: "none", width: "100%", fontFamily: "Sora", fontWeight: "600" }} />
             </label>
           </div>
         </div>
@@ -51,7 +51,7 @@ export function ProfileView({ v }: { v: ProfileVals }) {
               Séances / semaine
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "4px", padding: "4px", borderRadius: "99px", background: "rgba(var(--fb-ink,0,0,0),.35)" }}>
-              <button onClick={v.goalDown} style={{ width: "30px", height: "30px", borderRadius: "50%", border: "none", cursor: "pointer", background: "rgba(var(--fb-fg,255,255,255),.06)", color: "var(--fb-tx,#f5efe9)", display: "grid", placeItems: "center" }}>
+              <button onClick={v.goalDown} style={{ width: "36px", height: "36px", borderRadius: "50%", border: "none", cursor: "pointer", background: "rgba(var(--fb-fg,255,255,255),.06)", color: "var(--fb-tx,#f5efe9)", display: "grid", placeItems: "center" }}>
                 <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "18px" }}>
                   remove
                 </span>
@@ -59,7 +59,7 @@ export function ProfileView({ v }: { v: ProfileVals }) {
               <span style={{ minWidth: "24px", textAlign: "center", font: "700 15px Sora" }}>
                 {v.settings.goal}
               </span>
-              <button onClick={v.goalUp} style={{ width: "30px", height: "30px", borderRadius: "50%", border: "none", cursor: "pointer", background: "rgb(var(--fb-a,236,40,78))", color: "var(--fb-on,#fff)", display: "grid", placeItems: "center" }}>
+              <button onClick={v.goalUp} style={{ width: "36px", height: "36px", borderRadius: "50%", border: "none", cursor: "pointer", background: "rgb(var(--fb-a,236,40,78))", color: "var(--fb-on,#fff)", display: "grid", placeItems: "center" }}>
                 <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "18px" }}>
                   add
                 </span>
@@ -120,7 +120,7 @@ export function ProfileView({ v }: { v: ProfileVals }) {
             {v.resetLabel}
           </button>
           {v.askPassword && (
-            <input type="password" value={v.delPw} onChange={v.onDelPw} placeholder="Mot de passe pour confirmer" autoComplete="current-password" style={{ flex: "1 1 100%", height: "40px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(255,90,70,.3)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", fontSize: "14px", outline: "none" }} />
+            <input type="password" value={v.delPw} onChange={v.onDelPw} placeholder="Mot de passe pour confirmer" autoComplete="current-password" style={{ flex: "1 1 100%", height: "40px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(255,90,70,.3)", background: "rgba(var(--fb-ink,0,0,0),.35)", color: "var(--fb-tx,#f5efe9)", fontSize: "max(var(--fb-ifs, 0px), 14px)", outline: "none" }} />
           )}
           <button onClick={v.deleteAccount} disabled={v.deleting} style={{ flex: "1 1 100%", whiteSpace: "nowrap", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", padding: "11px", borderRadius: "14px", cursor: "pointer", background: v.deleteBg, border: "1px solid rgba(255,90,70,.3)", color: "#ff8a73", font: "600 13px Manrope" }}>
             <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "18px" }}>

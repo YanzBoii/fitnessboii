@@ -75,3 +75,11 @@ BROWSER_URL=http://127.0.0.1:9333 node scripts/showcase.mjs
 ```
 
 Le script crée un compte de démonstration sur l'émulateur (16 semaines de séances), capture chaque écran en clair et en sombre, puis compose la vitrine.
+
+## Audit mobile
+
+`scripts/audit-mobile.mjs` parcourt tous les écrans (connexion, vérification d'email, questionnaire, accueil, programmes, éditeur, séance, minuteur, perfs, réglages, profil, popup photo) sur 4 tailles de téléphone (360, 375, 390 et 430 px) et signale : défilement horizontal, contenu de champ coupé, texte tronqué, champs qui déclenchent le zoom automatique d'iOS (< 16 px), zones tactiles < 32 px, contenu masqué par la barre de navigation. Mêmes prérequis que les captures :
+
+```bash
+BROWSER_URL=http://127.0.0.1:9333 node scripts/audit-mobile.mjs   # rapport + captures dans docs/screenshots/raw/audit/
+```

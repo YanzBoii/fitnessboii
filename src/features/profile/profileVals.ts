@@ -55,7 +55,7 @@ export function useProfileVals() {
     },
     closeProfile: close,
     stop: (ev: MouseEvent) => ev.stopPropagation(),
-    sheetAlign: mob ? 'flex-end' : 'center', sheetPad: mob ? '0' : '24px', sheetMaxH: mob ? '90vh' : '86vh', sheetRadius: mob ? '26px 26px 0 0' : '26px',
+    sheetAlign: mob ? 'flex-end' : 'center', sheetPad: mob ? '0' : '24px', sheetMaxH: mob ? '90dvh' : '86dvh', sheetRadius: mob ? '26px 26px 0 0' : '26px',
     initial: (S.name || '?').trim().charAt(0).toUpperCase(),
     settings: {
       name: S.name, email: a.email, goal: S.goal,

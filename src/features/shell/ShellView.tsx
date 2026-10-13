@@ -61,7 +61,7 @@ export function ShellView({ v, children, overlays }: { v: ShellVals; children: R
                 </div>
               </div>
             </>)}
-            <div style={{ fontSize: "13px", color: "var(--fb-tx3,#a8978c)", textTransform: "capitalize" }}>
+            <div style={{ fontSize: "13px", color: "var(--fb-tx3,#a8978c)" }}>
               {v.dateLabel}
             </div>
             <h1 ref={v.titleRef} style={{ margin: "0", fontFamily: "Sora", fontWeight: "600", fontSize: "clamp(22px,2.6vw,30px)", letterSpacing: "-.025em" }}>
@@ -82,7 +82,7 @@ export function ShellView({ v, children, overlays }: { v: ShellVals; children: R
       {children}
     </main>
       {v.hasRestFloat && (<>
-        <div ref={v.popRef} style={{ position: "fixed", right: "clamp(14px,3vw,32px)", bottom: v.restBottom, display: "flex", alignItems: "center", gap: "10px", padding: "8px 8px 8px 16px", borderRadius: "99px", background: "rgba(var(--fb-s4,40,16,24),.85)", backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)", border: "1px solid rgba(var(--fb-a3,255,92,124),.3)", boxShadow: "var(--fb-popsh,0 14px 34px rgba(0,0,0,.5))", zIndex: "25" }}>
+        <div ref={v.popRef} style={{ position: "fixed", right: "clamp(14px,3vw,32px)", bottom: v.restBottom, transition: "bottom .32s cubic-bezier(.2,.8,.2,1)", display: "flex", alignItems: "center", gap: "10px", padding: "8px 8px 8px 16px", borderRadius: "99px", background: "rgba(var(--fb-s4,40,16,24),.85)", backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)", border: "1px solid rgba(var(--fb-a3,255,92,124),.3)", boxShadow: "var(--fb-popsh,0 14px 34px rgba(0,0,0,.5))", zIndex: "25" }}>
           <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", color: "rgb(var(--fb-a3,255,92,124))" }}>
             timer
           </span>
@@ -103,7 +103,7 @@ export function ShellView({ v, children, overlays }: { v: ShellVals; children: R
         </div>
       </>)}
       {v.isMobile && (<>
-        <nav style={{ position: "fixed", left: "50%", bottom: "16px", transform: "translateX(-50%)", display: "flex", gap: "6px", padding: "7px", borderRadius: "99px", background: "rgba(var(--fb-s4,40,16,24),.75)", backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", boxShadow: "var(--fb-popsh,0 20px 40px rgba(0,0,0,.5))", zIndex: "20" }}>
+        <nav style={{ position: "fixed", left: "50%", bottom: "16px", transform: v.navTransform, transition: "transform .32s cubic-bezier(.2,.8,.2,1)", display: "flex", gap: "6px", padding: "7px", borderRadius: "99px", background: "rgba(var(--fb-s4,40,16,24),.75)", backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", boxShadow: "var(--fb-popsh,0 20px 40px rgba(0,0,0,.5))", zIndex: "20" }}>
           {v.nav.map((n, n_i) => (
             <Fragment key={n_i}>
               <button onClick={n.onClick} aria-label={n.label} style={{ width: "48px", height: "48px", borderRadius: "50%", cursor: "pointer", display: "grid", placeItems: "center", background: n.mbg, color: n.color, border: n.mborder, boxShadow: n.shadow }}>

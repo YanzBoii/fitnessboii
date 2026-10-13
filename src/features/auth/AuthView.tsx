@@ -90,13 +90,13 @@ export function AuthView({ v }: { v: AuthVals }) {
               <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", fontVariationSettings: "'FILL' 0", color: "var(--fb-tx3,#a8978c)" }}>
                 mail
               </span>
-              <input type="email" value={v.auth.email} onChange={v.authEmail} onKeyDown={v.authKey} placeholder="Email" style={{ flex: "1", minWidth: "0", height: "100%", border: "none", background: "transparent", color: "var(--fb-tx,#f5efe9)", font: "500 15px Manrope", outline: "none" }} />
+              <input type="email" value={v.auth.email} onChange={v.authEmail} onKeyDown={v.authKey} placeholder="Email" style={{ flex: "1", minWidth: "0", height: "100%", border: "none", background: "transparent", color: "var(--fb-tx,#f5efe9)", font: "500 max(var(--fb-ifs, 0px), 15px) Manrope", outline: "none" }} />
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", height: "54px", padding: "0 14px", borderRadius: "16px", background: "rgba(var(--fb-ink,0,0,0),.3)", border: `1px solid ${v.authBorder}` }}>
               <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", fontVariationSettings: "'FILL' 0", color: "var(--fb-tx3,#a8978c)" }}>
                 lock
               </span>
-              <input type={v.pwType} value={v.auth.pw} onChange={v.authPw} onKeyDown={v.authKey} placeholder="Mot de passe" style={{ flex: "1", minWidth: "0", height: "100%", border: "none", background: "transparent", color: "var(--fb-tx,#f5efe9)", font: "500 15px Manrope", outline: "none" }} />
+              <input type={v.pwType} value={v.auth.pw} onChange={v.authPw} onKeyDown={v.authKey} placeholder="Mot de passe" style={{ flex: "1", minWidth: "0", height: "100%", border: "none", background: "transparent", color: "var(--fb-tx,#f5efe9)", font: "500 max(var(--fb-ifs, 0px), 15px) Manrope", outline: "none" }} />
               <button onClick={v.togglePw} aria-label="Afficher le mot de passe" style={{ width: "36px", height: "36px", borderRadius: "50%", border: "none", cursor: "pointer", display: "grid", placeItems: "center", background: "transparent", color: "var(--fb-tx3,#a8978c)" }}>
                 <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", fontVariationSettings: "'FILL' 0" }}>
                   {v.pwIcon}

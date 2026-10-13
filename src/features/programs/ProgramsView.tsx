@@ -19,17 +19,17 @@ export function ProgramsView({ v }: { v: ProgramsVals }) {
             </div>
           </div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(7, minmax(0,1fr))", gap: "6px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(7, minmax(0,1fr))", gap: "clamp(3px, 1.2vw, 6px)" }}>
           {v.plan.map((d, d_i) => (
             <Fragment key={d_i}>
-              <button onClick={d.onClick} style={{ cursor: "pointer", padding: "10px 4px", borderRadius: "16px", display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", minWidth: "0", background: d.bg, border: d.border, color: "var(--fb-tx,#f5efe9)", fontFamily: "Manrope" }}>
+              <button onClick={d.onClick} style={{ cursor: "pointer", padding: "10px 1px", borderRadius: "clamp(12px, 3.5vw, 16px)", display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", minWidth: "0", background: d.bg, border: d.border, color: "var(--fb-tx,#f5efe9)", fontFamily: "Manrope" }}>
                 <span style={{ fontSize: "11px", color: "var(--fb-tx3,#a8978c)" }}>
                   {d.short}
                 </span>
                 <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", fontVariationSettings: "'FILL' 1", color: d.iconColor }}>
                   {d.icon}
                 </span>
-                <span style={{ fontSize: "11px", fontWeight: "700", maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: d.nameColor }}>
+                <span style={{ fontSize: "clamp(9.5px, 2.75vw, 11px)", fontWeight: "700", maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: d.nameColor }}>
                   {d.name}
                 </span>
               </button>

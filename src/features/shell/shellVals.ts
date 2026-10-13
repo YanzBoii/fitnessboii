@@ -2,6 +2,9 @@ import { useLayoutEffect, useRef } from 'react';
 import { pad } from '../../domain/dates';
 import { useApp, type Tab } from '../../state/app';
 import { enterCascade, popRef } from '../../ui/anim';
+import { useAutoHide } from '../../ui/useAutoHide';
+
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 const NAV: [Tab, string, string][] = [
   ['home', 'Accueil', 'home'], ['programs', 'Programmes', 'fitness_center'], ['session', 'Séance', 'timer'],
@@ -13,6 +16,7 @@ export function useShellVals() {
   const { profile: S, tab, isMobile } = a;
   const mainEl = useRef<HTMLElement | null>(null);
   const titleEl = useRef<HTMLHeadingElement | null>(null);
+  const navHidden = useAutoHide(isMobile, tab);
 
   // Cascade d'entrée à chaque changement d'onglet.
   useLayoutEffect(() => {
@@ -39,13 +43,14 @@ export function useShellVals() {
     }),
     initial: (S.name || '?').trim().charAt(0).toUpperCase(),
     settings: { name: S.name, email: a.email },
-    dateLabel: new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }),
+    dateLabel: capitalize(new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })),
     pageTitle: titles[tab],
     goPrograms: () => a.go('programs'),
     goProfile: () => a.setProfileOpen(true),
     hasRestFloat: !!a.restEnd && tab !== 'session',
     popRef,
-    restBottom: isMobile ? '92px' : '28px',
+    restBottom: isMobile && !navHidden ? '92px' : isMobile ? '16px' : '28px',
+    navTransform: navHidden ? 'translate(-50%, calc(100% + 32px))' : 'translateX(-50%)',
     restLabel: `${Math.floor(restLeft / 60)}:${pad(restLeft % 60)}`,
     restPlus: () => a.restEnd && a.setRestEnd(a.restEnd + 15000),
     restSkip: () => a.setRestEnd(null)

@@ -85,7 +85,7 @@ export function BuilderView({ v }: { v: BuilderVals }) {
                           <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "14px", fontVariationSettings: "'FILL' 0" }}>
                             location_on
                           </span>
-                          <input value={r.machine} onChange={r.onMachine} placeholder="Machine (optionnel)" style={{ flex: "1", minWidth: "0", border: "none", background: "transparent", color: "var(--fb-tx3,#a8978c)", font: "500 12px Manrope", outline: "none", padding: "2px 0" }} />
+                          <input value={r.machine} onChange={r.onMachine} placeholder="Machine (optionnel)" style={{ flex: "1", minWidth: "0", border: "none", background: "transparent", color: "var(--fb-tx3,#a8978c)", font: "500 max(var(--fb-ifs, 0px), 12px) Manrope", outline: "none", padding: "2px 0" }} />
                         </div>
                       </div>
                       <button onClick={r.onUp} aria-label="Monter" style={{ width: "32px", height: "32px", flexShrink: "0", borderRadius: "50%", cursor: "pointer", display: "grid", placeItems: "center", background: "transparent", border: "none", color: "var(--fb-tx3,#a8978c)", visibility: r.upVis }}>
@@ -147,7 +147,7 @@ export function BuilderView({ v }: { v: BuilderVals }) {
                       <div style={{ display: "flex", flexDirection: "column", gap: "12px", paddingTop: "12px", borderTop: "1px solid rgba(var(--fb-fg,255,255,255),.06)" }}>
                         <label style={{ display: "flex", flexDirection: "column", gap: "5px", fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
                           Nom de l’exercice
-                          <input value={r.name} onChange={r.onName} style={{ height: "42px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.3)", color: "var(--fb-tx,#f5efe9)", font: "500 14px Manrope", outline: "none", width: "100%", minWidth: "0", fontWeight: "700" }} />
+                          <input value={r.name} onChange={r.onName} style={{ height: "42px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.3)", color: "var(--fb-tx,#f5efe9)", font: "500 max(var(--fb-ifs, 0px), 14px) Manrope", outline: "none", width: "100%", minWidth: "0", fontWeight: "700" }} />
                         </label>
                         <div style={{ display: "flex", flexDirection: "column", gap: "5px", fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
                           Muscle
@@ -164,16 +164,16 @@ export function BuilderView({ v }: { v: BuilderVals }) {
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
                           <label style={{ display: "flex", flexDirection: "column", gap: "5px", fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
                             Poids de départ (kg)
-                            <input type="text" inputMode="decimal" value={r.weight} onChange={r.onWeight} placeholder="auto" style={{ height: "42px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.3)", color: "var(--fb-tx,#f5efe9)", font: "500 14px Manrope", outline: "none", width: "100%", minWidth: "0", fontFamily: "Sora", fontWeight: "600" }} />
+                            <input type="text" inputMode="decimal" value={r.weight} onChange={r.onWeight} placeholder="auto" style={{ height: "42px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.3)", color: "var(--fb-tx,#f5efe9)", font: "500 max(var(--fb-ifs, 0px), 14px) Manrope", outline: "none", width: "100%", minWidth: "0", fontFamily: "Sora", fontWeight: "600" }} />
                           </label>
                           <label style={{ display: "flex", flexDirection: "column", gap: "5px", fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
                             Repos (secondes)
-                            <input type="number" inputMode="numeric" value={r.rest} onChange={r.onRest} placeholder={r.restPh} style={{ height: "42px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.3)", color: "var(--fb-tx,#f5efe9)", font: "500 14px Manrope", outline: "none", width: "100%", minWidth: "0", fontFamily: "Sora", fontWeight: "600" }} />
+                            <input type="number" inputMode="numeric" value={r.rest} onChange={r.onRest} placeholder={r.restPh} style={{ height: "42px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.3)", color: "var(--fb-tx,#f5efe9)", font: "500 max(var(--fb-ifs, 0px), 14px) Manrope", outline: "none", width: "100%", minWidth: "0", fontFamily: "Sora", fontWeight: "600" }} />
                           </label>
                         </div>
                         <label style={{ display: "flex", flexDirection: "column", gap: "5px", fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
                           Notes / réglage machine
-                          <input value={r.note} onChange={r.onNote} placeholder="ex. siège cran 4, prise serrée, tempo lent" style={{ height: "42px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.3)", color: "var(--fb-tx,#f5efe9)", font: "500 14px Manrope", outline: "none", width: "100%", minWidth: "0" }} />
+                          <input value={r.note} onChange={r.onNote} placeholder="ex. siège cran 4, prise serrée, tempo lent" style={{ height: "42px", padding: "0 12px", borderRadius: "12px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.3)", color: "var(--fb-tx,#f5efe9)", font: "500 max(var(--fb-ifs, 0px), 14px) Manrope", outline: "none", width: "100%", minWidth: "0" }} />
                         </label>
                       </div>
                     </>)}
@@ -186,7 +186,7 @@ export function BuilderView({ v }: { v: BuilderVals }) {
                 <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", fontVariationSettings: "'FILL' 0", color: "var(--fb-tx3,#a8978c)" }}>
                   search
                 </span>
-                <input value={v.bld.q} onChange={v.bld.onQ} onKeyDown={v.bld.onQKey} placeholder="Chercher ou créer un exercice" style={{ flex: "1", minWidth: "0", height: "100%", border: "none", background: "transparent", color: "var(--fb-tx,#f5efe9)", font: "500 14px Manrope", outline: "none" }} />
+                <input value={v.bld.q} onChange={v.bld.onQ} onKeyDown={v.bld.onQKey} placeholder="Chercher ou créer un exercice" style={{ flex: "1", minWidth: "0", height: "100%", border: "none", background: "transparent", color: "var(--fb-tx,#f5efe9)", font: "500 max(var(--fb-ifs, 0px), 14px) Manrope", outline: "none" }} />
               </div>
               <div style={{ display: "flex", gap: "6px", overflowX: "auto", paddingBottom: "2px" }}>
                 {v.bld.groups.map((g, g_i) => (

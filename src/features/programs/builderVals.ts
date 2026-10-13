@@ -114,7 +114,7 @@ export function useBuilderVals(initial: Program | null, onClose: () => void) {
     stop: (ev: MouseEvent) => ev.stopPropagation(),
     bClose: onClose,
     sheetAlign: mob ? 'flex-end' : 'center', sheetPad: mob ? '0' : '24px', sheetRadius: mob ? '26px 26px 0 0' : '26px',
-    bH: mob ? '94vh' : 'min(860px, 90vh)',
+    bH: mob ? '94dvh' : 'min(860px, 90dvh)',
     bld: {
       title: b.id ? 'Modifier le programme' : 'Nouveau programme',
       name: b.name, onName: (ev: Ev) => set({ name: ev.target.value.slice(0, 60) }), isEdit: !!b.id,

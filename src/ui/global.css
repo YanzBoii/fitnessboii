@@ -10,6 +10,7 @@ html, body {
 a { color: rgb(var(--fb-a4, 255, 130, 154)); text-decoration: none; }
 a:hover { color: rgb(var(--fb-a5, 255, 182, 198)); }
 input, select { font-family: Manrope; }
+input { text-overflow: ellipsis; }
 input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 input[type=number] { -moz-appearance: textfield; appearance: textfield; }
 select option { background: rgb(var(--fb-bg2, 20, 11, 15)); color: var(--fb-tx, #f5efe9); }
@@ -34,3 +35,10 @@ input:focus, select:focus { border-color: rgba(var(--fb-a3, 255, 92, 124), .6) !
 }
 @keyframes fb-breathe { 50% { transform: scale(.92); box-shadow: 0 0 18px rgba(236, 40, 78, .35); } }
 .ms { font-family: 'Material Symbols Rounded'; font-variation-settings: 'FILL' 1; }
+
+/* Écrans tactiles : champs à 16px minimum (sinon iPhone zoome à la saisie),
+   zones tactiles d'au moins 32px de haut pour les boutons texte. */
+@media (pointer: coarse) {
+  :root { --fb-ifs: 16px; }
+  button { min-height: 32px; }
+}
