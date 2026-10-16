@@ -18,7 +18,10 @@ export interface Profile {
   goal: number;
   rest: RestSeconds;
   autoTimer: boolean;
+  /** Ancien réglage « rappels » (jamais branché), gardé pour les profils existants. */
   remind: boolean;
+  /** Son + vibration à la fin du repos. */
+  sound: boolean;
   theme: ThemeId;
   mode: Mode;
   onboarded: boolean;
@@ -66,10 +69,19 @@ export interface SessionLog {
   perf: Record<string, PerfEntry>;
 }
 
-export interface SessionEx {
+export interface SetLog {
   w: number;
   r: number;
+}
+
+export interface SessionEx {
+  /** Valeurs saisies pour la prochaine série. */
+  w: number;
+  r: number;
+  /** Toutes les séries prévues sont faites. */
   done: boolean;
+  /** Séries validées (absent sur les séances d'avant le suivi par série). */
+  sets?: SetLog[];
 }
 
 export interface ActiveSession {
@@ -78,6 +90,10 @@ export interface ActiveSession {
   startedAt: number;
   cur: number;
   ex: Record<string, SessionEx>;
+  /** Dernière action (epoch ms) : repère une séance oubliée. */
+  lastAt?: number;
+  /** Exercices modifiés pour cette séance seulement ; absent = ceux du programme. */
+  plan?: Exercise[];
 }
 
 export interface PhotoMeta {

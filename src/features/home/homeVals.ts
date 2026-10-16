@@ -30,7 +30,13 @@ export function useHomeVals() {
     if (nextP) nextDay = d;
   }
   const heroP = todayP || nextP || programs[0];
-  const hero = !heroP
+  const sessP = a.session && programs.find(p => p.id === a.session!.programId);
+  const todayLog = a.logs.find(l => l.date === dateKey(today));
+  const hero = sessP
+    ? { pill: 'Séance en cours', pillIcon: 'timer', icon: sessP.icon, subtitle: `Commencée il y a ${Math.max(1, Math.round((Date.now() - a.session!.startedAt) / 60000))} min`, name: sessP.name, cta: 'Reprendre', id: sessP.id as string | null }
+    : todayLog && todayP
+      ? { pill: 'Séance faite', pillIcon: 'check_circle', icon: todayP.icon, subtitle: `Bravo, ${todayLog.minutes} min aujourd’hui · ${Object.keys(todayLog.perf).length} exercices`, name: todayP.name, cta: 'Refaire une séance', id: todayP.id as string | null }
+    : !heroP
     ? { pill: 'Aucun programme', pillIcon: 'info', icon: 'add', subtitle: 'Crée ton premier programme', name: '—', cta: 'Créer', id: null as string | null }
     : todayP
       ? { pill: 'Séance du jour', pillIcon: 'today', icon: todayP.icon, subtitle: todayP.subtitle || `${programInfo(todayP).exCount} exercices · ~${programInfo(todayP).duration} min`, name: todayP.name, cta: 'Commencer', id: todayP.id }

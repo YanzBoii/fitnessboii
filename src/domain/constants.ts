@@ -10,8 +10,10 @@ export const GROUP_LABELS: Record<Group, string> = {
 export const GROUP_IDS = Object.keys(GROUPS) as Group[];
 export const groupIcon = (g: string) => GROUPS[g as Group] || 'fitness_center';
 
+/** Icônes de programme proposées dans l'éditeur (même liste dans firestore.rules). */
 export const PROG_ICONS = ['fitness_center', 'rowing', 'directions_run', 'sports_gymnastics',
-  'local_fire_department', 'bolt', 'self_improvement', 'sprint'];
+  'local_fire_department', 'bolt', 'self_improvement', 'sprint', 'exercise', 'sports_martial_arts',
+  'accessibility_new', 'monitor_heart', 'directions_bike', 'sports_mma', 'emoji_events', 'star'];
 
 export const DAYS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 export const DAY_SHORT = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
@@ -74,7 +76,7 @@ export const DEFAULT_PROGRAMS: Program[] = [
 
 export const DEFAULT_PROFILE: Profile = {
   name: '', goalType: null, level: null, split: null, bodyWeight: 75, height: 175, goal: 3, rest: 90,
-  autoTimer: true, remind: false, theme: 'rubis', mode: 'dark', onboarded: false
+  autoTimer: true, remind: false, sound: true, theme: 'rubis', mode: 'dark', onboarded: false
 };
 
 export const LIMITS = { exercises: 40, programs: 20, photoBytes: 900_000 } as const;

@@ -5,6 +5,7 @@ import { DEFAULT_PROFILE } from '../domain/constants';
 import { dateKey, mondayOf } from '../domain/dates';
 import type { ActiveSession, Profile, Program } from '../domain/types';
 import { compressToJpeg, savePhoto } from '../firebase/photoApi';
+import { ring } from '../ui/beep';
 import * as repo from '../firebase/repo';
 import { useData, type Data } from './data';
 import { useToast } from './toast';
@@ -45,6 +46,7 @@ export interface App extends Data {
 const Ctx = createContext<App | null>(null);
 
 const TAB_KEY = 'fitnessboii-tab';
+const REST_KEY = 'fitnessboii-rest-end';
 const readTab = (): Tab => {
   try {
     const t = localStorage.getItem(TAB_KEY) as Tab | null;
@@ -61,7 +63,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [tab, setTab] = useState<Tab>(readTab);
   const [progId, setProgId] = useState<string | null>(null);
   const [profileOpen, setProfileOpen] = useState(false);
-  const [restEnd, setRestEnd] = useState<number | null>(null);
+  // Minuteur de repos gardé en local : il survit à un rechargement de l'app (iOS en arrière-plan).
+  const [restEnd, setRestEndState] = useState<number | null>(() => {
+    try { const t = Number(localStorage.getItem(REST_KEY)); return t > Date.now() ? t : null; } catch { return null; }
+  });
+  const setRestEnd = useCallback((t: number | null) => {
+    setRestEndState(t);
+    try { if (t) localStorage.setItem(REST_KEY, String(t)); else localStorage.removeItem(REST_KEY); } catch { /* stockage indisponible */ }
+  }, []);
   const [now, setNow] = useState(Date.now());
   const [photoPrompt, setPhotoPrompt] = useState(false);
   const [photoBusy, setPhotoBusy] = useState(false);
@@ -109,15 +118,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const dropSessionLocal = useCallback(() => sess.clear('s'), [sess]);
 
   // Horloge : chrono de séance et minuteur de repos.
+  const sound = profile.sound;
   useEffect(() => {
     if (!restEnd && !(session && tab === 'session')) return;
     const t = setInterval(() => {
       const n = Date.now();
       setNow(n);
-      if (restEnd && n >= restEnd) setRestEnd(null);
+      if (restEnd && n >= restEnd) {
+        setRestEnd(null);
+        // Pas de signal si l'app revient au premier plan longtemps après la fin du repos.
+        if (sound && n - restEnd < 5000) ring();
+      }
     }, 500);
     return () => clearInterval(t);
-  }, [restEnd, session, tab]);
+  }, [restEnd, session, tab, sound]);
 
   const go = useCallback((t: Tab) => {
     setTab(t);

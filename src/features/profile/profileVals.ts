@@ -75,7 +75,7 @@ export function useProfileVals() {
         color: on ? 'var(--fb-on,#fff)' : 'var(--fb-tx2,#d4c2b6)', border: on ? 'none' : '1px solid rgba(var(--fb-fg,255,255,255),.1)'
       };
     }),
-    toggles: ([['autoTimer', 'Minuteur de repos auto'], ['remind', 'Rappels les jours de séance (bientôt)']] as const).map(([k, label]) => ({
+    toggles: ([['autoTimer', 'Minuteur de repos auto'], ['sound', 'Son et vibration en fin de repos']] as const).map(([k, label]) => ({
       label, onClick: () => a.setting(k, !S[k]),
       track: S[k] ? 'rgb(var(--fb-a,236,40,78))' : 'rgba(var(--fb-fg,255,255,255),.12)',
       justify: S[k] ? 'flex-end' : 'flex-start'

@@ -29,8 +29,8 @@ Tout est rangé sous `users/{uid}` :
 |---|---|
 | `users/{uid}` | profil et réglages (objectif, niveau, type de programme, thème…) |
 | `programs/{id}` | programme et ses exercices (séries, reps, charge, repos et note par exercice) |
-| `sessionLogs/{AAAA-MM-JJ}` | séance terminée : durée + perf max par exercice |
-| `session/current` | séance en cours (reprise après fermeture, multi-appareils) |
+| `sessionLogs/{AAAA-MM-JJ}` | séance terminée (datée du jour où elle a commencé) : durée + meilleure série par exercice |
+| `session/current` | séance en cours : séries validées par exercice, dernière action (séance oubliée après 3 h sans activité), exercices modifiés pour cette séance seulement (`plan`) |
 | `photos/{lundi}` | métadonnées de la photo de la semaine |
 | `photoData/{lundi}` | image JPEG compressée (octets) |
 

@@ -58,7 +58,7 @@ export function useOnboardingVals() {
       await completeOnboarding(uid, {
         name: d.name.trim(), goalType: d.goalType, level: d.level, split: d.split,
         bodyWeight: toNum(d.bodyWeight) || 75, height: +d.height || 175, goal: days.length,
-        ...(profile ? {} : { rest: DEFAULT_PROFILE.rest, autoTimer: DEFAULT_PROFILE.autoTimer, remind: DEFAULT_PROFILE.remind, theme: DEFAULT_PROFILE.theme, mode: DEFAULT_PROFILE.mode })
+        ...(profile ? {} : { rest: DEFAULT_PROFILE.rest, autoTimer: DEFAULT_PROFILE.autoTimer, remind: DEFAULT_PROFILE.remind, sound: DEFAULT_PROFILE.sound, theme: DEFAULT_PROFILE.theme, mode: DEFAULT_PROFILE.mode })
       }, distributeDays(plan.programs, days), !profile, plan.removeIds);
       flash(`Bienvenue ${d.name.trim()}`);
     } catch (e) {

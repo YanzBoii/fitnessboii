@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import type { Program } from '../../domain/types';
+import type { Exercise, Program } from '../../domain/types';
 import { BuilderView } from './BuilderView';
 import { useBuilderVals } from './builderVals';
 import { ProgramsView } from './ProgramsView';
 import { useProgramsVals } from './programsVals';
 
-function Builder({ program, onClose }: { program: Program | null; onClose: () => void }) {
-  return createPortal(<BuilderView v={useBuilderVals(program, onClose)} />, document.body);
+/** Éditeur de programme ; avec `onSession`, il modifie la séance en cours. */
+export function Builder({ program, onClose, onSession }: { program: Program | null; onClose: () => void; onSession?: (exs: Exercise[], alsoProgram: boolean) => void }) {
+  return createPortal(<BuilderView v={useBuilderVals(program, onClose, onSession)} />, document.body);
 }
 
 export function Programs() {

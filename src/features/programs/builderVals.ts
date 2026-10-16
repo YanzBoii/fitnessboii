@@ -1,6 +1,6 @@
 // Éditeur de programme (création / modification) : bibliothèque d'exercices, modèles, jours.
 import { useRef, useState, type ChangeEvent, type KeyboardEvent, type MouseEvent } from 'react';
-import { DAY_SHORT, DAYS, GROUP_LABELS, groupIcon, LIMITS, newId } from '../../domain/constants';
+import { DAY_SHORT, DAYS, GROUP_LABELS, groupIcon, LIMITS, newId, PROG_ICONS } from '../../domain/constants';
 import { autoIcon, autoSubtitle, LIB, libById, libEx, norm, TEMPLATES } from '../../domain/library';
 import type { Exercise, Group, Program } from '../../domain/types';
 import { deleteProgram } from '../../firebase/repo';
@@ -36,7 +36,8 @@ export function draftFrom(p: Program | null): Draft {
     : { id: null, name: '', icon: null, days: [], exercises: [], q: '', grp: 'all', confirmDel: false, openId: null };
 }
 
-export function useBuilderVals(initial: Program | null, onClose: () => void) {
+/** `onSession` : mode « modifier la séance en cours » (pas de nom, d'icône ni de jours). */
+export function useBuilderVals(initial: Program | null, onClose: () => void, onSession?: (exs: Exercise[], alsoProgram: boolean) => void) {
   const a = useApp();
   const [b, setB] = useState<Draft>(() => draftFrom(initial));
   const panel = useRef<HTMLElement | null>(null);
@@ -69,13 +70,19 @@ export function useBuilderVals(initial: Program | null, onClose: () => void) {
     setB(x => ({ ...x, q: '', openId: id, exercises: [...x.exercises, { id, name, machine: '', group: x.grp === 'all' ? 'pecs' : x.grp, sets: 3, reps: 10, weight: 0, rest: 0 }] }));
   };
 
+  const cleanExercises = (): Exercise[] => b.exercises.map(e => ({
+    ...e, name: (e.name || '').trim() || 'Exercice', sets: Math.max(1, +e.sets || 1), reps: Math.max(1, +e.reps || 1),
+    weight: toNum(e.weight), rest: Math.round(toNum(e.rest)), note: (e.note || '').trim()
+  }));
+  const saveSession = (alsoProgram: boolean) => {
+    if (!n) return a.flash('Garde au moins un exercice');
+    onSession?.(cleanExercises(), alsoProgram);
+  };
+
   const save = () => {
     if (!n) return a.flash('Ajoute au moins un exercice');
     if (!b.id && progs.length >= LIMITS.programs) return a.flash(`${LIMITS.programs} programmes maximum`);
-    const exercises: Exercise[] = b.exercises.map(e => ({
-      ...e, name: (e.name || '').trim() || 'Exercice', sets: Math.max(1, +e.sets || 1), reps: Math.max(1, +e.reps || 1),
-      weight: toNum(e.weight), rest: Math.round(toNum(e.rest)), note: (e.note || '').trim()
-    }));
+    const exercises = cleanExercises();
     const id = b.id || newId('p');
     const prev = progs.find(p => p.id === id);
     const prog: Program = {
@@ -116,7 +123,14 @@ export function useBuilderVals(initial: Program | null, onClose: () => void) {
     sheetAlign: mob ? 'flex-end' : 'center', sheetPad: mob ? '0' : '24px', sheetRadius: mob ? '26px 26px 0 0' : '26px',
     bH: mob ? '94dvh' : 'min(860px, 90dvh)',
     bld: {
-      title: b.id ? 'Modifier le programme' : 'Nouveau programme',
+      title: onSession ? 'Modifier la séance' : b.id ? 'Modifier le programme' : 'Nouveau programme',
+      showMeta: !onSession, sessionMode: !!onSession,
+      sessionHint: 'Ajoute, retire ou réordonne des exercices, change séries et reps. Les séries déjà validées sont gardées.',
+      saveSession: () => saveSession(false), saveBoth: () => saveSession(true),
+      icons: PROG_ICONS.map(icon => {
+        const on = icon === (b.icon || autoIcon(cleanExercises()));
+        return { icon, on, onClick: () => set({ icon }), ...pill(on), shadow: on ? '0 0 14px rgba(var(--fb-a,236,40,78),.45)' : 'none' };
+      }),
       name: b.name, onName: (ev: Ev) => set({ name: ev.target.value.slice(0, 60) }), isEdit: !!b.id,
       showTpl: !b.id && !n,
       templates: TEMPLATES.map(([name, icon, list]) => ({

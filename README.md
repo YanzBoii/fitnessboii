@@ -30,14 +30,14 @@ Application de suivi de musculation : tes programmes, tes perfs et ta régularit
 À la salle, on veut savoir quoi faire, sur quelle machine, et à quelle charge on s'était arrêté. FitnessBoii garde tout ça dans la poche.
 
 1. **Un programme en 30 secondes** : choisis un split (Push / Pull / Legs, Haut / Bas, Full body) ou compose le tien depuis une bibliothèque de ~55 exercices sur machines.
-2. **Une séance guidée**, un exercice à la fois : la charge de la dernière fois est déjà pré-remplie, tu valides, le minuteur de repos se lance.
+2. **Une séance guidée**, série par série : la charge de la dernière fois est déjà pré-remplie, tu valides ta série, le minuteur de repos se lance.
 3. **Tes progrès sans effort** : records, régularité, ce qui a changé ce mois-ci, et ta photo de la semaine pour comparer.
 
 ## Fonctionnalités
 
-- 🏋️ **Programmes** : bibliothèque d'exercices (recherche, filtres par muscle), modèles prêts à l'emploi, exercices perso, réglage machine et repos par exercice
-- ⏱️ **Séance guidée** : chrono, minuteur de repos automatique, note de l'exercice (« siège cran 4 »), reprise si l'app se ferme
-- 📈 **Performances** : records, séances par semaine vs objectif, progression sur 30 jours avec mini-courbes
+- 🏋️ **Programmes** : bibliothèque d'exercices (recherche, filtres par muscle), modèles prêts à l'emploi, exercices perso, icône au choix, réglage machine et repos par exercice
+- ⏱️ **Séance guidée** : suivi série par série, repos automatique entre chaque série (son + vibration à la fin), séance modifiable en direct (pour cette fois ou aussi dans le programme), note de l'exercice (« siège cran 4 »), reprise si l'app se ferme, détection des séances oubliées
+- 📈 **Performances** : records, séances par semaine vs objectif, progression sur 30 jours, historique détaillé des séances
 - 🔥 **Régularité** : série de semaines, calendrier de présence sur 6 mois
 - 📸 **Photo de la semaine**, comparatifs début / aujourd'hui et mois par mois, privée et compressée sur l'appareil
 - 🗓️ **Planning** : un programme par jour, la séance du jour sur l'accueil

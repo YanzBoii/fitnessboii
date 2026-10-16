@@ -129,7 +129,7 @@ export function AuthView({ v }: { v: AuthVals }) {
           </div>
           {v.isSignup && (<>
             <p style={{ margin: "0", fontSize: "12px", color: "var(--fb-tx3,#a8978c)", textAlign: "center", textWrap: "pretty" }}>
-              En créant un compte, tu acceptes les conditions d’utilisation et la politique de confidentialité.
+              Tes séances et tes photos restent privées : toi seul y as accès. Tu peux tout exporter ou supprimer depuis ton profil.
             </p>
           </>)}
         </div>

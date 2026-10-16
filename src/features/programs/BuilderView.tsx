@@ -1,4 +1,4 @@
-// Vue générée depuis le prototype (design/design/FitnessBoii.dc.html), styles à l'identique.
+// Vue issue du prototype (design/design/FitnessBoii.dc.html), complétée : choix de l'icône, mode « modifier la séance ».
 import { Fragment } from 'react';
 import type { BuilderVals } from './builderVals';
 
@@ -20,16 +20,31 @@ export function BuilderView({ v }: { v: BuilderVals }) {
           </div>
         </div>
         <div style={{ flex: "1", overflowY: "auto", padding: "18px 16px 24px", display: "flex", flexDirection: "column", gap: "24px" }}>
+          {v.bld.sessionMode && (
+            <div style={{ fontSize: "13px", color: "var(--fb-tx3,#a8978c)", lineHeight: "1.45" }}>
+              {v.bld.sessionHint}
+            </div>
+          )}
+          {v.bld.showMeta && (
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <span style={{ width: "22px", height: "22px", borderRadius: "50%", display: "grid", placeItems: "center", background: "rgba(var(--fb-a,236,40,78),.16)", color: "rgb(var(--fb-a4,255,130,154))", font: "700 11px Sora" }}>
                 1
               </span>
               <span style={{ fontWeight: "700", fontSize: "14px" }}>
-                Nom
+                Nom et icône
               </span>
             </div>
             <input value={v.bld.name} onChange={v.bld.onName} placeholder="ex. Push, Haut du corps…" style={{ height: "54px", padding: "0 16px", borderRadius: "16px", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", background: "rgba(var(--fb-ink,0,0,0),.3)", color: "var(--fb-tx,#f5efe9)", font: "600 18px Sora", outline: "none" }} />
+            <div role="radiogroup" aria-label="Icône du programme" style={{ display: "grid", gridTemplateColumns: "repeat(8, minmax(0, 1fr))", gap: "6px" }}>
+              {v.bld.icons.map((ic, ic_i) => (
+                <button key={ic_i} onClick={ic.onClick} role="radio" aria-checked={ic.on} aria-label={ic.icon} style={{ height: "42px", borderRadius: "14px", cursor: "pointer", display: "grid", placeItems: "center", background: ic.bg, color: ic.color, border: ic.border, boxShadow: ic.shadow }}>
+                  <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "22px", fontVariationSettings: "'FILL' 1" }}>
+                    {ic.icon}
+                  </span>
+                </button>
+              ))}
+            </div>
             {v.bld.showTpl && (<>
               <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                 <div style={{ fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
@@ -50,11 +65,14 @@ export function BuilderView({ v }: { v: BuilderVals }) {
               </div>
             </>)}
           </div>
+          )}
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              {v.bld.showMeta && (
               <span style={{ width: "22px", height: "22px", borderRadius: "50%", display: "grid", placeItems: "center", background: "rgba(var(--fb-a,236,40,78),.16)", color: "rgb(var(--fb-a4,255,130,154))", font: "700 11px Sora" }}>
                 2
               </span>
+              )}
               <span style={{ fontWeight: "700", fontSize: "14px" }}>
                 Exercices
               </span>
@@ -219,6 +237,7 @@ export function BuilderView({ v }: { v: BuilderVals }) {
               </div>
             </div>
           </div>
+          {v.bld.showMeta && (<>
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <span style={{ width: "22px", height: "22px", borderRadius: "50%", display: "grid", placeItems: "center", background: "rgba(var(--fb-a,236,40,78),.16)", color: "rgb(var(--fb-a4,255,130,154))", font: "700 11px Sora" }}>
@@ -244,7 +263,8 @@ export function BuilderView({ v }: { v: BuilderVals }) {
               {v.bld.daysHint}
             </div>
           </div>
-          {v.bld.isEdit && (<>
+          </>)}
+          {v.bld.isEdit && v.bld.showMeta && (<>
             <button onClick={v.bld.del} style={{ alignSelf: "center", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "6px", padding: "10px 16px", borderRadius: "99px", border: "1px solid rgba(255,90,70,.35)", background: v.bld.delBg, color: "#ff8a73", font: "600 13px Manrope", cursor: "pointer" }}>
               <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "17px", fontVariationSettings: "'FILL' 0" }}>
                 delete
@@ -254,12 +274,23 @@ export function BuilderView({ v }: { v: BuilderVals }) {
           </>)}
         </div>
         <div style={{ padding: "12px 16px 16px", borderTop: "1px solid rgba(var(--fb-fg,255,255,255),.06)" }}>
-          <button onClick={v.bld.save} style={{ width: "100%", height: "54px", borderRadius: "99px", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "rgb(var(--fb-a,236,40,78))", color: "var(--fb-on,#fff)", font: "700 15px Manrope", boxShadow: "0 10px 28px rgba(var(--fb-a,236,40,78),.4)", opacity: v.bld.saveOp }}>
-            <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", fontVariationSettings: "'FILL' 0" }}>
-              check
-            </span>
-            {v.bld.saveLabel}
-          </button>
+          {v.bld.sessionMode ? (
+            <div style={{ display: "flex", gap: "8px" }}>
+              <button onClick={v.bld.saveSession} style={{ flex: "1", height: "54px", borderRadius: "99px", cursor: "pointer", background: "rgba(var(--fb-fg,255,255,255),.06)", border: "1px solid rgba(var(--fb-fg,255,255,255),.14)", color: "var(--fb-tx,#f5efe9)", font: "700 14px Manrope" }}>
+                Cette séance
+              </button>
+              <button onClick={v.bld.saveBoth} style={{ flex: "1.3", height: "54px", borderRadius: "99px", border: "none", cursor: "pointer", background: "rgb(var(--fb-a,236,40,78))", color: "var(--fb-on,#fff)", font: "700 14px Manrope", boxShadow: "0 10px 28px rgba(var(--fb-a,236,40,78),.4)" }}>
+                Séance + programme
+              </button>
+            </div>
+          ) : (
+            <button onClick={v.bld.save} style={{ width: "100%", height: "54px", borderRadius: "99px", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "rgb(var(--fb-a,236,40,78))", color: "var(--fb-on,#fff)", font: "700 15px Manrope", boxShadow: "0 10px 28px rgba(var(--fb-a,236,40,78),.4)", opacity: v.bld.saveOp }}>
+              <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", fontVariationSettings: "'FILL' 0" }}>
+                check
+              </span>
+              {v.bld.saveLabel}
+            </button>
+          )}
         </div>
       </div>
     </div>

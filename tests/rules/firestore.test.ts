@@ -22,7 +22,7 @@ const unverified = () => env.authenticatedContext('alice', { email: 'alice@test.
 const anon = () => env.unauthenticatedContext().firestore();
 
 const profile = { name: 'Alice', goalType: 'force', level: 'inter', split: 'ppl', bodyWeight: 62.5, height: 168, goal: 4, rest: 90,
-  autoTimer: true, remind: false, theme: 'ocean', mode: 'dark', onboarded: true };
+  autoTimer: true, remind: false, sound: true, theme: 'ocean', mode: 'dark', onboarded: true };
 const program = { name: 'Push', subtitle: 'Pecs', icon: 'fitness_center', days: [0, 3], order: 0,
   exercises: [{ id: 'dc', name: 'DC', machine: '', group: 'pecs', sets: 4, reps: 8, weight: 80, rest: 120, note: 'siège cran 4' }] };
 const log = { date: '2026-10-08', programId: 'push', programName: 'Push', minutes: 52,
@@ -111,8 +111,18 @@ describe('validation des écritures', () => {
     await assertFails(setDoc(doc(db, 'users/alice/sessionLogs/2026-10-08'), { ...log, minutes: 9999 }));
   });
 
-  it('séance en cours : un seul document "current"', async () => {
-    await assertFails(setDoc(doc(alice(), 'users/alice/session/other'), session));
+  it('séance en cours : un seul document "current", séries et exercices modifiés acceptés', async () => {
+    const db = alice();
+    await assertFails(setDoc(doc(db, 'users/alice/session/other'), session));
+    const live = { ...session, lastAt: Date.now(), ex: { dc: { w: 80, r: 8, done: false, sets: [{ w: 80, r: 8 }] } }, plan: program.exercises };
+    await assertSucceeds(setDoc(doc(db, 'users/alice/session/current'), live));
+    await assertFails(setDoc(doc(db, 'users/alice/session/current'), { ...live, plan: 'x' }));
+    await assertFails(setDoc(doc(db, 'users/alice/session/current'), { ...live, plan: Array(41).fill(program.exercises[0]) }));
+    await assertFails(setDoc(doc(db, 'users/alice/session/current'), { ...live, lastAt: 'hier' }));
+  });
+
+  it('programme : icône choisie dans la liste', async () => {
+    await assertSucceeds(setDoc(doc(alice(), 'users/alice/programs/p'), { ...program, icon: 'directions_bike' }));
   });
 
   it('photo : JPEG en octets, 900 Ko max', async () => {

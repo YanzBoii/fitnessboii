@@ -128,7 +128,7 @@ export function ProgramsView({ v }: { v: ProgramsVals }) {
               <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "22px", fontVariationSettings: "'FILL' 1" }}>
                 play_arrow
               </span>
-              Lancer la séance
+              {v.startLabel}
             </button>
             <button onClick={v.editProgram} style={{ whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "6px", height: "54px", padding: "0 22px", borderRadius: "99px", border: "1px solid rgba(var(--fb-fg,255,255,255),.2)", background: "rgba(var(--fb-ink,0,0,0),.25)", color: "var(--fb-tx,#f5efe9)", font: "600 15px Manrope", cursor: "pointer" }}>
               <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "18px", fontVariationSettings: "'FILL' 0" }}>

@@ -71,6 +71,7 @@ export function useProgramsVals(openBuilder: (p: Program | null) => void) {
       };
     }),
     startSelected: () => selP && start(selP.id),
+    startLabel: selP && a.session?.programId === selP.id ? 'Reprendre la séance' : 'Lancer la séance',
     newProgram: () => openBuilder(null),
     editProgram: () => selP && openBuilder(selP)
   };

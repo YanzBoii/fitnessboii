@@ -1,9 +1,9 @@
 rules_version = '2';
 
-// FitnessBoii â€” rÃ¨gles Firestore.
-// Principe : tout est privÃ©. Chaque utilisateur ne peut lire/Ã©crire que sous
-// users/{son uid}, avec un email vÃ©rifiÃ©, et chaque Ã©criture est validÃ©e
-// (champs autorisÃ©s, types, bornes). Tout ce qui n'est pas listÃ© est refusÃ©.
+// FitnessBoii — règles Firestore.
+// Principe : tout est privé. Chaque utilisateur ne peut lire/écrire que sous
+// users/{son uid}, avec un email vérifié, et chaque écriture est validée
+// (champs autorisés, types, bornes). Tout ce qui n'est pas listé est refusé.
 service cloud.firestore {
   match /databases/{database}/documents {
 
@@ -11,7 +11,7 @@ service cloud.firestore {
     function signedIn() {
       return request.auth != null;
     }
-    // Email/mot de passe : email vÃ©rifiÃ© obligatoire. Google : toujours vÃ©rifiÃ©.
+    // Email/mot de passe : email vérifié obligatoire. Google : toujours vérifié.
     function verified() {
       return request.auth.token.email_verified == true;
     }
@@ -40,11 +40,11 @@ service cloud.firestore {
       return v is list && v.size() <= 7 && v.hasOnly([0, 1, 2, 3, 4, 5, 6]);
     }
 
-    // ---------- Profil + rÃ©glages : users/{uid} ----------
+    // ---------- Profil + réglages : users/{uid} ----------
     function validProfile() {
       let d = data();
       return d.keys().hasOnly(['name', 'goalType', 'level', 'split', 'bodyWeight', 'height', 'goal',
-                               'rest', 'autoTimer', 'remind', 'theme', 'mode', 'onboarded',
+                               'rest', 'autoTimer', 'remind', 'sound', 'theme', 'mode', 'onboarded',
                                'createdAt', 'updatedAt'])
         && isStr(d.get('name', ''), 0, 40)
         && (d.get('goalType', 'masse') in ['masse', 'seche', 'force', 'forme'])
@@ -56,6 +56,7 @@ service cloud.firestore {
         && (d.get('rest', 90) in [60, 90, 120, 180])
         && d.get('autoTimer', true) is bool
         && d.get('remind', false) is bool
+        && d.get('sound', true) is bool
         && (d.get('theme', 'rubis') in ['rubis', 'braise', 'ocean', 'menthe', 'violet', 'solaire'])
         && (d.get('mode', 'dark') in ['dark', 'light'])
         && d.get('onboarded', false) is bool
@@ -69,8 +70,8 @@ service cloud.firestore {
 
       // ---------- Programmes : users/{uid}/programs/{programId} ----------
       // Les exercices sont une liste de maps (max 40) : Firestore ne permet pas
-      // de boucler sur une liste dans les rÃ¨gles, leur forme est validÃ©e cÃ´tÃ©
-      // app ; la taille reste bornÃ©e (40 Ã©lÃ©ments, 1 Mo max par document).
+      // de boucler sur une liste dans les règles, leur forme est validée côté
+      // app ; la taille reste bornée (40 éléments, 1 Mo max par document).
       match /programs/{programId} {
         allow read, delete: if isOwner(uid);
         allow create, update: if isOwner(uid) && validId(programId)
@@ -78,15 +79,17 @@ service cloud.firestore {
           && isStr(data().name, 1, 60)
           && isStr(data().subtitle, 0, 80)
           && data().icon in ['fitness_center', 'rowing', 'directions_run', 'sports_gymnastics',
-                             'local_fire_department', 'bolt', 'self_improvement', 'sprint']
+                             'local_fire_department', 'bolt', 'self_improvement', 'sprint',
+                             'exercise', 'sports_martial_arts', 'accessibility_new', 'monitor_heart',
+                             'directions_bike', 'sports_mma', 'emoji_events', 'star']
           && validDays(data().days)
           && data().exercises is list && data().exercises.size() <= 40
           && isInt(data().order, 0, 1000)
           && data().get('createdAt', request.time) is timestamp;
       }
 
-      // ---------- SÃ©ances terminÃ©es : users/{uid}/sessionLogs/{yyyy-mm-dd} ----------
-      // 1 document par jour : perf max de chaque exercice + durÃ©e.
+      // ---------- Séances terminées : users/{uid}/sessionLogs/{yyyy-mm-dd} ----------
+      // 1 document par jour : perf max de chaque exercice + durée.
       match /sessionLogs/{dateKey} {
         allow read, delete: if isOwner(uid);
         allow create, update: if isOwner(uid) && isDateKey(dateKey)
@@ -99,18 +102,20 @@ service cloud.firestore {
           && data().createdAt is timestamp;
       }
 
-      // ---------- SÃ©ance en cours : users/{uid}/session/current ----------
+      // ---------- Séance en cours : users/{uid}/session/current ----------
       match /session/{docId} {
         allow read, delete: if isOwner(uid);
         allow create, update: if isOwner(uid) && docId == 'current'
-          && data().keys().hasOnly(['programId', 'startedAt', 'cur', 'ex'])
+          && data().keys().hasOnly(['programId', 'startedAt', 'lastAt', 'cur', 'ex', 'plan'])
           && isStr(data().programId, 1, 40)
           && isInt(data().startedAt, 0, 9999999999999)
           && isInt(data().cur, 0, 100)
-          && data().ex is map && data().ex.size() <= 40;
+          && data().get('lastAt', 0) is int
+          && data().ex is map && data().ex.size() <= 40
+          && data().get('plan', []) is list && data().get('plan', []).size() <= 40;
       }
 
-      // ---------- Photos : mÃ©tadonnÃ©es (liste lÃ©gÃ¨re) ----------
+      // ---------- Photos : métadonnées (liste légère) ----------
       match /photos/{week} {
         allow read, delete: if isOwner(uid);
         allow create, update: if isOwner(uid) && isDateKey(week)
@@ -120,7 +125,7 @@ service cloud.firestore {
           && data().createdAt is timestamp;
       }
 
-      // ---------- Photos : image JPEG compressÃ©e (octets bruts) ----------
+      // ---------- Photos : image JPEG compressée (octets bruts) ----------
       match /photoData/{week} {
         allow read, delete: if isOwner(uid);
         allow create, update: if isOwner(uid) && isDateKey(week)
@@ -132,7 +137,7 @@ service cloud.firestore {
       }
     }
 
-    // Tout le reste : refusÃ©.
+    // Tout le reste : refusé.
     match /{document=**} {
       allow read, write: if false;
     }

@@ -11,6 +11,8 @@ const clamp = (v: unknown, min: number, max: number, fallback = min) => {
 };
 const int = (v: unknown, min: number, max: number, fallback = min) => Math.round(clamp(v, min, max, fallback));
 const half = (v: number) => Math.round(v * 2) / 2;
+/** Charges au quart de kilo (disques de 1,25 kg). */
+const kg = (v: unknown) => Math.round(clamp(v, 0, 1000, 0) * 4) / 4;
 const str = (v: unknown, max: number, fallback = '') => {
   const s = typeof v === 'string' ? v.trim().slice(0, max) : '';
   return s || fallback;
@@ -27,7 +29,7 @@ export function normalizeExercise(e: Exercise): Exercise {
     group: group(e.group),
     sets: int(e.sets, 1, 20, 3),
     reps: int(e.reps, 0, 500, 10),
-    weight: half(clamp(e.weight, 0, 1000, 0)),
+    weight: kg(e.weight),
     ...(rest ? { rest } : {}),
     ...(note ? { note } : {})
   };
@@ -58,6 +60,7 @@ export function normalizeProfile(p: Partial<Profile>): Partial<Profile> {
   if (p.rest !== undefined) o.rest = (REST_OPTIONS as readonly number[]).includes(p.rest) ? p.rest : (90 as RestSeconds);
   if (p.autoTimer !== undefined) o.autoTimer = !!p.autoTimer;
   if (p.remind !== undefined) o.remind = !!p.remind;
+  if (p.sound !== undefined) o.sound = !!p.sound;
   if (p.theme !== undefined) o.theme = THEME_IDS.includes(p.theme) ? p.theme : 'rubis';
   if (p.mode !== undefined) o.mode = p.mode === 'light' ? 'light' : 'dark';
   if (p.onboarded !== undefined) o.onboarded = !!p.onboarded;
@@ -67,15 +70,21 @@ export function normalizeProfile(p: Partial<Profile>): Partial<Profile> {
 export function normalizeSession(s: ActiveSession): ActiveSession {
   const ex: ActiveSession['ex'] = {};
   Object.entries(s.ex).slice(0, LIMITS.exercises).forEach(([id, x]) => {
-    if (safeId(id)) ex[id] = { w: half(clamp(x.w, 0, 1000, 0)), r: int(x.r, 0, 500, 0), done: !!x.done };
+    if (!safeId(id)) return;
+    ex[id] = { w: kg(x.w), r: int(x.r, 0, 500, 0), done: !!x.done };
+    if (Array.isArray(x.sets)) ex[id].sets = x.sets.slice(0, 20).map(t => ({ w: kg(t?.w), r: int(t?.r, 0, 500, 0) }));
   });
-  return { programId: s.programId, startedAt: Math.round(s.startedAt), cur: int(s.cur, 0, 100, 0), ex };
+  return {
+    programId: s.programId, startedAt: Math.round(s.startedAt), cur: int(s.cur, 0, 100, 0), ex,
+    ...(s.lastAt ? { lastAt: Math.round(s.lastAt) } : {}),
+    ...(Array.isArray(s.plan) ? { plan: s.plan.slice(0, LIMITS.exercises).map(normalizeExercise) } : {})
+  };
 }
 
 export function normalizeLog(l: SessionLog): SessionLog {
   const perf: SessionLog['perf'] = {};
   Object.entries(l.perf).slice(0, LIMITS.exercises).forEach(([id, p]) => {
-    if (safeId(id)) perf[id] = { w: half(clamp(p.w, 0, 1000, 0)), r: int(p.r, 0, 500, 0), name: str(p.name, 60, 'Exercice'), group: group(p.group) };
+    if (safeId(id)) perf[id] = { w: kg(p.w), r: int(p.r, 0, 500, 0), name: str(p.name, 60, 'Exercice'), group: group(p.group) };
   });
   return { date: l.date, programId: l.programId, programName: str(l.programName, 60), minutes: int(l.minutes, 1, 600, 1), perf };
 }

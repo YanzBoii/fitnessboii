@@ -1,4 +1,4 @@
-// Vue générée depuis le prototype (design/design/FitnessBoii.dc.html), styles à l'identique.
+// Vue issue du prototype (design/design/FitnessBoii.dc.html), complétée : séries, séance oubliée, modification en direct.
 import { Fragment } from 'react';
 import type { SessionVals } from './sessionVals';
 
@@ -46,12 +46,17 @@ export function SessionView({ v }: { v: SessionVals }) {
               </div>
               <div style={{ flex: "1", minWidth: "0" }}>
                 <div style={{ fontSize: "12px", color: "var(--fb-tx3,#a8978c)" }}>
-                  Séance en cours
+                  {v.sess.edited ? 'Séance modifiée' : 'Séance en cours'}
                 </div>
                 <div style={{ fontFamily: "Sora", fontWeight: "700", fontSize: "18px" }}>
                   {v.sess.name}
                 </div>
               </div>
+              <button onClick={v.sess.edit} aria-label="Modifier la séance" title="Modifier la séance" style={{ width: "38px", height: "38px", flexShrink: "0", borderRadius: "50%", cursor: "pointer", display: "grid", placeItems: "center", background: "rgba(var(--fb-fg,255,255,255),.06)", border: "1px solid rgba(var(--fb-fg,255,255,255),.1)", color: "var(--fb-tx,#f5efe9)" }}>
+                <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", fontVariationSettings: "'FILL' 0" }}>
+                  edit
+                </span>
+              </button>
               <div style={{ textAlign: "right" }}>
                 <div style={{ font: "700 28px Sora", letterSpacing: "-.02em", fontVariantNumeric: "tabular-nums", lineHeight: "1" }}>
                   {v.sess.elapsed}
@@ -72,6 +77,24 @@ export function SessionView({ v }: { v: SessionVals }) {
               </Fragment>
               ))}
             </div>
+            {v.sess.stale && (
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px", padding: "12px", borderRadius: "16px", background: "rgba(255,176,32,.1)", border: "1px solid rgba(255,176,32,.35)" }}>
+                <div style={{ display: "flex", gap: "8px", fontSize: "13px", color: "var(--fb-tx,#f5efe9)" }}>
+                  <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", color: "#ffb020" }}>
+                    history
+                  </span>
+                  <span>{v.sess.staleText} Tu l’as oubliée ?</span>
+                </div>
+                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                  <button onClick={v.sess.staleSave} style={{ flex: "1 1 140px", height: "40px", borderRadius: "99px", border: "none", cursor: "pointer", background: "var(--fb-inv,#fff)", color: "#140d0a", font: "700 13px Manrope" }}>
+                    Enregistrer et terminer
+                  </button>
+                  <button onClick={v.sess.staleResume} style={{ flex: "1 1 140px", height: "40px", borderRadius: "99px", cursor: "pointer", background: "transparent", border: "1px solid rgba(var(--fb-fg,255,255,255),.2)", color: "var(--fb-tx,#f5efe9)", font: "700 13px Manrope" }}>
+                    Continuer, chrono à zéro
+                  </button>
+                </div>
+              </div>
+            )}
             {v.hasRestInline && (<>
               <div ref={v.popRef} style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 8px 8px 12px", borderRadius: "16px", background: "rgba(var(--fb-a,236,40,78),.12)", border: "1px solid rgba(var(--fb-a,236,40,78),.3)" }}>
                 <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", color: "rgb(var(--fb-a3,255,92,124))" }}>
@@ -152,10 +175,24 @@ export function SessionView({ v }: { v: SessionVals }) {
                 </span>
               </>)}
             </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+              <div style={{ display: "flex", gap: "6px", overflowX: "auto", paddingBottom: "2px" }}>
+                {v.sess.c.sets.map((t, t_i) => (
+                  <button key={t_i} onClick={t.onClick} title={t.title} style={{ flexShrink: "0", minWidth: "64px", display: "flex", flexDirection: "column", alignItems: "center", gap: "2px", padding: "7px 10px", borderRadius: "14px", cursor: t.title ? "pointer" : "default", background: t.bg, border: t.border, color: t.color, fontFamily: "Manrope" }}>
+                    <span style={{ display: "flex", alignItems: "center", gap: "3px", fontSize: "11px", fontWeight: "700" }}>
+                      <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "13px", fontVariationSettings: "'FILL' 1" }}>{t.icon}</span>
+                      Série {t.label}
+                    </span>
+                    <span style={{ fontSize: "12px", fontWeight: "600", whiteSpace: "nowrap" }}>{t.sub}</span>
+                  </button>
+                ))}
+              </div>
+              {v.sess.c.setsHint && <div style={{ fontSize: "11px", color: "var(--fb-tx3,#a8978c)" }}>{v.sess.c.setsHint}</div>}
+            </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 210px), 1fr))", gap: "10px" }}>
               <div style={{ display: "flex", flexDirection: "column", gap: "8px", padding: "12px", borderRadius: "20px", background: "rgba(var(--fb-ink,0,0,0),.32)", border: "1px solid rgba(var(--fb-fg,255,255,255),.06)" }}>
                 <div style={{ fontSize: "12px", color: "var(--fb-tx3,#a8978c)", textAlign: "center" }}>
-                  Charge max (kg)
+                  Charge (kg)
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                   <button onClick={v.sess.c.wMinus} style={{ width: "44px", height: "44px", flexShrink: "0", borderRadius: "50%", cursor: "pointer", display: "grid", placeItems: "center", background: "rgba(var(--fb-fg,255,255,255),.06)", border: "1px solid rgba(var(--fb-fg,255,255,255),.08)", color: "var(--fb-tx,#f5efe9)" }}>
@@ -181,7 +218,7 @@ export function SessionView({ v }: { v: SessionVals }) {
                       remove
                     </span>
                   </button>
-                  <input type="number" inputMode="numeric" value={v.sess.c.r} onChange={v.sess.c.onR} style={{ flex: "1", minWidth: "0", width: "100%", height: "48px", textAlign: "center", border: "none", background: "transparent", color: "var(--fb-tx,#f5efe9)", font: "700 30px Sora", letterSpacing: "-.02em", outline: "none" }} />
+                  <input type="text" inputMode="numeric" value={v.sess.c.r} onChange={v.sess.c.onR} style={{ flex: "1", minWidth: "0", width: "100%", height: "48px", textAlign: "center", border: "none", background: "transparent", color: "var(--fb-tx,#f5efe9)", font: "700 30px Sora", letterSpacing: "-.02em", outline: "none" }} />
                   <button onClick={v.sess.c.rPlus} style={{ width: "44px", height: "44px", flexShrink: "0", borderRadius: "50%", cursor: "pointer", display: "grid", placeItems: "center", background: "rgba(var(--fb-fg,255,255,255),.06)", border: "1px solid rgba(var(--fb-fg,255,255,255),.08)", color: "var(--fb-tx,#f5efe9)" }}>
                     <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "20px", fontVariationSettings: "'FILL' 0" }}>
                       add
@@ -221,14 +258,14 @@ export function SessionView({ v }: { v: SessionVals }) {
             ))}
           </section>
           <div style={{ display: "flex", gap: "8px" }}>
-            <button onClick={v.cancelSession} style={{ whiteSpace: "nowrap", padding: "12px 18px", borderRadius: "99px", border: "1px solid rgba(var(--fb-fg,255,255,255),.16)", background: "transparent", color: "var(--fb-tx2,#d4c2b6)", font: "600 14px Manrope", cursor: "pointer" }}>
-              Abandonner
+            <button onClick={v.cancelSession} style={{ whiteSpace: "nowrap", padding: "12px 18px", borderRadius: "99px", border: v.sess.cancelBorder, background: "transparent", color: v.sess.cancelColor, font: "600 14px Manrope", cursor: "pointer" }}>
+              {v.sess.cancelLabel}
             </button>
-            <button onClick={v.finishSession} style={{ flex: "1", whiteSpace: "nowrap", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", padding: "12px 20px", borderRadius: "99px", border: "none", background: "var(--fb-inv,#fff)", color: "#140d0a", font: "700 14px Manrope", cursor: "pointer" }}>
+            <button onClick={v.sess.finish} style={{ flex: "1", whiteSpace: "nowrap", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", padding: "12px 20px", borderRadius: "99px", border: "none", background: "var(--fb-inv,#fff)", color: "#140d0a", font: "700 14px Manrope", cursor: "pointer" }}>
               <span style={{ fontFamily: "'Material Symbols Rounded'", fontSize: "18px", fontVariationSettings: "'FILL' 0" }}>
                 flag
               </span>
-              Terminer
+              {v.sess.finishLabel}
             </button>
           </div>
         </div>

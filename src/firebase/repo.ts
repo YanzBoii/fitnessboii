@@ -87,6 +87,9 @@ export async function saveLogAndEndSession(uid: string, log: SessionLog) {
   await b.commit();
 }
 
+/** Supprime une séance de l'historique (saisie par erreur). */
+export const deleteLog = (uid: string, date: string) => deleteDoc(doc(sub(uid, 'sessionLogs'), date));
+
 // ---------- Séance en cours ----------
 export function subscribeSession(uid: string, cb: (s: ActiveSession | null) => void, onError?: OnError): Unsubscribe {
   return onSnapshot(sessionDoc(uid), s => cb(s.exists() ? normalizeSession(s.data() as ActiveSession) : null), onError);
